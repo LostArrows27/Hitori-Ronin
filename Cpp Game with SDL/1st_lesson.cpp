@@ -20,12 +20,14 @@ int main(int argc, char* args[])
             cout << "Window could not be created! SDL_Error:" << SDL_GetError();
         }else
         {
-            for(int i = 15; 3*i < 1000; i++){
+            for(int i = 15; 3*i < 500; i++){
                 screenSurface = SDL_GetWindowSurface(window);
                 SDL_FillRect(screenSurface, NULL, SDL_MapRGB( screenSurface->format, i, 2*i, 3*i ) );
                 SDL_UpdateWindowSurface( window );
                 SDL_Delay (50);
             }
+            SDL_DestroyWindow(window);
+            SDL_Quit();
         }
 
     }
