@@ -6,7 +6,7 @@ using namespace std;
 const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 1000;
 
-int main(int argc, char* args[])
+/*int main(int argc, char* args[])
 {
     SDL_Window* window = NULL;
     SDL_Surface* screenSurface = NULL;
@@ -29,6 +29,5 @@ int main(int argc, char* args[])
             SDL_DestroyWindow(window);
             SDL_Quit();
         }
-
     }
-}
+}*/
