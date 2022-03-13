@@ -66,7 +66,7 @@ void close()
     SDL_Quit();
 }
 
-int main(int argc, char* args[]){
+/*int  main(int argc, char* args[]){
     if(!init())
     {
         cout << "Failed to intitalize!" << endl;
@@ -87,4 +87,4 @@ int main(int argc, char* args[]){
     }
     close();
     return 0;
-}
+}*/
