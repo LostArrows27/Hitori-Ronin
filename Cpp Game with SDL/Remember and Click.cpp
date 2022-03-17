@@ -24,7 +24,7 @@ void close();
 int main(int argc, char* args[])
 {
     init();
-    stretchedImage = loadSurface("Rem.png");
+    stretchedImage = loadSurface("Test.jpg");
     bool quit = false;
     SDL_Event e;
     while(!quit)
