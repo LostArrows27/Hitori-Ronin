@@ -9,22 +9,21 @@ const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 595;
 
 SDL_Window* window = NULL;
-SDL_Surface* surface = NULL;
-SDL_Surface* stretchedImage = NULL;
+SDL_Renderer* render = NULL;
+SDL_Texture* texture = NULL;
 
 void init();
-// tao cua so va surface
+// create window and texture color
 
-SDL_Surface* loadSurface(string path);
-// dua anh len surface
+SDL_Texture* loadTexture(string path);
+// load texture
 
 void close();
-// giai phong chuong trinh
 
 int main(int argc, char* args[])
 {
     init();
-    stretchedImage = loadSurface("Test.jpg");
+    texture = loadTexture("Image/Shinkai.png");
     bool quit = false;
     SDL_Event e;
     while(!quit)
@@ -33,13 +32,9 @@ int main(int argc, char* args[])
         {
             if(e.type == SDL_QUIT) quit = true;
         }
-        SDL_Rect temp;
-        temp.x = 0;
-        temp.y = 0;
-        temp.w = SCREEN_WIDTH;
-        temp.h = SCREEN_HEIGHT;
-        SDL_BlitScaled(stretchedImage, NULL, surface, &temp);
-        SDL_UpdateWindowSurface(window);
+        SDL_RenderClear(render);
+        SDL_RenderCopy(render, texture, NULL, NULL);
+        SDL_RenderPresent(render);
     }
     close();
     return 0;
@@ -47,23 +42,28 @@ int main(int argc, char* args[])
 
 void init()
 {
-    window = SDL_CreateWindow("Waifu", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    surface = SDL_GetWindowSurface(window);
+    window = SDL_CreateWindow("Shinkai Makoto picture", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    render = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 
-SDL_Surface* loadSurface(string path)
+SDL_Texture* loadTexture(string path)
 {
-    SDL_Surface* stretched = NULL;
-    SDL_Surface* temp = IMG_Load(path.c_str());
-    stretched = SDL_ConvertSurface(temp, surface->format, 0);
-    SDL_FreeSurface(temp);
-    return stretched;
+    SDL_Texture* temp = NULL;
+    SDL_Surface* loadSurface = IMG_Load(path.c_str());
+    temp = SDL_CreateTextureFromSurface(render, loadSurface);
+    SDL_FreeSurface(loadSurface);
+    return temp;
 }
 
 void close()
 {
-    SDL_FreeSurface(stretchedImage);
-    stretchedImage = NULL;
+    SDL_DestroyTexture(texture);
+    texture = NULL;
+    SDL_DestroyRenderer(render);
     SDL_DestroyWindow(window);
+    window = NULL;
+    render = NULL;
+    IMG_Quit();
     SDL_Quit();
 }
