@@ -12,7 +12,7 @@ public:
     ~Texture();
     void loadImage(string path, SDL_Renderer* render);
     void free();
-    void renderer(int x, int y, SDL_Renderer* render);
+    void renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip = NULL);
     int getWidth();
     int getHeight();
 private:
@@ -57,10 +57,12 @@ void Texture::free()
     }
 }
 
-void Texture::renderer(int x, int y, SDL_Renderer* render)
+void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
 {
     SDL_Rect renderQuad = { x, y, width, height };
-	SDL_RenderCopy( render, texture, NULL, &renderQuad );
+    renderQuad.w = clip->w;
+    renderQuad.h = clip->h;
+	SDL_RenderCopy(render, texture, clip, &renderQuad);
 }
 
 int Texture::getHeight()
@@ -72,4 +74,7 @@ int Texture::getWidth()
 {
     return width;
 }
+
+
+
 
