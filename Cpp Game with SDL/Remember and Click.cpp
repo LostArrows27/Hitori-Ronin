@@ -46,7 +46,6 @@ int main(int argc, char* args[])
         if(k < -50) k = 620;
         k = k - 5;
         //if(k < 0) k = 420
-        cout << k << endl;
     }
     closing();
     return 0;
@@ -104,7 +103,7 @@ void closing()
 void presenting()
 {
     SDL_RenderPresent(render);
-    SDL_Delay(50);
+    SDL_Delay(75);
 }
 
 
