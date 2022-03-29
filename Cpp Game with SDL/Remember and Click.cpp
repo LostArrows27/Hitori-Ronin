@@ -70,19 +70,16 @@ void loadMedia()
 		gSpriteClips[ 0 ].w = 64;
 		gSpriteClips[ 0 ].h = 205;
 
-		//Set top right sprite
 		gSpriteClips[ 1 ].x = 64;
 		gSpriteClips[ 1 ].y =  0;
 		gSpriteClips[ 1 ].w = 64;
 		gSpriteClips[ 1 ].h = 205;
 
-		//Set bottom left sprite
 		gSpriteClips[ 2 ].x =  128 ;
 		gSpriteClips[ 2 ].y = 0;
 		gSpriteClips[ 2 ].w = 64;
 		gSpriteClips[ 2 ].h = 205;
 
-		//Set bottom right sprite
 		gSpriteClips[ 3 ].x = 192;
 		gSpriteClips[ 3 ].y = 0;
 		gSpriteClips[ 3 ].w = 64;
