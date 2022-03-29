@@ -10,4 +10,5 @@ using namespace std;
 
 void close(SDL_Window* window, SDL_Renderer* render, SDL_Texture* texture);
 
+
 #endif
