@@ -60,8 +60,10 @@ void Texture::free()
 void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
 {
     SDL_Rect renderQuad = { x, y, width, height };
-    renderQuad.w = clip->w;
-    renderQuad.h = clip->h;
+    if (clip != NULL) {
+          renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
 	SDL_RenderCopy(render, texture, clip, &renderQuad);
 }
 
@@ -74,6 +76,7 @@ int Texture::getWidth()
 {
     return width;
 }
+
 
 
 
