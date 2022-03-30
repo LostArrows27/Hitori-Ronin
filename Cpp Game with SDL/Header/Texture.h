@@ -66,8 +66,8 @@ void Texture::renderer_flips(int x, int y, SDL_Renderer* render, SDL_Rect* clip 
 {
     SDL_Rect renderQuad = { x, y, width, height };
     if (clip != NULL) {
-          renderQuad.w = clip->w;
-          renderQuad.h = clip->h;
+          renderQuad.w = (clip->w);
+          renderQuad.h = (clip->h);
     }else{
         renderQuad.w = SCREEN_WIDTH;
         renderQuad.h = SCREEN_HEIGHT;

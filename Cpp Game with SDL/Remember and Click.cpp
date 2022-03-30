@@ -13,7 +13,7 @@ SDL_Rect gSpriteClips[ 5 ];
 Texture gSpriteSheetTexture;
 Texture background;
 SDL_RendererFlip flipType = SDL_FLIP_NONE;
-int k = SCREEN_WIDTH-20;
+int k = SCREEN_WIDTH/2;
 
 void init();
 
@@ -50,11 +50,12 @@ int main(int argc, char* args[])
                     flipType = SDL_FLIP_HORIZONTAL;
                     moving(k, 7);
                     break;
+
                 }
-            }else
+            }
+            else
             {
                 SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
-                background.renderer(0, 0, render, NULL);
                 gSpriteSheetTexture.loadImage("Image/sheet.png", render);
                 background.renderer(0, 0, render, NULL);
                 gSpriteSheetTexture.renderer_flips( k, 190, render, &gSpriteClips[0], 0, NULL, flipType);
