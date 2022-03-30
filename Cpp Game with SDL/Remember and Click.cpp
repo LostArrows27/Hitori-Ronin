@@ -9,48 +9,71 @@ using namespace std;
 
 SDL_Window* window = NULL;
 SDL_Renderer* render = NULL;
-SDL_Rect gSpriteClips[ 5 ];
-Texture gSpriteSheetTexture[4];
 Texture background;
-int k = SCREEN_WIDTH-20;
+Texture Blending_image;
+SDL_Rect temp[2];
+// vung anh can cat
+
 
 void init();
 
 void loadMedia();
 
-void closing();
-
 void presenting();
 
-void moving(int& k, int step);
-
-void render_background();
+void closing();
 
 int main(int argc, char* args[])
 {
+    for(int i = 0; i < 2; i++)
+    {
+        temp[i].x = 200;
+        temp[i].y = 200;
+        temp[i].w = SCREEN_WIDTH*2;
+        temp[i].h = SCREEN_HEIGHT*2;
+    }
     init();
     loadMedia();
     bool quit = false;
     SDL_Event e;
+    Uint8 a = 255;
     while(!quit)
     {
         while(SDL_PollEvent(&e) != 0)
         {
-            render_background();
             if(e.type == SDL_QUIT) quit = true;
-            else if(e.type == SDL_KEYDOWN)
-            {
-                switch(e.key.keysym.sym)
-                {
-                case SDLK_LEFT:
-                    moving(k, -7);
-                    break;
-                case SDLK_RIGHT:
-                    moving(k, 7);
-                    break;
-                }
-            }
+            else if( e.type == SDL_KEYDOWN )
+					{
+						if( e.key.keysym.sym == SDLK_UP )
+						{
+							if( a + 32 > 255 )
+							{
+								a = 255;
+							}
+							else
+							{
+								a += 32;
+							}
+						}
+						else if( e.key.keysym.sym == SDLK_DOWN )
+						{
+							if( a - 32 < 0 )
+							{
+								a = 0;
+							}
+							else
+							{
+								a -= 32;
+							}
+						}
+					}
         }
+        SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(render);
+        background.renderer(0, 0, render, NULL);
+        Blending_image.setAlpha(a);
+        Blending_image.renderer(0, 0, render, NULL);
+        SDL_RenderPresent(render);
     }
     closing();
     return 0;
@@ -62,24 +85,10 @@ void init()
     SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 
-void loadMedia()
-{
-        background.loadImage("Image/background.png", render);
-        for(int i = 0; i < 4; i++){
-            gSpriteSheetTexture[i].loadImage("Image/sheet.png", render);
-        }
-        for(int i = 0; i < 4; i++){
-            gSpriteClips[ i ].x =  0;
-            gSpriteClips[ i ].y =  0;
-            gSpriteClips[ i ].w = 64;
-            gSpriteClips[ i ].h = 205;
-        }
-        for(int i = 1; i < 4; i++) gSpriteClips[i].x = 64*i;
-}
-
 void closing()
 {
-    for(int i = 0; i < 4; i++) gSpriteSheetTexture[i].free();
+    background.free();
+    Blending_image.free();
     SDL_DestroyRenderer(render);
     SDL_DestroyWindow(window);
     window = NULL;
@@ -88,27 +97,8 @@ void closing()
     SDL_Quit();
 }
 
-void presenting()
+void loadMedia()
 {
-    SDL_RenderPresent(render);
-    SDL_Delay(30);
-}
-
-void moving(int& k, int step)
-{
-    for(int i = 0; i < 4; i++){
-    background.renderer(0, 0, render, NULL);
-    gSpriteSheetTexture[i].renderer( k, 190, render, &gSpriteClips[i] );
-    presenting();
-    SDL_RenderClear(render);
-    k = k + step;
-    }
-    if(k > SCREEN_WIDTH) k = -28;
-    if(k < -30) k = SCREEN_WIDTH-20;
-}
-
-void render_background()
-{
-    SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
-    background.renderer(0, 0, render, NULL);
+    Blending_image.loadImage("Image/001.jpg", render);
+    background.loadImage("Image/002.jpg", render);
 }
