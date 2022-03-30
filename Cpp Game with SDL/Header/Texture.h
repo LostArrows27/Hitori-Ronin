@@ -2,6 +2,7 @@
 #include<string>
 #include<SDL.h>
 #include<SDL_image.h>
+#include "Game_Size.h"
 
 using namespace std;
 
@@ -14,6 +15,8 @@ public:
     void free();
     void renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip = NULL);
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
+    void setBlendMode(SDL_BlendMode blending);
+    void setAlpha(Uint8 alpha);
     int getWidth();
     int getHeight();
 private:
@@ -62,8 +65,8 @@ void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
 {
     SDL_Rect renderQuad = { x, y, width, height };
     if (clip != NULL) {
-          renderQuad.w = clip->w;
-        renderQuad.h = clip->h;
+          renderQuad.w = SCREEN_WIDTH;
+          renderQuad.h = SCREEN_HEIGHT;
     }
 	SDL_RenderCopy(render, texture, clip, &renderQuad);
 }
@@ -71,6 +74,16 @@ void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
 void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
     SDL_SetTextureColorMod(texture, red, green, blue);
+}
+
+void Texture::setBlendMode(SDL_BlendMode blending)
+{
+    SDL_SetTextureBlendMode(texture, blending);
+}
+
+void Texture::setAlpha(Uint8 alpha)
+{
+    SDL_SetTextureAlphaMod(texture, alpha);
 }
 
 int Texture::getHeight()

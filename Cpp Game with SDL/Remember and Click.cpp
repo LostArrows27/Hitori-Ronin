@@ -9,7 +9,11 @@ using namespace std;
 
 SDL_Window* window = NULL;
 SDL_Renderer* render = NULL;
-Texture colorAdjust;
+Texture background;
+Texture Blending_image;
+SDL_Rect temp[2];
+// vung anh can cat
+
 
 void init();
 
@@ -21,50 +25,56 @@ void closing();
 
 int main(int argc, char* args[])
 {
+    for(int i = 0; i < 2; i++)
+    {
+        temp[i].x = 200;
+        temp[i].y = 200;
+        temp[i].w = SCREEN_WIDTH*2;
+        temp[i].h = SCREEN_HEIGHT*2;
+    }
     init();
     loadMedia();
     bool quit = false;
     SDL_Event e;
-    Uint8 r = 255;
-    Uint8 g = 255;
-    Uint8 b = 255;
+    Uint8 a = 255;
     while(!quit)
     {
         while(SDL_PollEvent(&e) != 0)
         {
             if(e.type == SDL_QUIT) quit = true;
-            else if(e.type == SDL_KEYDOWN)
-            {
-                switch(e.key.keysym.sym)
-                {
-                        case SDLK_q:
-                        r += 32;
-                        break;
-                        case SDLK_w:
-                        g += 32;
-                        break;
-                        case SDLK_e:
-                        b += 32;
-                        break;
-                        case SDLK_a:
-                        r -= 32;
-                        break;
-                        case SDLK_s:
-                        g -= 32;
-                        break;
-                        case SDLK_d:
-                        b -= 32;
-                        break;
-                }
-            }
+            else if( e.type == SDL_KEYDOWN )
+					{
+						if( e.key.keysym.sym == SDLK_UP )
+						{
+							if( a + 32 > 255 )
+							{
+								a = 255;
+							}
+							else
+							{
+								a += 32;
+							}
+						}
+						else if( e.key.keysym.sym == SDLK_DOWN )
+						{
+							if( a - 32 < 0 )
+							{
+								a = 0;
+							}
+							else
+							{
+								a -= 32;
+							}
+						}
+					}
         }
         SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(render);
-        colorAdjust.setColor(255, 128, 255);
-        colorAdjust.renderer(0, 0, render, NULL);
+        background.renderer(0, 0, render, &temp[0]);
+        Blending_image.setAlpha(a);
+        Blending_image.renderer(0, 0, render, &temp[1]);
         SDL_RenderPresent(render);
     }
-    colorAdjust.free();
     closing();
     return 0;
 }
@@ -75,11 +85,10 @@ void init()
     SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 
-
-
 void closing()
 {
-    colorAdjust.free();
+    background.free();
+    Blending_image.free();
     SDL_DestroyRenderer(render);
     SDL_DestroyWindow(window);
     window = NULL;
@@ -88,13 +97,8 @@ void closing()
     SDL_Quit();
 }
 
-void presenting()
-{
-    SDL_RenderPresent(render);
-    SDL_Delay(40);
-}
-
 void loadMedia()
 {
-    colorAdjust.loadImage("Image/colors.png", render);
+    Blending_image.loadImage("Image/001.jpg", render);
+    background.loadImage("Image/002.jpg", render);
 }
