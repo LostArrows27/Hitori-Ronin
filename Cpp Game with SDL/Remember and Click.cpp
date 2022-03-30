@@ -12,6 +12,7 @@ SDL_Renderer* render = NULL;
 SDL_Rect gSpriteClips[ 5 ];
 Texture gSpriteSheetTexture;
 Texture background;
+SDL_RendererFlip flipType = SDL_FLIP_NONE;
 int k = SCREEN_WIDTH-20;
 
 void init();
@@ -42,9 +43,11 @@ int main(int argc, char* args[])
                 switch(e.key.keysym.sym)
                 {
                 case SDLK_LEFT:
+                    flipType = SDL_FLIP_NONE;
                     moving(k, -7);
                     break;
                 case SDLK_RIGHT:
+                    flipType = SDL_FLIP_HORIZONTAL;
                     moving(k, 7);
                     break;
                 }
@@ -54,7 +57,7 @@ int main(int argc, char* args[])
                 background.renderer(0, 0, render, NULL);
                 gSpriteSheetTexture.loadImage("Image/sheet.png", render);
                 background.renderer(0, 0, render, NULL);
-                gSpriteSheetTexture.renderer( k, 190, render, &gSpriteClips[0] );
+                gSpriteSheetTexture.renderer_flips( k, 190, render, &gSpriteClips[0], 0, NULL, flipType);
                 SDL_RenderPresent(render);
             }
         }
@@ -103,7 +106,7 @@ void moving(int& k, int step)
 {
     for(int i = 0; i < 4; i++){
     background.renderer(0, 0, render, NULL);
-    gSpriteSheetTexture.renderer( k, 190, render, &gSpriteClips[i] );
+    gSpriteSheetTexture.renderer_flips( k, 190, render, &gSpriteClips[i], 0, NULL, flipType);
     presenting();
     SDL_RenderClear(render);
     k = k + step;
