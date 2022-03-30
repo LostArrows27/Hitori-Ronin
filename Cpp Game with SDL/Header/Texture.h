@@ -13,8 +13,9 @@ public:
     ~Texture();
     void loadImage(string path, SDL_Renderer* render);
     void free();
-    void renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip = NULL);
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
+    void renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip);
+    void renderer_flips(int x, int y, SDL_Renderer* render, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void setBlendMode(SDL_BlendMode blending);
     void setAlpha(Uint8 alpha);
     int getWidth();
@@ -59,6 +60,19 @@ void Texture::free()
         width = 0;
         height = 0;
     }
+}
+
+void Texture::renderer_flips(int x, int y, SDL_Renderer* render, SDL_Rect* clip , double angle, SDL_Point* center, SDL_RendererFlip flip)
+{
+    SDL_Rect renderQuad = { x, y, width, height };
+    if (clip != NULL) {
+          renderQuad.w = clip->w;
+          renderQuad.h = clip->h;
+    }else{
+        renderQuad.w = SCREEN_WIDTH;
+        renderQuad.h = SCREEN_HEIGHT;
+    }
+	SDL_RenderCopyEx(render, texture, clip, &renderQuad, angle, center, flip);
 }
 
 void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
