@@ -13,6 +13,7 @@ public:
     void loadImage(string path, SDL_Renderer* render);
     void free();
     void renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip = NULL);
+    void setColor(Uint8 red, Uint8 green, Uint8 blue);
     int getWidth();
     int getHeight();
 private:
@@ -65,6 +66,11 @@ void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
         renderQuad.h = clip->h;
     }
 	SDL_RenderCopy(render, texture, clip, &renderQuad);
+}
+
+void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
+{
+    SDL_SetTextureColorMod(texture, red, green, blue);
 }
 
 int Texture::getHeight()
