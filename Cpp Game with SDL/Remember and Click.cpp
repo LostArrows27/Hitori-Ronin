@@ -43,7 +43,7 @@ int main(int argc, char* args[])
             SDL_RenderClear(render);
             k = k - 5;
         }
-        if(k < -50) k = 620;
+        if(k < -30) k = 620;
         k = k - 5;
         //if(k < 0) k = 420
     }
