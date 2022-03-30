@@ -12,6 +12,7 @@ SDL_Renderer* render = NULL;
 SDL_Rect gSpriteClips[ 5 ];
 Texture gSpriteSheetTexture[4];
 Texture background;
+int k = 620;
 
 void init();
 
@@ -21,31 +22,35 @@ void closing();
 
 void presenting();
 
+void moving(int& k, int step);
+
+void render_background();
+
 int main(int argc, char* args[])
 {
     init();
     loadMedia();
     bool quit = false;
     SDL_Event e;
-    int k = 620;
     while(!quit)
     {
         while(SDL_PollEvent(&e) != 0)
         {
+            render_background();
             if(e.type == SDL_QUIT) quit = true;
+            else if(e.type == SDL_KEYDOWN)
+            {
+                switch(e.key.keysym.sym)
+                {
+                case SDLK_LEFT:
+                    moving(k, -7);
+                    break;
+                case SDLK_RIGHT:
+                    moving(k, 7);
+                    break;
+                }
+            }
         }
-        SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
-        background.renderer(0, 0, render, NULL);
-        for(int i = 0; i < 4; i++){
-            background.renderer(0, 0, render, NULL);
-            gSpriteSheetTexture[i].renderer( k, 190, render, &gSpriteClips[i] );
-            presenting();
-            SDL_RenderClear(render);
-            k = k - 5;
-        }
-        if(k < -30) k = 620;
-        k = k - 5;
-        //if(k < 0) k = 420
     }
     closing();
     return 0;
@@ -59,12 +64,12 @@ void init()
 
 void loadMedia()
 {
-
         background.loadImage("Image/background.png", render);
         gSpriteSheetTexture[0].loadImage("Image/sheet.png", render);
         gSpriteSheetTexture[1].loadImage("Image/sheet.png", render);
         gSpriteSheetTexture[2].loadImage("Image/sheet.png", render);
         gSpriteSheetTexture[3].loadImage("Image/sheet.png", render);
+
         gSpriteClips[ 0 ].x =  0;
 		gSpriteClips[ 0 ].y =  0;
 		gSpriteClips[ 0 ].w = 64;
@@ -100,7 +105,24 @@ void closing()
 void presenting()
 {
     SDL_RenderPresent(render);
-    SDL_Delay(75);
+    SDL_Delay(40);
 }
 
+void moving(int& k, int step)
+{
+    for(int i = 0; i < 4; i++){
+    background.renderer(0, 0, render, NULL);
+    gSpriteSheetTexture[i].renderer( k, 190, render, &gSpriteClips[i] );
+    presenting();
+    SDL_RenderClear(render);
+    k = k + step;
+    }
+    if(k > 640) k = -28;
+    if(k < -30) k = 620;
+}
 
+void render_background()
+{
+    SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
+    background.renderer(0, 0, render, NULL);
+}
