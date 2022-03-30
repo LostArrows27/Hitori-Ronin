@@ -64,9 +64,14 @@ void Texture::free()
 void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
 {
     SDL_Rect renderQuad = { x, y, width, height };
+    // if clip = NULL --> keo ra full man hinh --> thuong danh cho anh nen
+    // else clip != NULL --> theo kich thuoc that cua anh --> thuong danh cho minimap va nhan vat
     if (clip != NULL) {
-          renderQuad.w = SCREEN_WIDTH;
-          renderQuad.h = SCREEN_HEIGHT;
+          renderQuad.w = clip->w;
+          renderQuad.h = clip->h;
+    }else{
+        renderQuad.w = SCREEN_WIDTH;
+        renderQuad.h = SCREEN_HEIGHT;
     }
 	SDL_RenderCopy(render, texture, clip, &renderQuad);
 }
