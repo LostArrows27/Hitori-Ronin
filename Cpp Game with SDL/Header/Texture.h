@@ -1,3 +1,6 @@
+#ifndef SDL_TEXTURE_H
+#define SDL_TEXTURE_H
+
 #include<iostream>
 #include<string>
 #include<SDL.h>
@@ -115,7 +118,7 @@ int Texture::getWidth()
     return width;
 }
 
-
+#endif // SDL_TEXTURE_H
 
 
 

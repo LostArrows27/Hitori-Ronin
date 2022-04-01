@@ -4,15 +4,21 @@
 #include<string>
 #include "Header/Game_Size.h"
 #include "Header/Texture.h"
+#include "Header/Mouse.h"
 
 using namespace std;
 
 SDL_Window* window = NULL;
 SDL_Renderer* render = NULL;
-SDL_Rect gSpriteClips[ 5 ];
+
+SDL_Rect gSpriteClips[ BUTTON_SPRITE_TOTAL ]; // phan texture muon lay
+
 Texture gSpriteSheetTexture;
-Texture background;
+
 SDL_RendererFlip flipType = SDL_FLIP_NONE;
+
+Button gButtons[ TOTAL_BUTTONS ];
+
 int k = SCREEN_WIDTH/2;
 
 void init();
@@ -20,12 +26,6 @@ void init();
 void loadMedia();
 
 void closing();
-
-void presenting();
-
-void moving(int& k, int step);
-
-void render_background();
 
 int main(int argc, char* args[])
 {
@@ -37,53 +37,48 @@ int main(int argc, char* args[])
     {
         while(SDL_PollEvent(&e) != 0)
         {
-            if(e.type == SDL_QUIT) quit = true;
-            else if(e.type == SDL_KEYDOWN)
+            if(e.type == SDL_QUIT)
             {
-                switch(e.key.keysym.sym)
-                {
-                case SDLK_LEFT:
-                    flipType = SDL_FLIP_NONE;
-                    moving(k, -7);
-                    break;
-                case SDLK_RIGHT:
-                    flipType = SDL_FLIP_HORIZONTAL;
-                    moving(k, 7);
-                    break;
-
-                }
+                quit = true;
             }
-            else
+            for(int i = 0; i < TOTAL_BUTTONS; ++i)
             {
-                SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
-                gSpriteSheetTexture.loadImage("Image/sheet.png", render);
-                background.renderer(0, 0, render, NULL);
-                gSpriteSheetTexture.renderer_flips( k, 190, render, &gSpriteClips[0], 0, NULL, flipType);
-                SDL_RenderPresent(render);
+                gButtons[i].handle_mouseEvent(&e);
             }
         }
+        SDL_SetRenderDrawColor(render, 255, 255 ,255 ,255);
+        SDL_RenderClear(render);
+        for(int i = 0; i < TOTAL_BUTTONS; ++i)
+        {
+            int mouse_state = gButtons[i].get_currentSprite();
+            gButtons[i].render_button(gSpriteSheetTexture, render, gSpriteClips[mouse_state]);
+        }
+        SDL_RenderPresent(render);
     }
     closing();
     return 0;
 }
+
 void init()
 {
     window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 
 void loadMedia()
 {
-        background.loadImage("Image/background.png", render);
-        gSpriteSheetTexture.loadImage("Image/sheet.png", render);
-        for(int i = 0; i < 4; i++){
+        gSpriteSheetTexture.loadImage("Image/button.png", render);
+        for(int i = 0; i < BUTTON_SPRITE_TOTAL; ++i){
             gSpriteClips[ i ].x =  0;
-            gSpriteClips[ i ].y =  0;
-            gSpriteClips[ i ].w = 64;
-            gSpriteClips[ i ].h = 205;
+            gSpriteClips[ i ].y =  i * 200;
+            gSpriteClips[ i ].w = BUTTON_WIDTH;
+            gSpriteClips[ i ].h = BUTTON_HEIGHT;
         }
-        for(int i = 1; i < 4; i++) gSpriteClips[i].x = 64*i;
+        gButtons[ 0 ].setPosition(0, 0);
+		gButtons[ 1 ].setPosition( SCREEN_WIDTH - BUTTON_WIDTH, 0 );
+		gButtons[ 2 ].setPosition( 0, SCREEN_HEIGHT - BUTTON_HEIGHT );
+		gButtons[ 3 ].setPosition( SCREEN_WIDTH - BUTTON_WIDTH, SCREEN_HEIGHT - BUTTON_HEIGHT );
 }
 
 void closing()
@@ -97,27 +92,4 @@ void closing()
     SDL_Quit();
 }
 
-void presenting()
-{
-    SDL_RenderPresent(render);
-    SDL_Delay(30);
-}
 
-void moving(int& k, int step)
-{
-    for(int i = 0; i < 4; i++){
-    background.renderer(0, 0, render, NULL);
-    gSpriteSheetTexture.renderer_flips( k, 190, render, &gSpriteClips[i], 0, NULL, flipType);
-    presenting();
-    SDL_RenderClear(render);
-    k = k + step;
-    }
-    if(k > SCREEN_WIDTH) k = -28;
-    if(k < -30) k = SCREEN_WIDTH-20;
-}
-
-void render_background()
-{
-    SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
-    background.renderer(0, 0, render, NULL);
-}
