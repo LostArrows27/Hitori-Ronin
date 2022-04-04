@@ -86,12 +86,12 @@ void init()
 
 void loadMedia()
 {
-        background.loadImage("Image/prompt.png", render);
-        gMusic = Mix_LoadMUS( "Sound/beat.wav" );
-        gScratch = Mix_LoadWAV( "Sound/scratch.wav" );
-        gHigh = Mix_LoadWAV( "Sound/high.wav" );
-        gMedium = Mix_LoadWAV( "Sound/medium.wav" );
-        gLow = Mix_LoadWAV( "Sound/low.wav" );
+        background.loadImage("Image/musicbg.png", render);
+        gMusic = Mix_LoadMUS( "Sound/beat1.wav" );
+        gScratch = Mix_LoadWAV( "Sound/scratch1.wav" );
+        gHigh = Mix_LoadWAV( "Sound/high1.wav" );
+        gMedium = Mix_LoadWAV( "Sound/medium1.wav" );
+        gLow = Mix_LoadWAV( "Sound/low1.wav" );
 }
 
 void closing()
