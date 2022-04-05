@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<SDL.h>
+#include<SDL_ttf.h>
 #include<SDL_image.h>
 #include "Game_Size.h"
 
@@ -17,14 +18,22 @@ public:
     void loadImage(string path, SDL_Renderer* render);
     void free();
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
-    void renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip);
-    void renderer_flips(int x, int y, SDL_Renderer* render, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void renderer(int x, int y, SDL_Rect* clip);
+    void renderer_flips(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void setBlendMode(SDL_BlendMode blending);
+    void loadFromRenderedText( std::string textureText, SDL_Color textColor);
     void setAlpha(Uint8 alpha);
+    void init();
+    void loadMedia();
+    void closing();
+    void onscreen();
     int getWidth();
     int getHeight();
 private:
     SDL_Texture* texture;
+    SDL_Window* window;
+    SDL_Renderer* render;
+    TTF_Font* gFont;
     int width;
     int height;
 };
@@ -65,20 +74,66 @@ void Texture::free()
     }
 }
 
-void Texture::renderer_flips(int x, int y, SDL_Renderer* render, SDL_Rect* clip , double angle, SDL_Point* center, SDL_RendererFlip flip)
+void Texture::init()
+{
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+		std::cout << "Error: SDL can't be initialized!" << std::endl << SDL_GetError() << std::endl;
+	}
+	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+		std::cout << "Warning: Linear texture filtering not enabled!";
+	}
+	int iF = IMG_INIT_PNG;
+	if (!(IMG_Init(iF) & iF)) {
+		std::cout << "SDL_image could not initialize!" << std::endl << IMG_GetError() << std::endl;
+	}
+    window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
+    TTF_Init();
+}
+
+void Texture::loadMedia()
+{
+    gFont = TTF_OpenFont( "Font/PAC-FONT.ttf", 12 );
+    SDL_Color textColor = { 255, 0 , 255 };
+    loadFromRenderedText( "The quick brown fox jumps over the lazy dog", textColor );
+}
+
+void Texture::closing()
+{
+    free();
+    TTF_CloseFont(gFont);
+    gFont = NULL;
+    SDL_DestroyRenderer(render);
+    SDL_DestroyWindow(window);
+    window = NULL;
+    render = NULL;
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
+}
+
+void Texture::onscreen()
+{
+        SDL_SetRenderDrawColor(render, 255, 255 ,255 ,255);
+        SDL_RenderClear(render);
+        renderer_flips( ( SCREEN_WIDTH - getWidth() ) / 2, ( SCREEN_HEIGHT - getHeight() ) / 2);
+        SDL_RenderPresent(render);
+}
+
+void Texture::renderer_flips(int x, int y, SDL_Rect* clip , double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
     SDL_Rect renderQuad = { x, y, width, height };
     if (clip != NULL) {
-          renderQuad.w = (clip->w);
-          renderQuad.h = (clip->h);
-    }else{
-        renderQuad.w = SCREEN_WIDTH;
-        renderQuad.h = SCREEN_HEIGHT;
+          renderQuad.w = clip->w;
+          renderQuad.h = clip->h;
     }
+    // else se keo full kich thuoc anh that
+    // co them tu them else de kich thuoc anh thanh that
 	SDL_RenderCopyEx(render, texture, clip, &renderQuad, angle, center, flip);
 }
 
-void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
+void Texture::renderer(int x, int y, SDL_Rect* clip)
 {
     SDL_Rect renderQuad = { x, y, width, height };
     // if clip = NULL --> keo ra full man hinh --> thuong danh cho anh nen
@@ -91,6 +146,16 @@ void Texture::renderer(int x, int y, SDL_Renderer* render, SDL_Rect* clip)
         renderQuad.h = SCREEN_HEIGHT;
     }
 	SDL_RenderCopy(render, texture, clip, &renderQuad);
+}
+
+void Texture::loadFromRenderedText( std::string textureText, SDL_Color textColor)
+{
+	free();
+	SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
+    texture = SDL_CreateTextureFromSurface( render, textSurface );
+    width = textSurface->w;
+    height = textSurface->h;
+    SDL_FreeSurface( textSurface );;
 }
 
 void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
