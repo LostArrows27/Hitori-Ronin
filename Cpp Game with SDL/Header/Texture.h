@@ -24,9 +24,10 @@ public:
     void loadFromRenderedText( std::string textureText, SDL_Color textColor);
     void setAlpha(Uint8 alpha);
     void init();
-    void loadMedia();
+    void loadMedia(string path, string text_content, int font_size, int r, int g, int b);
     void closing();
-    void onscreen();
+    void onscreen(int x, int y);
+    void present();
     int getWidth();
     int getHeight();
 private:
@@ -92,11 +93,11 @@ void Texture::init()
     TTF_Init();
 }
 
-void Texture::loadMedia()
+void Texture::loadMedia(string path, string text_content, int font_size, int r, int g, int b)
 {
-    gFont = TTF_OpenFont( "Font/PAC-FONT.ttf", 12 );
-    SDL_Color textColor = { 255, 0 , 255 };
-    loadFromRenderedText( "The quick brown fox jumps over the lazy dog", textColor );
+    gFont = TTF_OpenFont( path.c_str(), font_size );
+    SDL_Color textColor = { r, g , b };
+    loadFromRenderedText( text_content, textColor );
 }
 
 void Texture::closing()
@@ -113,12 +114,16 @@ void Texture::closing()
     SDL_Quit();
 }
 
-void Texture::onscreen()
+void Texture::onscreen(int x, int y)
 {
         SDL_SetRenderDrawColor(render, 255, 255 ,255 ,255);
         SDL_RenderClear(render);
-        renderer_flips( ( SCREEN_WIDTH - getWidth() ) / 2, ( SCREEN_HEIGHT - getHeight() ) / 2);
-        SDL_RenderPresent(render);
+        renderer_flips( x, y);
+}
+
+void Texture::present()
+{
+    SDL_RenderPresent(render);
 }
 
 void Texture::renderer_flips(int x, int y, SDL_Rect* clip , double angle, SDL_Point* center, SDL_RendererFlip flip)
