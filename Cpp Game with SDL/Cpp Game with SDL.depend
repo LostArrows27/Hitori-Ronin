@@ -32,7 +32,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1649299267 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\remember and click.cpp
+1649300469 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\remember and click.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -1206,7 +1206,7 @@
 	"Texture.h"
 	"Game_Size.h"
 
-1649299267 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\texture.h
+1649300015 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\texture.h
 	"Common.h"
 
 1648826554 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\mouse.h
@@ -1231,7 +1231,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1649299372 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\common.h
+1649300013 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\common.h
 	<SDL.h>
 	<SDL_image.h>
 

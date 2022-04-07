@@ -13,13 +13,14 @@ public:
     void loadImage(string path);
     void free();
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
-    void renderer(int x, int y, SDL_Rect* clip);
+    void renderer(int x, int y, SDL_Rect* clip = NULL);
     void renderer_flips(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void setBlendMode(SDL_BlendMode blending);
     void loadFromRenderedText( std::string textureText, SDL_Color textColor);
     void setAlpha(Uint8 alpha);
     void loadMedia(string path, string text_content, int font_size, int r, int g, int b);
     void closing();
+    void load_bg(int x, int y);
     void onscreen(int x, int y);
     int getWidth();
     int getHeight();
@@ -83,6 +84,11 @@ void Texture::closing()
 void Texture::onscreen(int x, int y)
 {
         renderer_flips( x, y);
+}
+
+void Texture::load_bg(int x, int y)
+{
+    renderer(x, y);
 }
 
 void Texture::renderer_flips(int x, int y, SDL_Rect* clip , double angle, SDL_Point* center, SDL_RendererFlip flip)
