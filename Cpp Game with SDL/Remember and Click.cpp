@@ -25,13 +25,15 @@ int main(int argc, char* args[])
             if(e.type == SDL_QUIT) quit = true;
             else if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN) startTime = SDL_GetTicks();
         }
-        int k = (SDL_GetTicks() - startTime)/1000;
+        int k = (SDL_GetTicks() - startTime)/100;
+        int dv = k%10;
+        int chuc = (k-dv)/10;
         timeText.str( "" );
-        timeText << "TIME: " << k;
+        timeText << "TIME: " << chuc << "." << dv;
         time_text.loadMedia("Font/Need for font.ttf", timeText.str().c_str(), 40, 255, 0 , 255);
         Common_Func::back_render();
         time_text.onscreen(0, 0);
-        bg.onscreen(200,200);
+        bg.onscreen(100,200);
         Common_Func::present();
     }
     time_text.closing();
