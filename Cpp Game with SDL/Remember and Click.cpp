@@ -2,15 +2,18 @@
 #include<SDL_image.h>
 #include<SDL_ttf.h>
 #include<bits/stdc++.h>
-#include "Header/Game_Size.h"
 #include "Header/Texture.h"
+#include "Header/Common.h"
 
 using namespace std;
+
 
 int main(int argc, char* args[])
 {
     Texture time_text;
-    time_text.init();
+    Texture bg;
+    Common_Func::init();
+    bg.loadMedia("Font/Need for font.ttf", "YOUR GAME HAS BEGIN", 28, 255, 0, 0);
     bool quit = false;
     SDL_Event e;
     Uint32 startTime = 0;
@@ -25,11 +28,15 @@ int main(int argc, char* args[])
         int k = (SDL_GetTicks() - startTime)/1000;
         timeText.str( "" );
         timeText << "TIME: " << k;
-        time_text.loadMedia("Font/Need for font.ttf", timeText.str().c_str(), 40, 255, 0 , 0);
-        time_text.onscreen(280, 200);
-        time_text.present();
+        time_text.loadMedia("Font/Need for font.ttf", timeText.str().c_str(), 40, 255, 0 , 255);
+        Common_Func::back_render();
+        time_text.onscreen(0, 0);
+        bg.onscreen(200,200);
+        Common_Func::present();
     }
     time_text.closing();
+    bg.closing();
+    Common_Func::quit();
     return 0;
 }
 

@@ -1,12 +1,7 @@
 #ifndef SDL_TEXTURE_H
 #define SDL_TEXTURE_H
 
-#include<iostream>
-#include<string>
-#include<SDL.h>
-#include<SDL_ttf.h>
-#include<SDL_image.h>
-#include "Game_Size.h"
+#include"Common.h"
 
 using namespace std;
 
@@ -15,7 +10,7 @@ class Texture
 public:
     Texture();
     ~Texture();
-    void loadImage(string path, SDL_Renderer* render);
+    void loadImage(string path);
     void free();
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
     void renderer(int x, int y, SDL_Rect* clip);
@@ -23,17 +18,13 @@ public:
     void setBlendMode(SDL_BlendMode blending);
     void loadFromRenderedText( std::string textureText, SDL_Color textColor);
     void setAlpha(Uint8 alpha);
-    void init();
     void loadMedia(string path, string text_content, int font_size, int r, int g, int b);
     void closing();
     void onscreen(int x, int y);
-    void present();
     int getWidth();
     int getHeight();
-private:
+protected:
     SDL_Texture* texture;
-    SDL_Window* window;
-    SDL_Renderer* render;
     TTF_Font* gFont;
     int width;
     int height;
@@ -51,7 +42,7 @@ Texture::~Texture()
     free();
 }
 
-void Texture::loadImage(string path, SDL_Renderer* render)
+void Texture::loadImage(string path)
 {
     free();
     SDL_Texture* temp_texture = NULL;
@@ -75,24 +66,6 @@ void Texture::free()
     }
 }
 
-void Texture::init()
-{
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		std::cout << "Error: SDL can't be initialized!" << std::endl << SDL_GetError() << std::endl;
-	}
-	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-		std::cout << "Warning: Linear texture filtering not enabled!";
-	}
-	int iF = IMG_INIT_PNG;
-	if (!(IMG_Init(iF) & iF)) {
-		std::cout << "SDL_image could not initialize!" << std::endl << IMG_GetError() << std::endl;
-	}
-    window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    SDL_SetRenderDrawColor(render, 0xFF, 0xFF, 0xFF, 0xFF);
-    TTF_Init();
-}
-
 void Texture::loadMedia(string path, string text_content, int font_size, int r, int g, int b)
 {
     gFont = TTF_OpenFont( path.c_str(), font_size );
@@ -105,25 +78,11 @@ void Texture::closing()
     free();
     TTF_CloseFont(gFont);
     gFont = NULL;
-    SDL_DestroyRenderer(render);
-    SDL_DestroyWindow(window);
-    window = NULL;
-    render = NULL;
-    TTF_Quit();
-    IMG_Quit();
-    SDL_Quit();
 }
 
 void Texture::onscreen(int x, int y)
 {
-        SDL_SetRenderDrawColor(render, 255, 255 ,255 ,255);
-        SDL_RenderClear(render);
         renderer_flips( x, y);
-}
-
-void Texture::present()
-{
-    SDL_RenderPresent(render);
 }
 
 void Texture::renderer_flips(int x, int y, SDL_Rect* clip , double angle, SDL_Point* center, SDL_RendererFlip flip)
