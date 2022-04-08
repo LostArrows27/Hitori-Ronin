@@ -1,46 +1,74 @@
-#include<SDL.h>
-#include<SDL_image.h>
-#include<SDL_ttf.h>
-#include<bits/stdc++.h>
-#include "Header/Texture.h"
 #include "Header/Common.h"
+#include "Header/BaseObject.h"
+#include "Header/Character.h"
 
 using namespace std;
 
+BaseObject g_background;
 
-int main(int argc, char* args[])
+bool InitData()
 {
-    Texture time_text;
-    Texture bg;
-    Common_Func::init();
-    bg.loadMedia("Font/Need for font.ttf", "your game has begin", 30, 255, 0, 0);
-    bool quit = false;
-    SDL_Event e;
-    Uint32 startTime = 0;
-    std::stringstream timeText;
-    while(!quit)
+    bool success = true;
+    int ret = SDL_Init(SDL_INIT_VIDEO);
+    if(ret < 0) return false;
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+    window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if(window == NULL) success = false;
+    else
+    {
+        render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        if(render == NULL) success = false;
+        else
+        {
+            SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
+            int imgFlag = IMG_INIT_PNG;
+            if(!(IMG_Init(imgFlag) && imgFlag)) success = false;
+        }
+    }
+    return success;
+}
+
+bool loadBackground()
+{
+    bool ret = g_background.loadImg("Image/my_bg.png", render);
+    if(ret = false) return false;
+    return true;
+}
+
+void close()
+{
+    g_background.Free();
+    SDL_DestroyRenderer(render);
+    render = NULL;
+    SDL_DestroyWindow(window);
+    window = NULL;
+    IMG_Quit();
+    SDL_Quit();
+}
+
+int main(int argc, char* argv[])
+{
+    if(InitData() == false) return -1;
+    if(loadBackground() == false) return -1;
+    Character p_player;
+    p_player.LoadImg("Character/run_right.png", render);
+    p_player.Set_Clip();
+    bool is_quit = false;
+    while(!is_quit)
     {
         while(SDL_PollEvent(&e) != 0)
         {
-            if(e.type == SDL_QUIT) quit = true;
-            else if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN) startTime = SDL_GetTicks();
+            if(e.type  == SDL_QUIT) is_quit = true;
+            p_player.HandleInput(e, render);
         }
-
-        int k = (SDL_GetTicks() - startTime)/10;
-        int dv = k%10;
-        int next = ((k-dv)/10) % 10;
-        int chuc = (k-dv-next*10)/100;
-        timeText.str( "" );
-        timeText << "TIME: " << chuc << "." << next << dv;
-        time_text.loadMedia("Font/Mistral.ttf", timeText.str().c_str(), 40, 255, 0 , 255);
-        Common_Func::back_render();
-        time_text.onscreen(0, 0);
-        bg.onscreen(100,200);
-        Common_Func::present();
+        SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
+        SDL_RenderClear(render);
+        g_background.Render(render, NULL);
+        p_player.DoPlayer();
+        p_player.Show(render);
+        SDL_RenderPresent(render);
     }
-    time_text.closing();
-    bg.closing();
-    Common_Func::quit();
+    close();
     return 0;
 }
 
