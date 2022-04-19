@@ -1,8 +1,10 @@
 #include "Engine.h"
 #include "TextureManager.h"
-#include "Transform.h"
+
+#include "Warrior.h"
 
 Engine* Engine::s_Instance = nullptr;
+Warrior* player = nullptr;
 
 bool Engine::init()
 {
@@ -24,7 +26,8 @@ bool Engine::init()
         SDL_Log("Failed to create renderer: %s", SDL_GetError());
         return false;
     }
-    TextureManager::GetInstace()->Load("background", "Map/nightbg.png");
+    TextureManager::GetInstace()->Load("player", "Character/stay.png");
+    player = new Warrior(new Properties("player", 100, 200, 200, 200));
 
     Transform tf;
     tf.Log();
@@ -47,14 +50,14 @@ void Engine::Quit()
 
 void Engine::Update()
 {
-
+    player->Update(0);
 }
 
 void Engine::Render()
 {
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
-     TextureManager::GetInstace()->Draw("background", 100, 100, 320, 180 );
+     player->Draw();
      SDL_RenderPresent(m_Renderer);
 }
 

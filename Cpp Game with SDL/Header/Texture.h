@@ -1,4 +1,4 @@
-#ifndef SDL_TEXTURE_H
+/*#ifndef SDL_TEXTURE_H
 #define SDL_TEXTURE_H
 
 #include"Common.h"
@@ -10,7 +10,7 @@ class Texture
 public:
     Texture();
     ~Texture();
-    void loadImage(string path);
+    virtual void loadImage(string path);
     void free();
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
     void renderer(int x, int y, SDL_Rect* clip = NULL);
@@ -20,6 +20,7 @@ public:
     void setAlpha(Uint8 alpha);
     void loadMedia(string path, string text_content, int font_size, int r, int g, int b);
     void closing();
+    void HandleInput(SDL_Event e);
     void load_bg(int x, int y);
     void onscreen(int x, int y);
     int getWidth();
@@ -128,6 +129,41 @@ void Texture::loadFromRenderedText( std::string textureText, SDL_Color textColor
     SDL_FreeSurface( textSurface );;
 }
 
+void Texture::HandleInput(SDL_Event e)
+{
+    if(e.type == SDL_KEYDOWN)
+    {
+        switch(e.key.keysym.sym)
+        {
+        case SDLK_UP:
+
+            break;
+        case SDLK_DOWN:
+
+            break;
+        case SDLK_RIGHT:
+
+            break;
+        case SDLK_LEFT:
+
+            break;
+
+        }
+    }else if(e.type == SDL_KEYUP)
+    {
+
+    }else if(e.type == SDL_MOUSEBUTTONDOWN)
+    {
+
+    }else if(e.type == SDL_MOUSEBUTTONUP)
+    {
+
+    }else
+    {
+
+    }
+}
+
 void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
     SDL_SetTextureColorMod(texture, red, green, blue);
@@ -154,6 +190,7 @@ int Texture::getWidth()
 }
 
 #endif // SDL_TEXTURE_H
+*/
 
 
 
