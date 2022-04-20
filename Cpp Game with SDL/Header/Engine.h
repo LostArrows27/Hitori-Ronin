@@ -7,6 +7,8 @@
 #define SCREEN_WIDTH 980
 #define SCREEN_HEIGHT 640
 
+// gathering everything in game together
+
 class Engine
 {
     public:
