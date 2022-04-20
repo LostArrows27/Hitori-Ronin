@@ -10,7 +10,7 @@ Warrior::Warrior(Properties* props) : Character(props)
     //m_AnimSpeed = 80;
     m_RigidBody = new RigidBody();
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 1, 8, 80); // 80 la toc do cua chuyen dong
+    m_Animation->SetProps(m_TextureID, 1, 8, 100); // 80 la toc do cua chuyen dong
 }
 
 void Warrior::Draw()

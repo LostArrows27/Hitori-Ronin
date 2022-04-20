@@ -3,7 +3,7 @@
 
 // for handling fps and time between 2 event from keyboard
 
-const int TARGET_FPS = 60; // fps of the game
+const int TARGET_FPS = 45; // fps of the game // 60 is the best fpt but yah i found out 45 is more perfect to my game
 const float TARGET_DELTATIME = 1.5f;
 
 class Timer
