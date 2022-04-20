@@ -25,7 +25,8 @@ void Input::Listen()
 
 bool Input::GetKeyDown(SDL_Scancode key)
 {
-    if(m_KeyStates[key] == 1) return true;
+    if(m_KeyStates[key] == 1)
+        return true;
     return false;
 }
 

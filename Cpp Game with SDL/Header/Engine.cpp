@@ -30,6 +30,8 @@ bool Engine::init()
         return false;
     }
     TextureManager::GetInstace()->Load("player", "Character/stay.png");
+    TextureManager::GetInstace()->Load("player_run", "Character/run.png");
+
     player = new Warrior(new Properties("player", 100, 200, 200, 200));
 
     Transform tf;
@@ -53,10 +55,6 @@ void Engine::Quit()
 
 void Engine::Update()
 {
-    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A))
-    {
-        SDL_Log("Key A pushed: ");
-    }
     player->Update(0);
 }
 
