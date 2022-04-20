@@ -7,10 +7,10 @@ Warrior::Warrior(Properties* props) : Character(props)
 {
     //m_Row = 1;
     //m_FrameCount = 8;
-    //m_AnimSpeed = 100;
+    //m_AnimSpeed = 80;
     m_RigidBody = new RigidBody();
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 1, 8, 80);
+    m_Animation->SetProps(m_TextureID, 1, 8, 80); // 80 la toc do cua chuyen dong
 }
 
 void Warrior::Draw()
@@ -33,8 +33,9 @@ void Warrior::Update(float dt)
         m_RigidBody->ApplyForceX(5*FORWARD); // chinh toc do backward va forward de chinh toc do di chuyen
         m_Animation->SetProps("player_run", 1, 8, 100);
     }
-    m_RigidBody->Update(0.8);
-    m_RigidBody->ApplyForceX(5); // roi cheo thay vi roi thang vi trong luc
+    SDL_Log("%f", dt);
+    m_RigidBody->Update(dt);
+    //m_RigidBody->ApplyForceX(5); // roi cheo thay vi roi thang vi trong luc
     m_Transform->TranslateX(m_RigidBody->Position().X);
     //m_Transform->TranslateY(m_RigidBody->Position().Y);
 
