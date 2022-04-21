@@ -13,6 +13,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="Header" />
+					<Add directory="./" />
+					<Add directory="Header/Vender" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +25,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="Header" />
+					<Add directory="./" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -43,10 +48,38 @@
 			<Add directory="C:/Users/Admin/Documents/SDL Library/SDL2_mixer-devel-2.0.4-mingw/SDL2_mixer-2.0.4/i686-w64-mingw32/lib" />
 			<Add directory="C:/Users/Admin/Documents/SDL Library/SDL2_ttf-devel-2.0.18-mingw/SDL2_ttf-2.0.18/i686-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="Header/Game_Size.h" />
-		<Unit filename="Header/Mouse.h" />
-		<Unit filename="Header/Texture.h" />
-		<Unit filename="Header/Time.h" />
+		<Unit filename="Header/Animation.cpp" />
+		<Unit filename="Header/Animation.h" />
+		<Unit filename="Header/BaseObject.h" />
+		<Unit filename="Header/Character.h" />
+		<Unit filename="Header/Common.h" />
+		<Unit filename="Header/Engine.cpp" />
+		<Unit filename="Header/Engine.h" />
+		<Unit filename="Header/GameMap.h" />
+		<Unit filename="Header/GameObject.h" />
+		<Unit filename="Header/Input.cpp" />
+		<Unit filename="Header/Input.h" />
+		<Unit filename="Header/Layer.h" />
+		<Unit filename="Header/MapParser.cpp" />
+		<Unit filename="Header/MapParser.h" />
+		<Unit filename="Header/Object.h" />
+		<Unit filename="Header/RigidBody.h" />
+		<Unit filename="Header/TextureManager.cpp" />
+		<Unit filename="Header/TextureManager.h" />
+		<Unit filename="Header/TileLayer.cpp" />
+		<Unit filename="Header/TileLayer.h" />
+		<Unit filename="Header/Timer.cpp" />
+		<Unit filename="Header/Timer.h" />
+		<Unit filename="Header/Transform.h" />
+		<Unit filename="Header/Vector2D.h" />
+		<Unit filename="Header/Vender/tinystr.cpp" />
+		<Unit filename="Header/Vender/tinystr.h" />
+		<Unit filename="Header/Vender/tinyxml.cpp" />
+		<Unit filename="Header/Vender/tinyxml.h" />
+		<Unit filename="Header/Vender/tinyxmlerror.cpp" />
+		<Unit filename="Header/Vender/tinyxmlparser.cpp" />
+		<Unit filename="Header/Warrior.cpp" />
+		<Unit filename="Header/Warrior.h" />
 		<Unit filename="Remember and Click.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

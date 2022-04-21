@@ -80,7 +80,7 @@ void Engine::Render()
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
 
-    // u can comment 2 next line if game crash or issue
+    // u can comment 1 next line if game crash or issue
      TextureManager::GetInstace()->Draw("bg", 0, -0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_FLIP_NONE);
      m_LevelMap->Render();
 

@@ -32,13 +32,9 @@
 	"begin_code.h"
 	"close_code.h"
 
-1649300874 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\remember and click.cpp
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_ttf.h>
-	<bits/stdc++.h>
-	"Header/Texture.h"
-	"Header/Common.h"
+1650471182 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\remember and click.cpp
+	"Engine.h"
+	"Timer.h"
 
 1648170843 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\close.cpp
 	<iostream>
@@ -1206,7 +1202,7 @@
 	"Texture.h"
 	"Game_Size.h"
 
-1649300904 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\texture.h
+1649337215 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\texture.h
 	"Common.h"
 
 1648826554 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\mouse.h
@@ -1231,7 +1227,153 @@
 	"begin_code.h"
 	"close_code.h"
 
-1649300013 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\common.h
+1649381266 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\common.h
 	<SDL.h>
+	<windows.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<string>
+
+1649384137 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\baseobject.h
+	"Common.h"
+
+1650378245 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\character.h
+	"GameObject.h"
+	<string>
+
+1649344404 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\baseobject.cpp
+	"BaseObject.h"
+
+1650560165 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\engine.h
+	"SDL.h"
+	"SDL_image.h"
+	"GameMap.h"
+
+1650564485 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\engine.cpp
+	"Engine.h"
+	"TextureManager.h"
+	"Input.h"
+	"Warrior.h"
+	"SDL.h"
+	"Timer.h"
+	"MapParser.h"
+	<iostream>
+
+1650562655 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\texturemanager.cpp
+	"TextureManager.h"
+	"Engine.h"
+
+1650559743 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\texturemanager.h
+	<string>
+	"SDL.h"
+	<map>
+
+1650465986 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\transform.h
+	"Vector2D.h"
+
+1650375521 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vector2d.h
+	<iostream>
+
+1650465503 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\warrior.h
+	"Character.h"
+	"Animation.h"
+	"RigidBody.h"
+
+1650380622 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\gameobject.h
+	"Object.h"
+	"Transform.h"
+	"SDL.h"
+
+1650376314 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\object.h
+
+1650472197 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\warrior.cpp
+	"Warrior.h"
+	"TextureManager.h"
+	"SDL.h"
+	"Input.h"
+
+1650464119 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\animation.cpp
+	"Animation.h"
+	"TextureManager.h"
+
+1650464119 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\animation.h
+	"SDL.h"
+	<string>
+
+1650468652 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\rigidbody.h
+	"Vector2D.h"
+
+1650467352 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\input.h
+	"SDL.h"
+
+1650468110 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\input.cpp
+	"Input.h"
+	"Engine.h"
+
+1650471182 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\timer.cpp
+	"Timer.h"
+	"SDL.h"
+
+1650472370 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\timer.h
+
+1650564219 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\\map
+
+1650563083 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\tilelayer.cpp
+	"TileLayer.h"
+	"TextureManager.h"
+
+1650560995 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\tilelayer.h
+	"Layer.h"
+	<string>
+	<vector>
+
+1650554069 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\layer.h
+
+1305426297 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vender\tinystr.cpp
+	"tinystr.h"
+
+1305426297 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vender\tinystr.h
+	<assert.h>
+	<string.h>
+
+1305426297 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vender\tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+1650553823 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vender\tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1305426297 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vender\tinyxmlerror.cpp
+	"tinyxml.h"
+
+1305426297 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\vender\tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1650564248 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\mapparser.cpp
+	"MapParser.h"
+
+1650562458 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\mapparser.h
+	<map>
+	<string>
+	"GameMap.h"
+	"TileLayer.h"
+	"tinyxml.h"
+
+1650557921 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\gamemap.h
+	<Vector>
+	"Layer.h"
 
