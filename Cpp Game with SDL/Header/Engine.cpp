@@ -6,9 +6,13 @@
 #include "Warrior.h"
 #include "SDL.h"
 #include "Timer.h"
+#include "MapParser.h"
+#include <iostream>
 
 Engine* Engine::s_Instance = nullptr;
 Warrior* player = nullptr;
+
+
 
 bool Engine::init()
 {
@@ -30,10 +34,18 @@ bool Engine::init()
         SDL_Log("Failed to create renderer: %s", SDL_GetError());
         return false;
     }
+
+    if(!MapParser::GetInstance()->Load())
+    {
+        std::cout << "Failed to Load map!!!" << test << std::endl;
+    }
+
+    m_LevelMap = MapParser::GetInstance()->GetMaps("MAP");
+
     TextureManager::GetInstace()->Load("player", "Character/stay.png");
     TextureManager::GetInstace()->Load("player_run", "Character/run.png");
 
-    player = new Warrior(new Properties("player", 100, 200, 200, 200));
+    player = new Warrior(new Properties("player", 100, 260, 200, 200));
 
     Transform tf;
     tf.Log();
@@ -57,6 +69,9 @@ void Engine::Quit()
 void Engine::Update()
 {
     float dt = Timer::GetInstance()->GetDeltaTime();
+
+    m_LevelMap->Update();
+
     player->Update(dt);
 }
 
@@ -64,6 +79,11 @@ void Engine::Render()
 {
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
+
+    // u can comment 2 next line if game crash or issue
+     TextureManager::GetInstace()->Draw("bg", 0, -0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_FLIP_NONE);
+     m_LevelMap->Render();
+
      player->Draw();
      SDL_RenderPresent(m_Renderer);
 }
