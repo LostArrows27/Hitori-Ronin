@@ -43,7 +43,10 @@ void TileLayer::Render()
                     tileCol = ts.ColCount - 1;
                 }
 
-                TextureManager::GetInstace()->DrawTile(ts.Name, ts.TileSize, j*ts.TileSize, i*ts.TileSize, tileRow, tileCol);
+                TextureManager::GetInstace()->DrawTile(ts.Name, ts.TileSize, j*ts.TileSize, i*ts.TileSize + 140, tileRow, tileCol);
+                // u can adjust the 3rd and 4th element of this drawtile function
+                // to adjust the start point of the map.
+                // i add +65 to the 4th element, which is the y axis, so that the map can fall down a bit compare to the first map
             }
         }
     }

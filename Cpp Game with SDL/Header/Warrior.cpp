@@ -38,12 +38,23 @@ void Warrior::Update(float dt)
         state = SDL_FLIP_NONE;
         m_Animation->SetProps("player_run", 1, 8, 100, state);
     }
-    SDL_Log("%f", dt);
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_J))
+    {
+        m_RigidBody->ApplyForceX(0*BACKWARD);
+        m_Animation->SetProps("Attack1", 1, 3, 80, state);
+    }
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_K))
+    {
+        m_RigidBody->ApplyForceX(0*BACKWARD);
+        m_Animation->SetProps("Attack2", 1, 6, 50, state);
+    }
     m_RigidBody->Update(dt);
     //m_RigidBody->ApplyForceX(5); // roi cheo thay vi roi thang vi trong luc
     m_Transform->TranslateX(m_RigidBody->Position().X);
     //m_Transform->TranslateY(m_RigidBody->Position().Y);
 
+    m_Origin->X = m_Transform->X + m_Width/2;
+    m_Origin->Y = m_Transform->Y + m_Height/2;
     m_Animation->Update();
 }
 

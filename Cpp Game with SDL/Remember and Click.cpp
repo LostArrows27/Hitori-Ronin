@@ -5,7 +5,6 @@
 int main(int argc, char** argv)
 {
     Engine::GetInstance()->init();
-        TextureManager::GetInstace()->Load("bg", "Map/background.png"); //comment this 2
     while(Engine::GetInstance()->IsRunning())
     {
         Engine::GetInstance()->Events();

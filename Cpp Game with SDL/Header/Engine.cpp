@@ -8,6 +8,7 @@
 #include "Timer.h"
 #include "MapParser.h"
 #include <iostream>
+#include "Camera.h"
 
 Engine* Engine::s_Instance = nullptr;
 Warrior* player = nullptr;
@@ -44,11 +45,13 @@ bool Engine::init()
 
     TextureManager::GetInstace()->Load("player", "Character/stay.png");
     TextureManager::GetInstace()->Load("player_run", "Character/run.png");
+    TextureManager::GetInstace()->Load("Attack1", "Character/33.png");
+    TextureManager::GetInstace()->Load("Attack2", "Character/Attack2.png");
+    TextureManager::GetInstace()->Load("bg", "Map/BG/background.png");
 
-    player = new Warrior(new Properties("player", 100, 260, 200, 200));
+    player = new Warrior(new Properties("player", 100, 340, 200, 200));
 
-    Transform tf;
-    tf.Log();
+    Camera::GetInstance()->SetTarget(player->GetOrigin());
     return s_IsRunning = true;
 }
 
@@ -73,6 +76,8 @@ void Engine::Update()
     m_LevelMap->Update();
 
     player->Update(dt);
+
+    Camera::GetInstance() ->Update(dt);
 }
 
 void Engine::Render()
@@ -80,8 +85,7 @@ void Engine::Render()
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
 
-    // u can comment 1 next line if game crash or issue
-     TextureManager::GetInstace()->Draw("bg", 0, -0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_FLIP_NONE);
+     TextureManager::GetInstace()->Draw("bg", 0, 0, 1536, 768);
      m_LevelMap->Render();
 
      player->Draw();
