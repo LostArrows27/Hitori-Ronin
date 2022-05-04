@@ -1,6 +1,8 @@
 #include "TileLayer.h"
 #include "TextureManager.h"
 
+//#include<iostream>
+
 TileLayer::TileLayer(int tilesize, int rowcount, int colcount, TileMap tilemap, TilesetsList tilesets) :
 m_TileSize (tilesize), m_ColCount (colcount), m_RowCount(rowcount), m_Tilemap(tilemap), m_Tilesets(tilesets){
     for(unsigned int i = 0; i < m_Tilesets.size(); i++)
@@ -42,8 +44,8 @@ void TileLayer::Render()
                     tileRow--;
                     tileCol = ts.ColCount - 1;
                 }
-
-                TextureManager::GetInstace()->DrawTile(ts.Name, ts.TileSize, j*ts.TileSize, i*ts.TileSize + 140, tileRow, tileCol);
+                //std::cout << "[" << j << "][" << i << "] : ";
+                TextureManager::GetInstace()->DrawTile(ts.Name, ts.TileSize, j*ts.TileSize, i*ts.TileSize, tileRow, tileCol);
                 // u can adjust the 3rd and 4th element of this drawtile function
                 // to adjust the start point of the map.
                 // i add +65 to the 4th element, which is the y axis, so that the map can fall down a bit compare to the first map

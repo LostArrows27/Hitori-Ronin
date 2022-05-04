@@ -1,8 +1,6 @@
 #include "Engine.h"
 #include "TextureManager.h"
 #include "Input.h"
-
-
 #include "Warrior.h"
 #include "SDL.h"
 #include "Timer.h"
@@ -11,8 +9,7 @@
 #include "Camera.h"
 
 Engine* Engine::s_Instance = nullptr;
-Warrior* player = nullptr;
-
+Warrior* player = nullptr; // can remove static
 
 
 bool Engine::init()
@@ -22,7 +19,10 @@ bool Engine::init()
         SDL_Log("Failed to initalize SDL: %s", SDL_GetError());
         return false;
     }
-    m_Window = SDL_CreateWindow("The Lost Ronin", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+
+    SDL_WindowFlags window_flags = (SDL_WindowFlags) (SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+
+    m_Window = SDL_CreateWindow("The Lost Ronin", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, window_flags);
     if(m_Window == nullptr)
     {
         SDL_Log("Failed to Create Window: %s", SDL_GetError());
@@ -38,7 +38,7 @@ bool Engine::init()
 
     if(!MapParser::GetInstance()->Load())
     {
-        std::cout << "Failed to Load map!!!" << test << std::endl;
+        std::cout << "Failed to Load map!!!" << std::endl;
     }
 
     m_LevelMap = MapParser::GetInstance()->GetMaps("MAP");
@@ -47,9 +47,11 @@ bool Engine::init()
     TextureManager::GetInstace()->Load("player_run", "Character/run.png");
     TextureManager::GetInstace()->Load("Attack1", "Character/33.png");
     TextureManager::GetInstace()->Load("Attack2", "Character/Attack2.png");
-    TextureManager::GetInstace()->Load("bg", "Map/BG/background.png");
+    TextureManager::GetInstace()->Load("bg", "Map/Background.png");
+    TextureManager::GetInstace()->Load("jump", "Character/Jump.png");
 
-    player = new Warrior(new Properties("player", 100, 340, 200, 200));
+
+    player = new Warrior(new Properties("player", 0, 0, 200, 200)); // 100 340 instead
 
     Camera::GetInstance()->SetTarget(player->GetOrigin());
     return s_IsRunning = true;
@@ -58,6 +60,7 @@ bool Engine::init()
 bool Engine::Clean()
 {
     TextureManager::GetInstace()->Clean();
+    MapParser::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
     IMG_Quit();
@@ -72,11 +75,8 @@ void Engine::Quit()
 void Engine::Update()
 {
     float dt = Timer::GetInstance()->GetDeltaTime();
-
-    m_LevelMap->Update();
-
     player->Update(dt);
-
+    m_LevelMap->Update();
     Camera::GetInstance() ->Update(dt);
 }
 
@@ -85,7 +85,7 @@ void Engine::Render()
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
 
-     TextureManager::GetInstace()->Draw("bg", 0, 0, 1536, 768);
+     TextureManager::GetInstace()->Draw("bg", 0, 0, 576*3, 324*3);
      m_LevelMap->Render();
 
      player->Draw();

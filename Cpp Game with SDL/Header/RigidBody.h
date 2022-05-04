@@ -4,7 +4,7 @@
 #include "Vector2D.h"
 
 #define UNI_MASS 1.0f
-#define GRAVITY 9.8
+#define GRAVITY 9.8f
 
 #define FORWARD 1
 #define BACKWARD -1

@@ -27,7 +27,7 @@ bool TextureManager::Load(std::string id, std::string filename)
 void TextureManager::Draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip)
 {
     SDL_Rect srcRect = {0, 0, width, height};
-    Vector2D cam = Camera::GetInstance()->GetPosition()*0.5;
+    Vector2D cam = Camera::GetInstance()->GetPosition()*0.5; // toc do scroll cua background
     SDL_Rect dstRect = {x-cam.X, y-cam.Y, width, height};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
 }

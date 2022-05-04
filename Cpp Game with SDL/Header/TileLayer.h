@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include <string>
 #include <vector>
+#include "Vector2D.h"
 
 // trong 1 map thi 0 la khong co tileset
 // id cua tileset la so, xem trong phan mem tilemap
