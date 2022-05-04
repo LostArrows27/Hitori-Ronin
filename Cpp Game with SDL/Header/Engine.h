@@ -5,8 +5,8 @@
 #include "SDL_image.h"
 #include "GameMap.h"
 
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 640
+#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 575 // ban dau la 640
 
 // gathering everything in game together
 

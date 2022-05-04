@@ -5,10 +5,6 @@
 #include <vector>
 #include "TileLayer.h"
 #include "GameMap.h"
-//#include "Engine.h"
-//#include <iostream>
-
-//using namespace std;
 
 class CollisionHandler
 {

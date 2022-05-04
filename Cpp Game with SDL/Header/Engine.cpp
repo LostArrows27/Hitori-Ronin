@@ -47,8 +47,9 @@ bool Engine::init()
     TextureManager::GetInstace()->Load("player_run", "Character/run.png");
     TextureManager::GetInstace()->Load("Attack1", "Character/33.png");
     TextureManager::GetInstace()->Load("Attack2", "Character/Attack2.png");
-    TextureManager::GetInstace()->Load("bg", "Map/Background.png");
+    TextureManager::GetInstace()->Load("bg", "Map/BG/newbg.png");
     TextureManager::GetInstace()->Load("jump", "Character/Jump.png");
+    TextureManager::GetInstace()->Load("fall", "Character/Fall.png");
 
 
     player = new Warrior(new Properties("player", 0, 0, 200, 200)); // 100 340 instead
@@ -85,7 +86,7 @@ void Engine::Render()
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
 
-     TextureManager::GetInstace()->Draw("bg", 0, 0, 576*3, 324*3);
+     TextureManager::GetInstace()->Draw("bg", 0, 0, 512*3*2, 256*3/2);
      m_LevelMap->Render();
 
      player->Draw();

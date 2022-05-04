@@ -4,7 +4,7 @@ MapParser* MapParser::s_Instance = nullptr;
 
 bool MapParser::Load()
 {
-    return Parse("MAP", "Map/test1.tmx"); // loading map
+    return Parse("MAP", "Map/mymap.tmx"); // loading map
 }
 
 

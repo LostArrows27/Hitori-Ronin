@@ -1,6 +1,8 @@
 #include "Engine.h"
 #include "Timer.h"
-#include "TextureManager.h" // comment this
+//#include "TextureManager.h" // comment this
+//#include "CollisionHandler.h"
+
 
 int main(int argc, char** argv)
 {
