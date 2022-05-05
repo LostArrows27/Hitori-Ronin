@@ -65,6 +65,7 @@ Tileset MapParser::ParseTileset(TiXmlElement* xmlTileset)
     TiXmlElement* image = xmlTileset->FirstChildElement();
     tileset.Source = image->Attribute("source");
     return tileset;
+
 }
 
 TileLayer* MapParser::ParseTileLayer(TiXmlElement* xmlLayer, TilesetsList tilesets, int tilesize, int rowcount, int colcount)

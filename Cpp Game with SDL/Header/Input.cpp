@@ -50,8 +50,8 @@ int Input::GetAxisKey(Axis axis){
             break;
 
         case VERTICAL:
-         // if(GetKeyDown(SDL_SCANCODE_W) || GetKeyDown(SDL_SCANCODE_UP))
-           //     return 1;
+            if(GetKeyDown(SDL_SCANCODE_W) || GetKeyDown(SDL_SCANCODE_UP))
+               return 1;
             if(GetKeyDown(SDL_SCANCODE_S) || GetKeyDown(SDL_SCANCODE_DOWN))
                 return -1;
                 // u can cmt this S line

@@ -8,7 +8,7 @@
 #include "Vector2D.h"
 
 #define JUMP_TIME 15.0f;
-#define JUMP_FORCE 9.8f;
+#define JUMP_FORCE 11.0f;
 
 #define RUN_FORCE 3.8f
 #define ATTACK_TIME 20.0f

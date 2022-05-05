@@ -20,10 +20,10 @@ Warrior::Warrior(Properties* props) : Character(props)
     m_AttackTime = ATTACK_TIME;
 
     m_Collider = new Collder();
-    m_Collider->SetBuffer(-80, -60, 0, 0); // chinh 1 va 2 de vua vs design va khung cua nhan vat
+    m_Collider->SetBuffer(-85, -68, 0, 0); // chinh 1 va 2 de vua vs design va khung cua nhan vat
 
     m_RigidBody = new RigidBody();
-    m_RigidBody->SetGravity(3.0f); // u can change gravity here
+    m_RigidBody->SetGravity(5.0f); // u can change gravity here
 
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, 1, 8, 80); // 80 la toc do cua chuyen dong
@@ -101,7 +101,7 @@ void Warrior::Update(float dt)
     m_RigidBody->Update(dt);
     m_LastSafePosition.X = m_Transform->X;
     m_Transform->X += m_RigidBody->Position().X;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 40, 60);
+    m_Collider->Set(m_Transform->X, m_Transform->Y, 30, 50);
 
     if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
         m_Transform->X = m_LastSafePosition.X;
@@ -111,7 +111,7 @@ void Warrior::Update(float dt)
     m_RigidBody->Update(dt);
     m_LastSafePosition.Y = m_Transform->Y;
     m_Transform->Y += m_RigidBody->Position().Y;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 40, 60);
+    m_Collider->Set(m_Transform->X, m_Transform->Y, 30, 50);
 
     if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get())){
         m_IsGrounded = true;
@@ -143,9 +143,9 @@ void Warrior::AnimationState()
     if(m_IsJumping)
         m_Animation->SetProps("jump", 1, 2, 100, state);
     if(m_IsAttacking1)
-        m_Animation->SetProps("Attack1", 1, 3, 80, state);
+        m_Animation->SetProps("Attack1", 1, 6, 60, state);
     if(m_IsAttacking2)
-         m_Animation->SetProps("Attack2", 1, 6, 50, state);
+         m_Animation->SetProps("Attack2", 1, 6, 60, state);
     if(m_IsFalling)
         m_Animation->SetProps("fall", 1, 2, 150, state);
 

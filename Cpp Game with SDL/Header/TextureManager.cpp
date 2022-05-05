@@ -1,6 +1,8 @@
 #include "TextureManager.h"
 #include "Engine.h"
 #include "Camera.h"
+#include "tinyxml.h"
+#include <iostream>
 
 TextureManager* TextureManager::s_Instance = nullptr;
 
@@ -46,6 +48,28 @@ void TextureManager::DrawFrame(std::string id, int x,int y, int width, int heigh
     Vector2D cam = Camera::GetInstance()->GetPosition();
     SDL_Rect dstRect = {x-cam.X, y-cam.Y, width, height};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+}
+
+bool TextureManager::ParseTextures(std::string source){
+
+    TiXmlDocument xml;
+    xml.LoadFile(source);
+    if(xml.Error()){
+        std::cout << "Failed to load: " << source << std::endl;
+        return false;
+    }
+
+    TiXmlElement* root = xml.RootElement();
+    for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
+        if(e->Value() == std::string("texture")){
+            std::string id = e->Attribute("id");
+            std::string src = e->Attribute("source");
+            Load(id, src);
+        }
+    }
+
+    std::cout << "Textures Parse success!" << std::endl;
+    return true;
 }
 
 void TextureManager::Drop(std::string id)

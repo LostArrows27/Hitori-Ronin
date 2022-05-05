@@ -45,7 +45,7 @@ bool Engine::init()
 
     TextureManager::GetInstace()->Load("player", "Character/stay.png");
     TextureManager::GetInstace()->Load("player_run", "Character/run.png");
-    TextureManager::GetInstace()->Load("Attack1", "Character/33.png");
+    TextureManager::GetInstace()->Load("Attack1", "Character/Attack1.png");
     TextureManager::GetInstace()->Load("Attack2", "Character/Attack2.png");
     TextureManager::GetInstace()->Load("bg", "Map/BG/newbg.png");
     TextureManager::GetInstace()->Load("jump", "Character/Jump.png");
