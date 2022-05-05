@@ -1,21 +1,18 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "SDL.h"
-#include <string>
+class Animation {
 
-class Animation
-{
     public:
-        Animation() {}
-        void Update();
-        void Draw(float x, float y, int spritWidth, int spriteHeight);
-        void SetProps(std::string textureID, int spriteRow, int frameCount, int animSpeed, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    private:
-        int m_SpriteRow, m_SpriteFrame;
-        int m_AnimSpeed, m_FrameCount;
-        std::string m_TextureID;
-        SDL_RendererFlip m_Flip;
+        Animation(bool repeat = true): m_Repeat(repeat){ m_IsEnded = false;}
+
+        virtual void Update(float dt) = 0;
+        inline bool IsEnded(){return m_IsEnded;}
+
+    protected:
+        bool m_Repeat;
+        bool m_IsEnded;
+        int m_CurrentFrame;
 };
 
 #endif // ANIMATION_H

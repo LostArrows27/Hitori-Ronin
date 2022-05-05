@@ -5,9 +5,12 @@
 #include "Camera.h"
 #include "CollisionHandler.h"
 #include "Engine.h"
+#include "ObjectFactory.h"
 
 static SDL_RendererFlip state = SDL_FLIP_NONE;
 // u can comment this "state" value if error to the youtube channel and remove all the "state" below :D
+
+static Registrar<Warrior> registrar("PLAYER");
 
 Warrior::Warrior(Properties* props) : Character(props)
 {
@@ -23,16 +26,18 @@ Warrior::Warrior(Properties* props) : Character(props)
     m_Collider->SetBuffer(-85, -68, 0, 0); // chinh 1 va 2 de vua vs design va khung cua nhan vat
 
     m_RigidBody = new RigidBody();
-    m_RigidBody->SetGravity(5.0f); // u can change gravity here
+    m_RigidBody->SetGravity(4.0f); // u can change gravity here
 
-    m_Animation = new Animation();
+    m_Animation = new SpritetAnimation();
     m_Animation->SetProps(m_TextureID, 1, 8, 80); // 80 la toc do cua chuyen dong
 }
 
 void Warrior::Draw()
 {
     m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height);
-    Vector2D cam = Camera::GetInstance()->GetPosition();
+    SDL_SetRenderDrawColor(Engine::GetInstance()->GetRenderer(), 124, 255, 0, 255);
+    m_Collider->Draw();
+   /* Vector2D cam = Camera::GetInstance()->GetPosition();
     SDL_Rect box = m_Collider->Get();
     box.x -= cam.X;
     box.y -= cam.Y;
@@ -124,7 +129,7 @@ void Warrior::Update(float dt)
     m_Origin->Y = m_Transform->Y + m_Height/2;
 
     AnimationState();
-    m_Animation->Update();
+    m_Animation->Update(dt);
 
 
 
@@ -141,7 +146,7 @@ void Warrior::AnimationState()
     if(m_IsRunning)
         m_Animation->SetProps("player_run", 1, 8, 100, state);
     if(m_IsJumping)
-        m_Animation->SetProps("jump", 1, 2, 100, state);
+        m_Animation->SetProps("jump", 1, 2, 200, state);
     if(m_IsAttacking1)
         m_Animation->SetProps("Attack1", 1, 6, 60, state);
     if(m_IsAttacking2)

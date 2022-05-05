@@ -7,9 +7,10 @@
 #include "MapParser.h"
 #include <iostream>
 #include "Camera.h"
+#include "Enemy.h"
+#include "ObjectFactory.h"
 
 Engine* Engine::s_Instance = nullptr;
-Warrior* player = nullptr; // can remove static
 
 
 bool Engine::init()
@@ -43,23 +44,33 @@ bool Engine::init()
 
     m_LevelMap = MapParser::GetInstance()->GetMaps("MAP");
 
-    TextureManager::GetInstace()->Load("player", "Character/stay.png");
+    TextureManager::GetInstace()->ParseTextures("Map/textures.tml");
+
+    /*TextureManager::GetInstace()->Load("player", "Character/stay.png");
     TextureManager::GetInstace()->Load("player_run", "Character/run.png");
     TextureManager::GetInstace()->Load("Attack1", "Character/Attack1.png");
     TextureManager::GetInstace()->Load("Attack2", "Character/Attack2.png");
     TextureManager::GetInstace()->Load("bg", "Map/BG/newbg.png");
     TextureManager::GetInstace()->Load("jump", "Character/Jump.png");
-    TextureManager::GetInstace()->Load("fall", "Character/Fall.png");
+    TextureManager::GetInstace()->Load("fall", "Character/Fall.png");*/
 
 
-    player = new Warrior(new Properties("player", 0, 0, 200, 200)); // 100 340 instead
+    //Warrior* player =  new Warrior(new Properties("player", 0, 0, 200, 200)); // 100 340 instead
+    Properties* props = new Properties("player", 0, 0, 200, 200);
 
+    GameObject* player = ObjectFactory::GetInstance()->CreateObject("PLAYER", props);
+    Enemy* boss = new Enemy(new Properties("BOSS", 500, 240, 460, 352));
+    m_GameObjects.push_back(player);
+    m_GameObjects.push_back(boss);
     Camera::GetInstance()->SetTarget(player->GetOrigin());
     return s_IsRunning = true;
 }
 
 bool Engine::Clean()
 {
+    for(unsigned int i = 0; i != m_GameObjects.size(); i++)
+        m_GameObjects[i]->Clean();
+
     TextureManager::GetInstace()->Clean();
     MapParser::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
@@ -76,9 +87,12 @@ void Engine::Quit()
 void Engine::Update()
 {
     float dt = Timer::GetInstance()->GetDeltaTime();
-    player->Update(dt);
-    m_LevelMap->Update();
+
+    for(unsigned int i = 0; i != m_GameObjects.size(); i++)
+        m_GameObjects[i]->Update(dt);
+
     Camera::GetInstance() ->Update(dt);
+    m_LevelMap->Update();
 }
 
 void Engine::Render()
@@ -86,10 +100,11 @@ void Engine::Render()
      SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
      SDL_RenderClear(m_Renderer);
 
-     TextureManager::GetInstace()->Draw("bg", 0, 0, 512*3*2, 256*3/2);
+     TextureManager::GetInstace()->Draw("bg", 0, 0, 688, 127, 3, 3, 0.4);
      m_LevelMap->Render();
 
-     player->Draw();
+     for(unsigned int i = 0; i != m_GameObjects.size(); i++)
+        m_GameObjects[i]->Draw();
      SDL_RenderPresent(m_Renderer);
 }
 
