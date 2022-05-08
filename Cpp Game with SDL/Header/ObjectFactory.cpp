@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Warrior.h"
 
+//std::shared_ptr<GameObject>
 ObjectFactory* ObjectFactory::s_Instance = nullptr;
 
 void ObjectFactory::RegisterType(std::string className, std::function<GameObject*(Properties* props)> type){

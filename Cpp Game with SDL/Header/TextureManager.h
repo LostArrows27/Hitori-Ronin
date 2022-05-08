@@ -5,23 +5,32 @@
 #include "SDL.h"
 #include <map>
 
-class TextureManager
-{
+using TextureMap = std::map<std::string, SDL_Texture*>;
+
+class TextureManager{
     public:
-        static TextureManager* GetInstace(){return s_Instance = (s_Instance != nullptr)? s_Instance : new TextureManager();}
-
-        bool Load(std::string id, std::string filename);
-        bool ParseTextures(std::string source);
-        void Drop(std::string id);
         void Clean();
+        void Erase(std::string id);
+        bool Parse(std::string source);
+        SDL_Texture* Load(std::string filename);
+        bool Add(std::string id, std::string filename);
+        TextureMap GetTextureMap(){return m_TextureMap;}
 
-        void Draw(std::string id, int x, int y, int width,int height, float scaleX = 1, float slaceY = 1, float scrollRatio = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void DrawTile(std::string tilesetID, int tileSize, int x, int y, int row, int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
-        void DrawFrame(std::string id, int x,int y, int width, int height, int row, int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    // row doc col ngang
-   private:
-        TextureManager() {}
-        std::map<std::string, SDL_Texture*> m_TextureMap;
+        void DrawTile(std::string tilesetID, int x, int y, int tilesize, int row, int col, float speedRatio=1.0f);
+
+        void Draw(std::string id, int x, int y, int w, int h, SDL_RendererFlip flip=SDL_FLIP_NONE,
+                  float scaleX=1.0f, float scaleY=1.0f, float rotation=0.0f, float speedRatio=1.0f);
+
+        void DrawFrame(std::string id, int x, int y, int w, int h, int row, int frame, SDL_RendererFlip flip=SDL_FLIP_NONE,
+                        float scaleX=1.0f, float scaleY=1.0f,  float rotation=0.0f, float speedRatio=1.0f);
+
+        SDL_Texture* GetTexture(std::string id){return m_TextureMap[id];}
+
+        static TextureManager* GetInstance(){ return s_Instance = (s_Instance != nullptr)? s_Instance : new TextureManager();}
+
+    private:
+        TextureManager(){}
+        TextureMap m_TextureMap;
         static TextureManager* s_Instance;
 };
 

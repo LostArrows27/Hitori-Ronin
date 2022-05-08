@@ -2,82 +2,71 @@
 #include "TextureManager.h"
 #include "SDL.h"
 #include "Input.h"
-#include "Camera.h"
-#include "CollisionHandler.h"
 #include "Engine.h"
+#include "CollisionHandler.h"
+#include "Camera.h"
 #include "ObjectFactory.h"
 
-static SDL_RendererFlip state = SDL_FLIP_NONE;
-// u can comment this "state" value if error to the youtube channel and remove all the "state" below :D
+static Registrar<Warrior> registrar("Warrior");
 
-static Registrar<Warrior> registrar("PLAYER");
-
-Warrior::Warrior(Properties* props) : Character(props)
-{
-    //m_Row = 1;
-    //m_FrameCount = 8;
-    //m_AnimSpeed = 80;
-
+Warrior::Warrior(Properties* props):Character(props){
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
     m_AttackTime = ATTACK_TIME;
 
-    m_Collider = new Collder();
-    m_Collider->SetBuffer(-85, -68, 0, 0); // chinh 1 va 2 de vua vs design va khung cua nhan vat
+    m_Collider = new Collider();
+    m_Collider->SetBuffer(-85, -68, 0, 0);
 
     m_RigidBody = new RigidBody();
-    m_RigidBody->SetGravity(4.0f); // u can change gravity here
+    m_RigidBody->SetGravity(3.0f);
 
     m_Animation = new SpritetAnimation();
-    m_Animation->SetProps(m_TextureID, 1, 8, 80); // 80 la toc do cua chuyen dong
+    m_Animation->SetProps(m_TextureID, 1, 8, 100); // sua
 }
 
-void Warrior::Draw()
-{
-    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height);
-    SDL_SetRenderDrawColor(Engine::GetInstance()->GetRenderer(), 124, 255, 0, 255);
-    m_Collider->Draw();
-   /* Vector2D cam = Camera::GetInstance()->GetPosition();
-    SDL_Rect box = m_Collider->Get();
-    box.x -= cam.X;
-    box.y -= cam.Y;
-    SDL_SetRenderDrawColor(Engine::GetInstance()->GetRenderer(), 124, 255, 0, 255);
-    SDL_RenderDrawRect(Engine::GetInstance()->GetRenderer(), &box); // u can cmt this */
-
+void Warrior::Draw(){
+    //m_Collider->Draw();
+    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height, m_Flip);
 }
 
-void Warrior::Update(float dt)
-{
+void Warrior::Update(float dt){
+
     m_IsRunning = false;
     m_RigidBody->UnSetForce();
 
+    // Run forward
     if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == FORWARD && !m_IsAttacking1 && !m_IsAttacking2){
         m_RigidBody->ApplyForceX(FORWARD*RUN_FORCE);
-        state = SDL_FLIP_NONE;
-        m_IsRunning = true;
-    }
-    if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == BACKWARD && !m_IsAttacking1 && !m_IsAttacking2){
-        m_RigidBody->ApplyForceX(BACKWARD*RUN_FORCE);
-        state = SDL_FLIP_HORIZONTAL;
+        m_Flip = SDL_FLIP_NONE;
         m_IsRunning = true;
     }
 
+    // Run backward
+    if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == BACKWARD && !m_IsAttacking1 && !m_IsAttacking2){
+        m_RigidBody->ApplyForceX(BACKWARD*RUN_FORCE);
+        m_Flip = SDL_FLIP_HORIZONTAL;
+        m_IsRunning = true;
+    }
+
+    // Attack1
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_J)){
         m_RigidBody->UnSetForce();
         m_IsAttacking1 = true;
+
     }
 
+    // Attack2
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_K)){
         m_RigidBody->UnSetForce();
         m_IsAttacking2 = true;
     }
 
+    // Jump
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_W) && m_IsGrounded){
         m_IsJumping = true;
         m_IsGrounded = false;
         m_RigidBody->ApplyForceY(UPWARD*m_JumpForce);
     }
-
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_W) && m_IsJumping && m_JumpTime > 0){
         m_JumpTime -= dt;
         m_RigidBody->ApplyForceY(UPWARD*m_JumpForce);
@@ -87,9 +76,12 @@ void Warrior::Update(float dt)
         m_JumpTime = JUMP_TIME;
     }
 
-    if(m_RigidBody->Velocity().Y > 0 && !m_IsGrounded)
+    // Fall
+    if(m_RigidBody->Veclocity().Y > 0 && !m_IsGrounded){
         m_IsFalling = true;
-    else
+        m_IsAttacking1 = false;
+        m_IsAttacking2 = false;
+    }else
         m_IsFalling = false;
 
     // Attack timer
@@ -103,12 +95,13 @@ void Warrior::Update(float dt)
         m_AttackTime = ATTACK_TIME;
     }
 
+    // move on X axis
     m_RigidBody->Update(dt);
     m_LastSafePosition.X = m_Transform->X;
     m_Transform->X += m_RigidBody->Position().X;
     m_Collider->Set(m_Transform->X, m_Transform->Y, 30, 50);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
+    if(m_Collider->CollideWithMap())
         m_Transform->X = m_LastSafePosition.X;
 
 
@@ -118,7 +111,7 @@ void Warrior::Update(float dt)
     m_Transform->Y += m_RigidBody->Position().Y;
     m_Collider->Set(m_Transform->X, m_Transform->Y, 30, 50);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get())){
+    if(m_Collider->CollideWithMap()){
         m_IsGrounded = true;
         m_Transform->Y = m_LastSafePosition.Y;
     }
@@ -130,29 +123,36 @@ void Warrior::Update(float dt)
 
     AnimationState();
     m_Animation->Update(dt);
-
-
-
 }
 
-void Warrior::Clean()
-{
-    TextureManager::GetInstace()->Drop(m_TextureID);
-}
 
-void Warrior::AnimationState()
-{
-    m_Animation->SetProps("player", 1 ,8 ,100, state);
+void Warrior::AnimationState(){
+    // idling
+    m_Animation->SetProps("player_idle", 0, 8, 100);
+
+    // running
     if(m_IsRunning)
-        m_Animation->SetProps("player_run", 1, 8, 100, state);
+        m_Animation->SetProps("player_run", 0, 8, 100);
+
+    // jumping
     if(m_IsJumping)
-        m_Animation->SetProps("jump", 1, 2, 200, state);
-    if(m_IsAttacking1)
-        m_Animation->SetProps("Attack1", 1, 6, 60, state);
-    if(m_IsAttacking2)
-         m_Animation->SetProps("Attack2", 1, 6, 60, state);
+         m_Animation->SetProps("player_jump", 0, 2, 200);
+
+    // falling
     if(m_IsFalling)
-        m_Animation->SetProps("fall", 1, 2, 150, state);
+         m_Animation->SetProps("player_fall", 0, 2, 150);
+
+    // attacking
+    if(m_IsAttacking1)
+        m_Animation->SetProps("player_attack1", 0, 6, 60);
+
+    // attacking2
+    if(m_IsAttacking2)
+        m_Animation->SetProps("player_attack2", 0, 6, 60);
+
+}
+
+void Warrior::Clean(){
 
 }
 

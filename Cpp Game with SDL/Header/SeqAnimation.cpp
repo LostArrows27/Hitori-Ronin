@@ -1,12 +1,11 @@
 #include "SeqAnimation.h"
 #include "tinyxml.h"
 #include "iostream"
-#include "TextureManager.h"
 
 SeqAnimation::SeqAnimation(bool repeat):Animation(repeat){}
 
-void SeqAnimation::DrawFrame(float x, float y, float xScale, float yScale, SDL_RendererFlip flip){
-    TextureManager::GetInstace()->Draw(m_CurrentSeq.TextureIDs[m_CurrentFrame], x, y, m_CurrentSeq.Width, m_CurrentSeq.Height, xScale, yScale, flip);
+void SeqAnimation::DrawFrame(int x, int y, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){
+    TextureManager::GetInstance()->Draw(m_CurrentSeq.TextureIDs[m_CurrentFrame], x, y, m_CurrentSeq.Width, m_CurrentSeq.Height, flip, scaleX, scaleY, rotation, speedRatio);
 }
 
 void SeqAnimation::Update(float dt){

@@ -1,42 +1,38 @@
 #ifndef TILELAYER_H
 #define TILELAYER_H
 
-#include "Layer.h"
 #include <string>
 #include <vector>
+#include "Layer.h"
 #include "Vector2D.h"
 
-// trong 1 map thi 0 la khong co tileset
-// id cua tileset la so, xem trong phan mem tilemap
-
-struct Tileset
-{
+struct Tileset{
     int FirstID, LastID;
-    int RowCount, ColCount; // cot va hang cua tileset ta lay chia theo kich thuoc 1 tileset
+    int Height, Width;
     int TileCount, TileSize;
-    std::string Name, Source; // Name is tileset's name
+    std::string Name, Source;
 };
 
 using TilesetsList = std::vector<Tileset>;
-using TileMap = std::vector<std::vector<int> >;
+using TileMatrix = std::vector<std::vector<int> >;
 
-class TileLayer : public Layer
-{
+class TileLayer : public Layer {
+
     public:
-        TileLayer(int tilesize, int rowcount, int colcount, TileMap tilemap, TilesetsList tilesets);
+        TileLayer(int tilesize, int width, int height, TileMatrix tilemap, TilesetsList tilesets);
+
         virtual void Render();
         virtual void Update();
-        inline TileMap GetTilemap() {return m_Tilemap;}
 
+        inline int GetWidth(){return m_Width;}
+        inline int GetHeight(){return m_Height;}
+        inline int GetTileSize(){return m_TileSize;}
+        inline TileMatrix GetTileMap(){return m_Tilemap;}
 
     private:
-        int m_TileSize;
-        int m_RowCount, m_ColCount;
-
-        TileMap m_Tilemap;
+        TileMatrix m_Tilemap;
         TilesetsList m_Tilesets;
+        int m_TileSize, m_Width, m_Height;
 };
-
-
 
 #endif // TILELAYER_H

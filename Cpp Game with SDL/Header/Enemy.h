@@ -6,6 +6,7 @@
 #include "Collder.h"
 #include "SeqAnimation.h"
 #include "SpriteAnimation.h"
+#include "ObjectFactory.h"
 
 class Enemy: public Character {
 
@@ -17,10 +18,11 @@ class Enemy: public Character {
         virtual void Update(float dt);
 
     private:
-        Collder* m_Collider;
+        Collider* m_Collider;
         RigidBody* m_RigiBody;
         SeqAnimation* m_Animation;
         Vector2D m_LastSafePosition;
 };
 
 #endif // ENEMY_H
+

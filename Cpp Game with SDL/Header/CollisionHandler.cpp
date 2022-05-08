@@ -3,53 +3,39 @@
 
 CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
-CollisionHandler::CollisionHandler()
-{
-    m_CollisionLayer = (TileLayer*) Engine::GetInstance()->GetMap()->GetMapLayer().back(); // front la layer o truoc trong map, back la layer o sau trong map
-    m_CollisionTilemap = m_CollisionLayer->GetTilemap();
+void CollisionHandler::SetCollisionMap(TileMatrix tilemap, int tilesize){
+    m_CollisionTilemap = tilemap;
+    m_MapTileSize = tilesize;
+    m_MapHeight = tilemap.size();
+    m_MapWidth = tilemap[0].size();
 }
 
-bool CollisionHandler::MapCollision(SDL_Rect a)
-{
-    int tileSize = 32;
-    //140 18
-    int RowCount = 18;
-    int ColCount = 140;
+bool CollisionHandler::CheckCollision(SDL_Rect a, SDL_Rect b){
+    bool x_overlaps = (a.x < b.x + b.w) && (a.x + a.w > b.x);
+    bool y_overlaps = (a.y < b.y + b.h) && (a.y + a.h > b.y);
+    return (x_overlaps && y_overlaps);
+}
 
-    int left_tile = a.x/tileSize;
-    int right_tile = (a.x+a.w) / tileSize;
+bool CollisionHandler::MapCollision(SDL_Rect a){
 
-    int top_tile = a.y/tileSize;
-    int bottom_tile = (a.y + a.h) / tileSize;
+    int left_tile = a.x/m_MapTileSize;
+    int right_tile = (a.x + a.w)/m_MapTileSize;
+
+    int top_tile = a.y/m_MapTileSize;
+    int bottom_tile = (a.y + a.h)/m_MapTileSize;
 
     if(left_tile < 0) left_tile = 0;
-    if(right_tile > ColCount) right_tile = ColCount;
+    if(right_tile > m_MapWidth) right_tile = m_MapWidth;
 
     if(top_tile < 0) top_tile = 0;
-    if(bottom_tile > RowCount) bottom_tile = RowCount; // this can remove - 1
+    if(bottom_tile > m_MapHeight) bottom_tile = m_MapHeight;
 
-    for(int i = left_tile; i <= right_tile; ++i)
-    {
-        for(int j = top_tile; j <= bottom_tile; ++j)
-        {
-            if(m_CollisionTilemap[j][i] > 0)
-            {
+    for(int i = left_tile; i <= right_tile; ++i){
+        for(int j = top_tile; j <= bottom_tile; ++j){
+            if(m_CollisionTilemap[j][i] > 0){
                 return true;
             }
         }
     }
     return false;
 }
-
-
-bool CollisionHandler::CheckCollision(SDL_Rect a, SDL_Rect b)
-{
-    bool x_overlaps = (a.x < b.x + b.w) &&  (a.x + a.w > b.x);
-    bool y_overlaps = (a.y < b.y + b.h) && (a.y + a.h > b.y);
-    return (x_overlaps && y_overlaps);
-
-}
-
-
-
-

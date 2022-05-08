@@ -4,7 +4,7 @@
 class Animation {
 
     public:
-        Animation(bool repeat = true): m_Repeat(repeat){ m_IsEnded = false;}
+        Animation(bool repeat = true): m_Repeat(repeat){m_IsEnded = false;}
 
         virtual void Update(float dt) = 0;
         inline bool IsEnded(){return m_IsEnded;}

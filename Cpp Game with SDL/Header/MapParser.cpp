@@ -2,95 +2,59 @@
 
 MapParser* MapParser::s_Instance = nullptr;
 
-bool MapParser::Load()
-{
-    return Parse("MAP", "Map/mymap.tmx"); // loading map
-}
-
-
-bool MapParser::Parse(std::string id, std::string source)
-{
+TileMap* MapParser::Load(std::string source){
     TiXmlDocument xml;
     xml.LoadFile(source);
-
-    if(xml.Error())
-    {
-        std::cerr << "Failed to load:" << source << std::endl;
-        return false;
+    if(xml.Error()){
+        std::cerr << "Failed to load map: " << source << std::endl;
+        return nullptr;
     }
 
-    TiXmlElement* root = xml.RootElement(); // lay thong tin tu map version trong file tmx
-    int rowcount, colcount, tilesize = 0;
+    TiXmlElement* root = xml.RootElement();
 
+    int colcount, rowcount, tilesize = 0;
     root->Attribute("width", &colcount);
     root->Attribute("height", &rowcount);
     root->Attribute("tilewidth", &tilesize);
 
-     TilesetsList tilesets;
-     for(TiXmlElement* e = root->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-     {
-        if(e->Value() == std::string("tileset"))
-        {
+    // Parse Tile sets
+    TilesetsList tilesets;
+    for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
+        if(e->Value() == std::string("tileset")){
             tilesets.push_back(ParseTileset(e));
         }
-     }
+    }
 
-     GameMap* gamemap = new GameMap();
-     for(TiXmlElement* e = root->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-     {
-         if(e->Value() == std::string("layer"))
-         {
-             TileLayer* tilelayer = ParseTileLayer(e, tilesets, tilesize, rowcount, colcount);
-             gamemap->m_MapLayers.push_back(tilelayer);
-         }
-     }
+    // Parse Layers
+    TileMap* gamemap = new TileMap();
+    for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
+        if(e->Value() == std::string("layer")){
+            TileLayer* tilelayer = ParseTileLayer(e, tilesets, tilesize, rowcount, colcount);
+            gamemap->m_MapLayers.push_back(tilelayer);
+        }
+    }
 
-     m_MapDict[id] = gamemap;
-     return true;
+    return gamemap;
 }
 
-Tileset MapParser::ParseTileset(TiXmlElement* xmlTileset)
-{
-    Tileset tileset;
-    tileset.Name = xmlTileset->Attribute("name"); // name = " " trong file tmx
-    xmlTileset->Attribute("firstgid", &tileset.FirstID);
+TileLayer* MapParser::ParseTileLayer(TiXmlElement* xmlLayer, TilesetsList tilesets, int tilesize, int rowcount, int colcount){
 
-    xmlTileset->Attribute("tilecount", &tileset.TileCount);
-    tileset.LastID = (tileset.FirstID + tileset.TileCount) - 1;
-
-    xmlTileset->Attribute("columns", &tileset.ColCount);
-    tileset.RowCount = tileset.TileCount/tileset.ColCount;
-    xmlTileset->Attribute("tilewidth", &tileset.TileSize);
-
-    TiXmlElement* image = xmlTileset->FirstChildElement();
-    tileset.Source = image->Attribute("source");
-    return tileset;
-
-}
-
-TileLayer* MapParser::ParseTileLayer(TiXmlElement* xmlLayer, TilesetsList tilesets, int tilesize, int rowcount, int colcount)
-{
     TiXmlElement* data;
-    for(TiXmlElement* e = xmlLayer->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-    {
-        if(e->Value() == std::string("data"))
-        {
+    for(TiXmlElement* e=xmlLayer->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
+        if(e->Value() == std::string("data")){
             data = e;
             break;
         }
     }
 
-    // Layer tile map
+    // Parse Layer tile map
     std::string matrix(data->GetText());
     std::istringstream iss(matrix);
     std::string id;
 
-    TileMap tilemap(rowcount, std::vector<int> (colcount, 0));
-
-    for(int row = 0; row < rowcount; row++)
-    {
-        for(int col = 0; col < colcount; col++)
-        {
+    TileMatrix tilemap(rowcount, std::vector<int> (colcount, 0));
+    for(int row = 0; row < rowcount; row++){
+        for (int col = 0; col < colcount; col++){
             getline(iss, id, ',');
             std::stringstream convertor(id);
             convertor >> tilemap[row][col];
@@ -100,17 +64,22 @@ TileLayer* MapParser::ParseTileLayer(TiXmlElement* xmlLayer, TilesetsList tilese
         }
     }
 
-    return (new TileLayer(tilesize, rowcount, colcount, tilemap, tilesets));
+    return (new TileLayer(tilesize, colcount, rowcount, tilemap, tilesets));
 }
 
-void MapParser::Clean()
-{
-    std::map<std::string, GameMap*>::iterator it;
-    for(it = m_MapDict.begin(); it != m_MapDict.end(); it++)
-        it->second = nullptr;
-    m_MapDict.clear();
+Tileset MapParser::ParseTileset(TiXmlElement* xmlTileset){
+    Tileset tileset;
+    tileset.Name = xmlTileset->Attribute("name");
+    xmlTileset->Attribute("firstgid", &tileset.FirstID);
+    xmlTileset->Attribute("tilecount", &tileset.TileCount);
+    tileset.LastID = (tileset.FirstID + tileset.TileCount) - 1;
+
+    xmlTileset->Attribute("columns", &tileset.Width);
+    tileset.Height = tileset.TileCount/tileset.Width;
+    xmlTileset->Attribute("tilewidth", &tileset.TileSize);
+
+    TiXmlElement* image = xmlTileset->FirstChildElement();
+    tileset.Source = image->Attribute("source");
+    return tileset;
 }
-
-
-
 

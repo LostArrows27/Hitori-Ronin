@@ -1,25 +1,21 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include <iostream>
 #include <vector>
+
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "SDL_image.h"
-#include "GameMap.h"
-#include "GameObject.h"
+#include "GameState.h"
 
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 575 // ban dau la 640
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 800
 
-// gathering everything in game together
+class Engine {
 
-class Engine
-{
     public:
-        static Engine* GetInstance()
-        {
-            return s_Instance = (s_Instance != nullptr)? s_Instance : new Engine();
-        }
-        bool init();
+        bool Init();
         bool Clean();
         void Quit();
 
@@ -27,20 +23,23 @@ class Engine
         void Render();
         void Events();
 
-        inline GameMap* GetMap() {return m_LevelMap;}
-        inline bool IsRunning() {return s_IsRunning;}
-        inline SDL_Renderer* GetRenderer() {return m_Renderer;}
+        void PopState();
+        void PushState(GameState* current);
+        void ChangeState(GameState* target);
+
+        inline bool IsRunning(){return m_IsRunning;}
+        inline SDL_Window* GetMainWindow(){return m_Window;}
+        inline SDL_Renderer* GetRenderer(){return m_Renderer;}
+        static Engine* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new Engine();}
 
     private:
-        Engine() {}
-        bool s_IsRunning;
-
-        GameMap* m_LevelMap;
+        Engine(){}
+        bool m_IsRunning;
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         static Engine* s_Instance;
+        std::vector<GameState*> m_States;
 
-        std::vector<GameObject*> m_GameObjects;
 };
 
 #endif // ENGINE_H

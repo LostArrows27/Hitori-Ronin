@@ -6,6 +6,7 @@
 #include <vector>
 #include "SDL.h"
 #include "Animation.h"
+#include "TextureManager.h"
 
 struct Sequence {
     int Speed;
@@ -23,7 +24,7 @@ class SeqAnimation: public Animation{
         void Parse(std::string source);
         void SetCurrentSeq(std::string seqID);
         void SetRepeat(bool repeat){m_Repeat = repeat;}
-        void DrawFrame(float x, float y, float xScale=1, float yScale=1, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        void DrawFrame(int x, int y, SDL_RendererFlip flip=SDL_FLIP_NONE, float scaleX=0.0f, float scaleY=0.0f, float rotation=0.0f, float speedRatio=1.0f);
 
     private:
         Sequence m_CurrentSeq;

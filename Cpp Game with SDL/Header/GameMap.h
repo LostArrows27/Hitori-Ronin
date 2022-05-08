@@ -1,27 +1,32 @@
-#ifndef GAMEMAP_H
-#define GAMEMAP_H
+#ifndef TileMap_H
+#define TileMap_H
 
-#include <Vector>
+#include <vector>
 #include "Layer.h"
 
-class GameMap
-{
+class TileMap {
+
     public:
 
-        GameMap() {}
+        TileMap(){}
 
-        void Render()
-        {
-            for(unsigned int i = 0; i < m_MapLayers.size(); i++)
-                m_MapLayers[i]->Render();
-        }
-        void Update()
-        {
-            for(unsigned int i = 0; i < m_MapLayers.size(); i++)
-                m_MapLayers[i]->Update();
+        void Render(){
+            for(auto layer : m_MapLayers)
+                layer->Render();
         }
 
-        std::vector<Layer*> GetMapLayer() {
+        void Update(){
+           for(auto layer : m_MapLayers)
+                layer->Update();
+        }
+
+        void Clean(){
+           for(auto layer : m_MapLayers)
+                delete layer;
+            m_MapLayers.clear();
+        }
+
+        std::vector<Layer*> GetLayers(){
             return m_MapLayers;
         }
 
@@ -30,5 +35,4 @@ class GameMap
         std::vector<Layer*> m_MapLayers;
 };
 
-#endif // GAMEMAP_H
-
+#endif // TileMap_H

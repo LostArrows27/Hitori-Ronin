@@ -4,23 +4,24 @@
 #include "SDL.h"
 #include <vector>
 #include "TileLayer.h"
-#include "GameMap.h"
+#include "TileMap.h"
 
-class CollisionHandler
-{
+class CollisionHandler{
+
     public:
         bool MapCollision(SDL_Rect a);
         bool CheckCollision(SDL_Rect a, SDL_Rect b);
+        void SetCollisionMap(TileMatrix tilemap, int tilesize);
 
-       inline static CollisionHandler* GetInstance() {return s_Instance = (s_Instance != nullptr) ? s_Instance : new CollisionHandler();}
-       void print(SDL_Rect a);
+        inline static CollisionHandler* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new CollisionHandler();}
 
-    public:
-        CollisionHandler();
-        TileMap m_CollisionTilemap;
-        TileLayer* m_CollisionLayer;
+    private:
+        CollisionHandler(){}
+
+        int m_MapTileSize;
+        int m_MapWidth, m_MapHeight;
+        TileMatrix m_CollisionTilemap;
         static CollisionHandler* s_Instance;
-
 };
 
 #endif // COLLISIONHANDLER_H

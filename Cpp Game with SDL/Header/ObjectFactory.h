@@ -5,14 +5,11 @@
 #include <string>
 #include <memory>
 #include "GameObject.h"
-#include <functional>
 
-// this class for creating small object ingame like car, moving tree, ....
-
-class ObjectFactory {
+class ObjectFactory{
 
     public:
-        GameObject* CreateObject(std::string type, Properties* props); // type of the object or its name
+        GameObject* CreateObject(std::string type, Properties* props);
         void RegisterType(std::string className, std::function<GameObject*(Properties* props)> type);
         static ObjectFactory* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new ObjectFactory();}
 

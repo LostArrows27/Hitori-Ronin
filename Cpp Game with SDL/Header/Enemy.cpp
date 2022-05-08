@@ -1,15 +1,15 @@
 #include "Enemy.h"
 #include "Camera.h"
 #include "CollisionHandler.h"
-#include "ObjectFactory.h"
 #include <iostream>
+#include "ObjectFactory.h"
 
-static Registrar<Enemy> registrar("BOSS");
+static Registrar<Enemy> registrar("Enemy");
 
-Enemy::Enemy(Properties* props): Character(props){
+Enemy::Enemy(Properties* props):Character(props){
     m_RigiBody = new RigidBody();
     m_RigiBody->SetGravity(3.5);
-    m_Collider = new Collder();
+    m_Collider = new Collider();
 
     m_Animation = new SeqAnimation(false);
     m_Animation->Parse("assets/animation.aml");
@@ -17,8 +17,7 @@ Enemy::Enemy(Properties* props): Character(props){
 }
 
 void Enemy::Draw(){
-    m_Animation->DrawFrame(m_Transform->X, m_Transform->Y, 0.3f, 0.3f, m_Flip); //this 0.3f is enemy ratio
-    m_Collider->Draw();
+    //m_Animation->DrawFrame(m_Transform->X, m_Transform->Y, m_Flip, 0.3f, 0.3f);
 }
 
 void Enemy::Update(float dt){
@@ -44,9 +43,8 @@ void Enemy::Update(float dt){
     m_Animation->Update(dt);
 
     if(m_Animation->IsEnded()){
-        m_Animation->SetRepeat(true); // repeat hanh dong cua boss
+        m_Animation->SetRepeat(true);
         m_Animation->SetCurrentSeq("boss_idle");
-
     }
 }
 
