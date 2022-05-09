@@ -2,23 +2,21 @@
 #define BUTTON_H
 
 #include "Widget.h"
-#include "Input.h"
 
-namespace Gui{
+namespace Ui{
 
-    const int BTN_BORDER_THICKNESS = 1;
-
-    class Button : public Widget {
+    class Button : public Widget{
 
         public:
-            Button(Attr attr, void (*clickAction)());
-            virtual void Draw();
-            virtual void Clean();
-            virtual void Update();
+            Button(Vector2D offset, void (*click)());
+            virtual void Show();
+            virtual void Refresh();
+            virtual void Destroy();
 
         private:
             bool m_IsReleased;
-            void (*m_ClickAction)();
+            void (*m_Click)();
     };
 }
+
 #endif // BUTTON_H

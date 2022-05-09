@@ -2,7 +2,6 @@
 #define CAMERA_H
 
 #include <SDL.h>
-#include "Point.h"
 #include "Engine.h"
 #include "Vector2D.h"
 
@@ -10,29 +9,37 @@ class Camera {
 
     public:
 
-        void Update();
-        inline int GetSceneWidth(){return m_SceneWidth;}
-        inline int GetSceneHeight(){return m_SceneHeight;}
+        void TrackTarget();
 
-        inline SDL_Rect GetViewBox(){return m_ViewBox;}
-        inline Vector2D GetPosition(){return m_Position;}
+        void TranslateX(int x);
+        void TranslateY(int y);
+        void Translate(Vector2D target);
 
-        inline void MoveX(float x){m_Position.X = x;}
-        inline void MoveY(float y){m_Position.Y = y;}
+        void SetPositionX(int targetX);
+        void SetPositionY(int targetY);
+        void SetPosition(Vector2D target);
 
-        inline void SetTarget(Point* target){m_Target = target;}
-        inline void SetSceneLimit(int w, int h){m_SceneWidth = w; m_SceneHeight = h;}
+        bool GetInsectionWithViewPort(const SDL_Rect* rect);
 
-        inline static Camera* GetInstance(){return s_Instance = (s_Instance != nullptr) ? s_Instance : new Camera();}
+        inline const int GetMapWidth(){return m_MapWidth;}
+        inline const int GetMapHeight(){return m_MapHeight;}
+
+        inline const SDL_Rect GetViewPort(){return m_ViewPort;}
+        inline const Vector2D GetPosition(){return m_Position;}
+
+        inline void SetTarget(Vector2D* target){m_Target = target;}
+        inline void SetViewPort(SDL_Rect viewport){m_ViewPort = viewport;}
+        inline void SetMapLimit(int w, int h){m_MapWidth = w; m_MapHeight = h;}
+        inline static Camera* Instance(){return s_Instance = (s_Instance != nullptr) ? s_Instance : new Camera();}
 
     private:
 
         Camera();
-        Point* m_Target;
-        SDL_Rect m_ViewBox;
+        Vector2D* m_Target;
         Vector2D m_Position;
+        SDL_Rect m_ViewPort;
         static Camera* s_Instance;
-        int m_SceneWidth, m_SceneHeight;
+        int m_MapWidth, m_MapHeight;
 };
 
 #endif // CAMERA_H

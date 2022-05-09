@@ -2,19 +2,13 @@
 #include "Play.h"
 #include "Engine.h"
 #include "Input.h"
-
-#include "Button.h"
-#include "Frame.h"
-
-Gui::Frame* frame1 = nullptr;
+#include "StateMgr.h"
 
 Menu::Menu(){}
 
 bool Menu::Init(){
-    m_Ctxt = Engine::GetInstance()->GetRenderer();
-    frame1 = new Gui::Frame(Gui::Attr(m_Ctxt, 100, 100, 250, 100));
-    Gui::Button* btn = new Gui::Button(Gui::Attr(m_Ctxt, 50, 50, 100, 35), StartGame);
-    frame1->AddChild(btn);
+    m_Ctxt = Engine::Instance()->GetRenderer();
+
     std::cout << "menu initialized!" << std::endl;
     return true;
 }
@@ -23,12 +17,11 @@ void Menu::Render(){
     SDL_SetRenderDrawColor(m_Ctxt, 16, 45, 70, 255);
     SDL_RenderClear(m_Ctxt);
 
-    frame1->Draw();
     SDL_RenderPresent(m_Ctxt);
 }
 
 void Menu::Update(){
-    frame1->Update();
+
 }
 
 bool Menu::Exit(){
@@ -38,7 +31,7 @@ bool Menu::Exit(){
 
 // Callbacks
 void Menu::StartGame(){
-    Engine::GetInstance()->ChangeState(new Play());
+    StateMgr::Instance()->ChangeState(new Play());
     std::cout << "start game!\n";
 }
 

@@ -1,18 +1,18 @@
 #include "Enemy.h"
 #include "Camera.h"
-#include "CollisionHandler.h"
+#include "CollisionMgr.h"
 #include <iostream>
-#include "ObjectFactory.h"
 
-static Registrar<Enemy> registrar("Enemy");
+static Registrar<Enemy> enemy("Enemy");
 
-Enemy::Enemy(Properties* props):Character(props){
+Enemy::Enemy(Transform* tf):GameObject(tf){
+
     m_RigiBody = new RigidBody();
     m_RigiBody->SetGravity(3.5);
     m_Collider = new Collider();
 
     m_Animation = new SeqAnimation(false);
-    m_Animation->Parse("assets/animation.aml");
+    m_Animation->Parse("assets/animations/boss/boss.aml");
     m_Animation->SetCurrentSeq("boss_appear");
 }
 
@@ -24,21 +24,21 @@ void Enemy::Update(float dt){
 
     // X-Axis movements
     m_RigiBody->Update(dt);
-    m_LastSafePosition.X = m_Transform->X;
-    m_Transform->X += m_RigiBody->Position().X;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 140, 100);
+    m_LastSafePosition.X = m_Tf->X;
+    m_Tf->X += m_RigiBody->Position().X;
+    m_Collider->Set(m_Tf->X, m_Tf->Y, 140, 100);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
-        m_Transform->X = m_LastSafePosition.X;
+    if(CollisionMgr::Instance()->MapCollision(m_Collider->Get()))
+        m_Tf->X = m_LastSafePosition.X;
 
     // Y-Axis movements
     m_RigiBody->Update(dt);
-    m_LastSafePosition.Y = m_Transform->Y;
-    m_Transform->Y += m_RigiBody->Position().Y;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 140, 100);
+    m_LastSafePosition.Y = m_Tf->Y;
+    m_Tf->Y += m_RigiBody->Position().Y;
+    m_Collider->Set(m_Tf->X, m_Tf->Y, 140, 100);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
-        m_Transform->Y = m_LastSafePosition.Y;
+    if(CollisionMgr::Instance()->MapCollision(m_Collider->Get()))
+        m_Tf->Y = m_LastSafePosition.Y;
 
     m_Animation->Update(dt);
 

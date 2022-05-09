@@ -1,6 +1,7 @@
 #ifndef PLAY_H
 #define PLAY_H
 
+#include <map>
 #include <iostream>
 #include "TileMap.h"
 #include "GameObject.h"
@@ -10,12 +11,14 @@
 #include "Timer.h"
 #include "Input.h"
 #include "Camera.h"
-#include "MapParser.h"
+#include "Parser.h"
 #include "TileLayer.h"
 #include "ObjectFactory.h"
-#include "TextureManager.h"
-#include "CollisionHandler.h"
-#include "ImgLayer.h"
+#include "TextureMgr.h"
+#include "CollisionMgr.h"
+#include "StateMgr.h"
+#include "StaticObject.h"
+#include "Cloud.h"
 
 class Play : public GameState{
 
@@ -28,14 +31,9 @@ class Play : public GameState{
         virtual void Render();
 
     private:
-        static void OpenMenu();
-        static void PauseGame();
-
-    private:
-        bool m_EditMode;
+        ObjectPtr m_Player;
         TileMap* m_LevelMap;
-        std::vector<ImgLayer*>  m_ParalaxBg;
-        std::vector<GameObject*> m_GameObjects;
+        ObjectList m_GameObjects;
 };
 
 #endif // PLAY_H

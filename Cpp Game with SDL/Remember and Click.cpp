@@ -1,21 +1,18 @@
 #include "Engine.h"
 #include "Timer.h"
-//#include "TextureManager.h" // comment this
-//#include "CollisionHandler.h"
+#include "Input.h"
+#include "StateMgr.h"
 
+int main(int argc, char** argv){
 
-int main(int argc, char** argv)
-{
-    Engine::GetInstance()->init();
-    while(Engine::GetInstance()->IsRunning())
-    {
-        Engine::GetInstance()->Events();
-        Engine::GetInstance()->Update();
-        Engine::GetInstance()->Render();
-        Timer::GetInstance()->Tick();
+    Engine::Instance()->Init();
+
+    while(Engine::Instance()->IsRunning()){
+        Input::Instance()->Listen();
+        StateMgr::Instance()->Render();
+        StateMgr::Instance()->Update();
+        Timer::Instance()->Tick();
     }
 
-    Engine::GetInstance()->Clean();
-    return 0;
+    return EXIT_SUCCESS;
 }
-

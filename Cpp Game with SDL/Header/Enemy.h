@@ -1,17 +1,17 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Character.h"
+#include "GameObject.h"
 #include "RigidBody.h"
-#include "Collder.h"
+#include "Collider.h"
 #include "SeqAnimation.h"
 #include "SpriteAnimation.h"
 #include "ObjectFactory.h"
 
-class Enemy: public Character {
+class Enemy: public GameObject {
 
     public:
-        Enemy(Properties* props);
+        Enemy(Transform* tf);
 
         virtual void Draw();
         virtual void Clean();

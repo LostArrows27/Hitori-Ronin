@@ -3,21 +3,12 @@
 #include "Play.h"
 #include "Engine.h"
 #include "Input.h"
+#include "StateMgr.h"
 
-#include "Button.h"
-#include "Frame.h"
-
-Gui::Frame* frame2 = nullptr;
-
-Pause::Pause(){
-
-}
+Pause::Pause(){}
 
 bool Pause::Init(){
-    m_Ctxt = Engine::GetInstance()->GetRenderer();
-    frame2 = new Gui::Frame(Gui::Attr(m_Ctxt, 100, 100, 250, 100));
-    Gui::Button* btn = new Gui::Button(Gui::Attr(m_Ctxt, 50, 50, 100, 35), Resume);
-    frame2->AddChild(btn);
+    m_Ctxt = Engine::Instance()->GetRenderer();
     std::cout << "menu initialized!" << std::endl;
     return true;
 }
@@ -26,12 +17,11 @@ void Pause::Render(){
     SDL_SetRenderDrawColor(m_Ctxt, 211, 87, 85, 255);
     SDL_RenderClear(m_Ctxt);
 
-    frame2->Draw();
     SDL_RenderPresent(m_Ctxt);
 }
 
 void Pause::Update(){
-    frame2->Update();
+
 }
 
 bool Pause::Exit(){
@@ -41,7 +31,7 @@ bool Pause::Exit(){
 
 // Callbacks
 void Pause::Resume(){
-    Engine::GetInstance()->PopState();
+    StateMgr::Instance()->PopState();
     std::cout << "resume game\n";
 }
 
