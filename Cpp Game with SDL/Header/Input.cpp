@@ -62,9 +62,7 @@ void Input::MouseButtonDown(SDL_Event event){
 
 void Input::WindowEvent(SDL_Event event){
     if(event.window.event == SDL_WINDOWEVENT_RESIZED){
-        const int w = event.window.data1;
-        const int h = event.window.data2;
-        const SDL_Rect viewport = {0, 0, w, h};
+        const SDL_Rect viewport = {0, 0, event.window.data1, event.window.data2};
         Engine::Instance()->SetViewPort(viewport);
         Camera::Instance()->SetViewPort(viewport);
     }

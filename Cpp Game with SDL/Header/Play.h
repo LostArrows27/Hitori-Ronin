@@ -19,6 +19,11 @@
 #include "StateMgr.h"
 #include "StaticObject.h"
 #include "Cloud.h"
+#include "ClimatEmitter.h"
+#include "Tree.h"
+
+const SDL_Color SKYBLUE = {30, 191, 242};
+const SDL_Color SKYDARK = {45, 80, 82};
 
 class Play : public GameState{
 
@@ -33,6 +38,7 @@ class Play : public GameState{
     private:
         ObjectPtr m_Player;
         TileMap* m_LevelMap;
+        SDL_Color m_ClearColor;
         ObjectList m_GameObjects;
 };
 

@@ -1,16 +1,17 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include <random>
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
 
 class Helpers {
 
     public:
-        static int RandI(int _min, int _max){
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(_min, _max);
-            return dis(gen);
+        static int RandI(int min, int max){
+            if(min < max)
+                return ((rand()%(max - min)) + min);
+            return 0;
         }
 };
 

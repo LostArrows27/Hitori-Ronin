@@ -21,7 +21,7 @@ Warrior::Warrior(Transform* tf) : GameObject(tf){
 }
 
 void Warrior::Draw(){
-    m_Collider->Draw();
+    //m_Collider->Draw();
     m_Animation->Draw(m_Tf);
 }
 

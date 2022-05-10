@@ -12,10 +12,12 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add directory="Header" />
 					<Add directory="./" />
 					<Add directory="Header/Vender" />
+					<Add directory="Header/Vendor/TinyXML" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -53,6 +55,7 @@
 		<Unit filename="Header/Button.h" />
 		<Unit filename="Header/Camera.cpp" />
 		<Unit filename="Header/Camera.h" />
+		<Unit filename="Header/ClimatEmitter.h" />
 		<Unit filename="Header/Cloud.h" />
 		<Unit filename="Header/Collider.h" />
 		<Unit filename="Header/CollisionMgr.cpp" />
@@ -74,6 +77,7 @@
 		<Unit filename="Header/Panel.h" />
 		<Unit filename="Header/Parser.cpp" />
 		<Unit filename="Header/Parser.h" />
+		<Unit filename="Header/Particle.h" />
 		<Unit filename="Header/Pause.cpp" />
 		<Unit filename="Header/Pause.h" />
 		<Unit filename="Header/Play.cpp" />
@@ -93,13 +97,14 @@
 		<Unit filename="Header/Timer.cpp" />
 		<Unit filename="Header/Timer.h" />
 		<Unit filename="Header/Transform.h" />
+		<Unit filename="Header/Tree.h" />
 		<Unit filename="Header/Vector2D.h" />
-		<Unit filename="Header/Vender/tinystr.cpp" />
-		<Unit filename="Header/Vender/tinystr.h" />
-		<Unit filename="Header/Vender/tinyxml.cpp" />
-		<Unit filename="Header/Vender/tinyxml.h" />
-		<Unit filename="Header/Vender/tinyxmlerror.cpp" />
-		<Unit filename="Header/Vender/tinyxmlparser.cpp" />
+		<Unit filename="Header/Vendor/TinyXML/tinystr.cpp" />
+		<Unit filename="Header/Vendor/TinyXML/tinystr.h" />
+		<Unit filename="Header/Vendor/TinyXML/tinyxml.cpp" />
+		<Unit filename="Header/Vendor/TinyXML/tinyxml.h" />
+		<Unit filename="Header/Vendor/TinyXML/tinyxmlerror.cpp" />
+		<Unit filename="Header/Vendor/TinyXML/tinyxmlparser.cpp" />
 		<Unit filename="Header/Warrior.cpp" />
 		<Unit filename="Header/Warrior.h" />
 		<Unit filename="Header/Widget.h" />

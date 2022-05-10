@@ -11,10 +11,9 @@ class Transform {
 
         Transform(float x=0, float y=0, int width=0, int height=0, std::string textureID = "",
             SDL_RendererFlip flip = SDL_FLIP_NONE, float scaleX = 1.0f, float scaleY = 1.0f,
-            float rotation = 0.0f, float scrollRatio = 1.0f){
+            float rotation = 0.0f, float scrollRatio = 0.0f){
 
-            X = x;
-            Y = y;
+            X = x; Y = y;
             Flip = flip;
             Width = width;
             Height = height;
@@ -32,6 +31,7 @@ class Transform {
 
 
         public:
+
             float X, Y;
             float Rotation;
             Vector2D* Origin;

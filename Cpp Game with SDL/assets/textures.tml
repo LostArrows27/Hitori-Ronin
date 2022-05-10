@@ -3,66 +3,60 @@
     <texture id="brick" source="assets/maps/brick.png"/>
     <texture id="objects" source="assets/maps/objects.png"/>
     <texture id="Jungle_terrain" source="assets/maps/Jungle_terrain.png"/>
+    <texture id="gd32x32" source="assets/maps/gd32x32.png"/>
+    <texture id="FeudalUrbanJapan0" source="assets/maps/FeudalUrbanJapan0.png"/>
+    <texture id="japanset2" source="assets/maps/japanset2.png"/>
+    <texture id="japanset" source="assets/maps/japanset.png"/>
 
-    <texture id="sky" source="assets/images/sky.png"/>
-    <texture id="mountain" source="assets/images/mountain.png"/>
-    <texture id="cloud" source="assets/images/cloud.png"/>
-    <texture id="pine1" source="assets/images/pine1.png"/>
-    <texture id="pine2" source="assets/images/pine2.png"/>
-    <texture id="tree" source="assets/images/tree.png"/>
-    <texture id="tree_dead" source="assets/images/tree_dead.png"/>
-    <texture id="Sign_1" source="assets/images/Sign_1.png"/>
-    <texture id="Sign_2" source="assets/images/Sign_2.png"/>
+    <texture id="sky" source="assets/textures/sky/sky.png"/>
+    <texture id="night_sky" source="assets/textures/sky/night_sky.png"/>
 
-    <texture id="cumulus_big1" source="assets/images/cumulus_big1.png"/>
-    <texture id="moon" source="assets/images/moon.png"/>
-    <texture id="sun" source="assets/images/sun.png"/>
-    <texture id="night_sky" source="assets/images/night_sky.jpg"/>
+    <texture id="cloud" source="assets/textures/clouds/cloud.png"/>
+    <texture id="cloud1" source="assets/textures/clouds/cloud1.png"/>
+    <texture id="cloud2" source="assets/textures/clouds/cloud2.png"/>
+    <texture id="cloud_night" source="assets/textures/clouds/cloud_night.png"/>
+
+    <texture id="montain1" source="assets/textures/montains/montain1.png"/>
+    <texture id="montain2" source="assets/textures/montains/montain2.png"/>
     
-    <texture id="player_run" source="assets/player/run.png"/>
-    <texture id="player_idle" source="assets/player/stay.png"/>
-    <texture id="player_jump" source="assets/player/Jump.png"/>
-    <texture id="player_fall" source="assets/player/Fall.png"/>
-    <texture id="player_attack1" source="assets/player/Attack1.png"/>
-    <texture id="player_attack2" source="assets/player/Attack2.png"/>
+    <texture id="pine1" source="assets/textures/pines/pine1.png"/>
+    <texture id="pine2" source="assets/textures/pines/pine2.png"/>
+    <texture id="pine3" source="assets/textures/pines/pine3.png"/>
+    <texture id="pine2_night" source="assets/textures/pines/pine2_night.png"/>
 
-    <texture id="boss_idle1" source="assets/boss/idle/idle_1.png"/>
-    <texture id="boss_idle2" source="assets/boss/idle/idle_2.png"/>
-    <texture id="boss_idle3" source="assets/boss/idle/idle_3.png"/>
-    <texture id="boss_idle4" source="assets/boss/idle/idle_4.png"/>
-    <texture id="boss_idle5" source="assets/boss/idle/idle_5.png"/>
-    <texture id="boss_idle6" source="assets/boss/idle/idle_6.png"/>
+    <texture id="tree1" source="assets/textures/trees/tree1.png"/>
+    <texture id="tree2" source="assets/textures/trees/tree2.png"/>
+    <texture id="tree3" source="assets/textures/trees/tree3.png"/>
+    <texture id="tree4" source="assets/textures/trees/tree4.png"/>
+    <texture id="tree5" source="assets/textures/trees/tree5.png"/>
+    <texture id="tree6" source="assets/textures/trees/tree6.png"/>
+    <texture id="tree7" source="assets/textures/trees/tree7.png"/>
+    <texture id="tree_night" source="assets/textures/trees/tree_night.png"/>
 
-    <texture id="boss_attack1" source="assets/boss/attack/hit_1.png"/>
-    <texture id="boss_attack2" source="assets/boss/attack/hit_2.png"/>
-    <texture id="boss_attack3" source="assets/boss/attack/hit_3.png"/>
-    <texture id="boss_attack4" source="assets/boss/attack/hit_4.png"/>
-    <texture id="boss_attack5" source="assets/boss/attack/hit_5.png"/>
-    <texture id="boss_attack6" source="assets/boss/attack/hit_6.png"/>
+    <texture id="moon" source="assets/textures/stars/moon.png"/>
+    <texture id="sun" source="assets/textures/stars/sun.png"/>
 
-    <texture id="boss_appear1" source="assets/boss/appear/appear_1.png"/>
-    <texture id="boss_appear2" source="assets/boss/appear/appear_2.png"/>
-    <texture id="boss_appear3" source="assets/boss/appear/appear_3.png"/>
-    <texture id="boss_appear4" source="assets/boss/appear/appear_4.png"/>
-    <texture id="boss_appear5" source="assets/boss/appear/appear_5.png"/>
-    <texture id="boss_appear6" source="assets/boss/appear/appear_6.png"/>
-    <texture id="boss_appear7" source="assets/boss/appear/appear_7.png"/>
-    <texture id="boss_appear8" source="assets/boss/appear/appear_8.png"/>
-    <texture id="boss_appear9" source="assets/boss/appear/appear_9.png"/>
-    <texture id="boss_appear10" source="assets/boss/appear/appear_10.png"/>
-    <texture id="boss_appear11" source="assets/boss/appear/appear_11.png"/>
-    <texture id="boss_appear12" source="assets/boss/appear/appear_12.png"/>
-    <texture id="boss_appear13" source="assets/boss/appear/appear_13.png"/>
-    <texture id="boss_appear14" source="assets/boss/appear/appear_14.png"/>
-    <texture id="boss_appear15" source="assets/boss/appear/appear_15.png"/>
+    <texture id="rain1" source="assets/textures/rain/rain1.png"/>
+    <texture id="rain2" source="assets/textures/rain/rain2.png"/>
 
-    <texture id="boss_die1" source="assets/boss/die/die_1.png"/>
-    <texture id="boss_die2" source="assets/boss/die/die_2.png"/>
-    <texture id="boss_die3" source="assets/boss/die/die_3.png"/>
-    <texture id="boss_die4" source="assets/boss/die/die_4.png"/>
-    <texture id="boss_die5" source="assets/boss/die/die_5.png"/>
-    <texture id="boss_die6" source="assets/boss/die/die_6.png"/>
-    <texture id="boss_die7" source="assets/boss/die/die_7.png"/>
+    <texture id="snow1" source="assets/textures/snow/snow1.png"/>
+    <texture id="snow2" source="assets/textures/snow/snow2.png"/>
+    <texture id="snow3" source="assets/textures/snow/snow3.png"/>
+
+    <texture id="dust1" source="assets/textures/dust/dust1.png"/>
+    <texture id="dust2" source="assets/textures/dust/dust2.png"/>
+    <texture id="dust3" source="assets/textures/dust/dust3.png"/>
+
+    <texture id="ligth1" source="assets/textures/ligthing/ligth1.png"/>
+    <texture id="ligth2" source="assets/textures/ligthing/ligth2.png"/>
+    <texture id="ligth3" source="assets/textures/ligthing/ligth3.png"/>
+    
+    <texture id="player_run" source="assets/textures/player/run.png"/>
+    <texture id="player_idle" source="assets/textures/player/stay.png"/>
+    <texture id="player_jump" source="assets/textures/player/Jump.png"/>
+    <texture id="player_fall" source="assets/textures/player/Fall.png"/>
+    <texture id="player_attack1" source="assets/textures/player/Attack1.png"/>
+    <texture id="player_attack2" source="assets/textures/player/Attack2.png"/>
 </textures>
 
  

@@ -1247,14 +1247,15 @@
 1649344404 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\baseobject.cpp
 	"BaseObject.h"
 
-1652104347 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\engine.h
+1652202492 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\engine.h
 	<iostream>
 	<vector>
 	"SDL.h"
+	"SDL_ttf.h"
 	"SDL_image.h"
 	"GameState.h"
 
-1584995058 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\engine.cpp
+1652202493 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\engine.cpp
 	"Engine.h"
 	"assert.h"
 	"Play.h"
@@ -1272,7 +1273,7 @@
 	"SDL.h"
 	<map>
 
-1584972600 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\transform.h
+1652202493 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\transform.h
 	<SDL.h>
 	<string>
 	"Vector2D.h"
@@ -1286,7 +1287,7 @@
 	"GameObject.h"
 	"SpriteAnimation.h"
 
-1584969261 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\gameobject.h
+1652202493 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\gameobject.h
 	<SDL.h>
 	"IObject.h"
 	"Transform.h"
@@ -1294,7 +1295,7 @@
 
 1652019370 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\object.h
 
-1652107746 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\warrior.cpp
+1652187391 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\warrior.cpp
 	"Warrior.h"
 	"Input.h"
 	"CollisionMgr.h"
@@ -1309,12 +1310,12 @@
 1582106859 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\rigidbody.h
 	"Vector2D.h"
 
-1584188690 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\input.h
+1652202493 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\input.h
 	"SDL.h"
 	<vector>
 	"Vector2D.h"
 
-1584998934 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\input.cpp
+1652202493 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\input.cpp
 	"Input.h"
 	"Engine.h"
 	"Camera.h"
@@ -1386,12 +1387,12 @@
 	<vector>
 	"Layer.h"
 
-1584988865 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\camera.cpp
+1652202492 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\camera.cpp
 	"Camera.h"
 	"Input.h"
 	"Engine.h"
 
-1584988870 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\camera.h
+1652202493 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\camera.h
 	<SDL.h>
 	"Engine.h"
 	"Vector2D.h"
@@ -1424,12 +1425,12 @@
 	"Animation.h"
 	"TextureMgr.h"
 
-1584804500 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\seqanimation.cpp
+1652201995 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\seqanimation.cpp
 	"SeqAnimation.h"
 	"tinyxml.h"
 	"iostream"
 
-1584804585 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\seqanimation.h
+1652202066 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\seqanimation.h
 	<map>
 	<string>
 	<vector>
@@ -1438,7 +1439,7 @@
 	"TextureMgr.h"
 	"Transform.h"
 
-1584971727 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\enemy.cpp
+1652194915 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\enemy.cpp
 	"Enemy.h"
 	"Camera.h"
 	"CollisionMgr.h"
@@ -1452,7 +1453,7 @@
 	"SpriteAnimation.h"
 	"ObjectFactory.h"
 
-1584968192 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\objectfactory.h
+1652202492 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\objectfactory.h
 	<map>
 	<string>
 	<vector>
@@ -1460,7 +1461,7 @@
 	"Transform.h"
 	"GameObject.h"
 
-1584819651 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\objectfactory.cpp
+1652202493 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\objectfactory.cpp
 	"ObjectFactory.h"
 	"Enemy.h"
 	"Warrior.h"
@@ -1472,7 +1473,7 @@
 1583745017 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\menu.h
 	"GameState.h"
 
-1584996508 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\play.h
+1652200470 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\play.h
 	<map>
 	<iostream>
 	"TileMap.h"
@@ -1491,6 +1492,8 @@
 	"StateMgr.h"
 	"StaticObject.h"
 	"Cloud.h"
+	"ClimatEmitter.h"
+	"Tree.h"
 
 1584788262 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\menu.cpp
 	"Menu.h"
@@ -1499,7 +1502,7 @@
 	"Input.h"
 	"StateMgr.h"
 
-1652108550 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\play.cpp
+1652202627 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\play.cpp
 	"Play.h"
 	"Menu.h"
 	"Pause.h"
@@ -1618,7 +1621,7 @@
 	<memory>
 	"GameObject.h"
 
-1584912005 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\iobject.h
+1652202493 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\iobject.h
 
 1584811663 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\collider.h
 	"SDL.h"
@@ -1698,7 +1701,7 @@
 	"SDL.h"
 	<map>
 
-1584813201 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\collisionmgr.cpp
+1652202493 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\collisionmgr.cpp
 	"CollisionMgr.h"
 	"Engine.h"
 
@@ -1728,7 +1731,7 @@
 	"TextureMgr.h"
 	"ObjectFactory.h"
 
-1584998767 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\cloud.h
+1652200571 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\cloud.h
 	<SDL.h>
 	"Engine.h"
 	"Helpers.h"
@@ -1736,8 +1739,10 @@
 	"TextureMgr.h"
 	"ObjectFactory.h"
 
-1584995943 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\helpers.h
-	<random>
+1652202493 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\helpers.h
+	<cstdlib>
+	<iostream>
+	<ctime>
 
 1584971412 source:c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\statemgr.cpp
 	"StateMgr.h"
@@ -1786,4 +1791,22 @@
 	<stddef.h>
 	"tinyxml.h"
 	<windows.h>
+
+1585240482 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\climatemitter.h
+	"Particle.h"
+	"Transform.h"
+
+1585138797 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\particle.h
+	<string>
+	"Helpers.h"
+	"Engine.h"
+	"Transform.h"
+	"TextureMgr.h"
+
+1585237803 c:\users\admin\documents\github\remember_and_click_game\cpp game with sdl\header\tree.h
+	"Helpers.h"
+	"GameObject.h"
+	"TextureMgr.h"
+	"ObjectFactory.h"
+	"SeqAnimation.h"
 

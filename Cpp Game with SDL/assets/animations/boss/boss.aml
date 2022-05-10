@@ -9,7 +9,7 @@
         <frame textureID ="boss_idle6"/>
     </sequence> 
 
-    <sequence id="boss_attack" frameCount="6" speed="150" width="460" height="352">
+    <sequence id="boss_attack" frameCount="6" speed="150" width="528" height="372">
         <frame textureID ="boss_attack1"/>
         <frame textureID ="boss_attack2"/>
         <frame textureID ="boss_attack3"/>

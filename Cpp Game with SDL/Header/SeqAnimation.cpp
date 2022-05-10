@@ -11,21 +11,8 @@ void SeqAnimation::DrawFrame(Transform* tf){
     TextureMgr::Instance()->Draw(tf);
 }
 
-/*void SeqAnimation::DrawFrame(int x, int y, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){
-    TextureMgr::Instance()->Draw(m_CurrentSeq.TextureIDs[m_CurrentFrame], x, y, m_CurrentSeq.Width, m_CurrentSeq.Height, flip, scaleX, scaleY, rotation, speedRatio);
-}*/
-
 void SeqAnimation::Update(float dt){
-
-    if(m_Repeat || !m_IsEnded){
-        m_IsEnded = false;
-        m_CurrentFrame = (SDL_GetTicks()/m_CurrentSeq.Speed) % m_CurrentSeq.FrameCount;
-    }
-
-    if(!m_Repeat && m_CurrentFrame == (m_CurrentSeq.FrameCount-1)){
-        m_IsEnded = true;
-        m_CurrentFrame = (m_CurrentSeq.FrameCount-1);
-    }
+    m_CurrentFrame = (SDL_GetTicks()/m_CurrentSeq.Speed) % m_CurrentSeq.FrameCount;
 }
 
 void SeqAnimation::SetCurrentSeq(std::string seqID){

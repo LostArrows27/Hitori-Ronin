@@ -8,7 +8,7 @@
 #include "TextureMgr.h"
 #include "ObjectFactory.h"
 
-#define MAX_COUNTER 40
+#define MAX_COUNTER 30
 #define MIN_COUNTER 10
 
 class Cloud : public GameObject {

@@ -6,8 +6,9 @@
 Engine* Engine::s_Instance = nullptr;
 
 void Engine::Init(){
+    srand (time(NULL));
     assert(!SDL_Init(SDL_INIT_VIDEO) && SDL_GetError());
-    SDL_WindowFlags w_flags = (SDL_WindowFlags)(/*SDL_WINDOW_MAXIMIZED |*/ SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_WindowFlags w_flags = (SDL_WindowFlags)(SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
     m_Window = SDL_CreateWindow("Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, w_flags);
 
     SDL_RendererFlags r_flags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
