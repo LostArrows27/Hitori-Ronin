@@ -1,2 +1,2 @@
-# "Lost Ronin" game
-# Small adventure game
+# Small Adventure "Hitori Ronin" game
+
