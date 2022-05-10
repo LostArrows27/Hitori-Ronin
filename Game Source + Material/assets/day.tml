@@ -8,9 +8,9 @@
     <object type="SOBJECT" category="0" texture="pine3" x="100" y ="400" w="0" h="0" flip="0" sX="3.5" sY="3" sratio="0.1" rot="0"/>    
     <object type="SOBJECT" category="0" texture="pine1" x="-10" y ="440" w="0" h="0" flip="0" sX="3.5" sY="3" sratio="0.15" rot="0"/>
     <object type="SOBJECT" category="0" texture="pine2" x="-50" y ="500" w="0" h="0" flip="0" sX="3.5" sY="3" sratio="0.2" rot="0"/>  
-    <object type="SOBJECT" category="0" texture="montain2" x="-50" y ="600" w="0" h="0" flip="0" sX="1" sY="1" sratio="0.8" rot="0"/>  
-    <object type="SOBJECT" category="0" texture="montain2" x="1000" y ="600" w="0" h="0" flip="0" sX="1" sY="1" sratio="0.8" rot="0"/>
-    <object type="SOBJECT" category="0" texture="montain2" x="1800" y ="600" w="0" h="0" flip="0" sX="1" sY="1" sratio="0.8" rot="0"/>
+    <object type="SOBJECT" category="0" texture="montain2" x="-50" y ="550" w="0" h="0" flip="0" sX="1" sY="1" sratio="0.8" rot="0"/>  
+    <object type="SOBJECT" category="0" texture="montain2" x="1000" y ="550" w="0" h="0" flip="0" sX="1" sY="1" sratio="0.8" rot="0"/>
+    <object type="SOBJECT" category="0" texture="montain2" x="1800" y ="550" w="0" h="0" flip="0" sX="1" sY="1" sratio="0.8" rot="0"/>
 
     <object type="SOBJECT" category="0" texture="tree2" x="-100" y="300" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/>
     <object type="SOBJECT" category="0" texture="tree1" x="0" y="300" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/>
