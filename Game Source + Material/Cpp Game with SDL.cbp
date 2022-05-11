@@ -50,7 +50,6 @@
 			<Add directory="C:/Users/Admin/Documents/SDL Library/SDL2_mixer-devel-2.0.4-mingw/SDL2_mixer-2.0.4/i686-w64-mingw32/lib" />
 			<Add directory="C:/Users/Admin/Documents/SDL Library/SDL2_ttf-devel-2.0.18-mingw/SDL2_ttf-2.0.18/i686-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="Header/Animation.h" />
 		<Unit filename="Header/Button.h" />
 		<Unit filename="Header/Camera.cpp" />
 		<Unit filename="Header/Camera.h" />
@@ -84,6 +83,8 @@
 		<Unit filename="Header/RigidBody.h" />
 		<Unit filename="Header/SeqAnimation.cpp" />
 		<Unit filename="Header/SeqAnimation.h" />
+		<Unit filename="Header/SoundMgr.cpp" />
+		<Unit filename="Header/SoundMgr.h" />
 		<Unit filename="Header/SpriteAnimation.cpp" />
 		<Unit filename="Header/SpriteAnimation.h" />
 		<Unit filename="Header/StateMgr.cpp" />
