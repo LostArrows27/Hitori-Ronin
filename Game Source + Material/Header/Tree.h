@@ -18,6 +18,7 @@ class Tree : public GameObject{
             //m_CurrFrame = (Uint8)((SDL_GetTicks()/1000) % 2);
             //m_Tf->TextureID = (m_CurrFrame == 0)? "tree2" : "tree2";
         }
+        // u can cmt this
 
     private:
         Uint8 m_CurrFrame;

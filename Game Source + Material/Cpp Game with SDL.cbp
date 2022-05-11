@@ -51,7 +51,6 @@
 			<Add directory="C:/Users/Admin/Documents/SDL Library/SDL2_ttf-devel-2.0.18-mingw/SDL2_ttf-2.0.18/i686-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="Header/Animation.h" />
-		<Unit filename="Header/Button.cpp" />
 		<Unit filename="Header/Button.h" />
 		<Unit filename="Header/Camera.cpp" />
 		<Unit filename="Header/Camera.h" />

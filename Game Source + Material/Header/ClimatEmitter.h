@@ -85,28 +85,25 @@ class ClimatEmitter {
         Particle* RainParticle(std::string textrID){
             SDL_Rect vp = Engine::Instance()->GetViewPort();
             float x = Helpers::RandI(0, vp.w);
-            float vx = Helpers::RandI(-1, 1);
-            float vy = Helpers::RandI(10, 15);
             Uint32 lifetime = Helpers::RandI(800, 2000);
-            return (new Particle(Transform(x, 0, 0, 0, textrID), vx, vy, lifetime));
+            Vector2D vel(Helpers::RandI(-1, 1), Helpers::RandI(10, 15));
+            return (new Particle(Transform(x, 0, 0, 0, textrID), vel, lifetime));
         }
 
         Particle* SnowParticle(std::string textrID){
             SDL_Rect vp = Engine::Instance()->GetViewPort();
             float x = Helpers::RandI(0, vp.w);
-            float vx = Helpers::RandI(-2, 2);
-            float vy = Helpers::RandI(1, 4);
             Uint32 lifetime = Helpers::RandI(5000, 8000);
-            return (new Particle(Transform(x, 0, 0, 0, textrID), vx, vy, lifetime));
+            Vector2D vel(Helpers::RandI(-2, 2), Helpers::RandI(1, 4));
+            return (new Particle(Transform(x, 0, 0, 0, textrID), vel, lifetime));
         }
 
         Particle* DustParticle(std::string textrID){
             SDL_Rect vp = Engine::Instance()->GetViewPort();
             float y = Helpers::RandI(0, vp.h);
-            float vx = Helpers::RandI(-10, -1);
-            float vy = Helpers::RandI(-1, 1);
             Uint32 lifetime = Helpers::RandI(4000, 9000);
-            return (new Particle(Transform(vp.w, y, 0, 0, textrID), vx, vy, lifetime));
+            Vector2D vel(Helpers::RandI(-10, -1), Helpers::RandI(-1, 1));
+            return (new Particle(Transform(vp.w, y, 0, 0, textrID), vel, lifetime));
         }
 
         Particle* ThunderParticle(std::string textrID){
@@ -114,7 +111,7 @@ class ClimatEmitter {
             float x = Helpers::RandI(0, vp.w);
             float y = Helpers::RandI(0, 100);
             Uint32 lifetime = Helpers::RandI(600, 1200);
-            return (new Particle(Transform(x, y, 0, 0, textrID), 0, 0, lifetime));
+            return (new Particle(Transform(x, y, 0, 0, textrID), Vector2D(0,0), lifetime));
         }
 
     private:

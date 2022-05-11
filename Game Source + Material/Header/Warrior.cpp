@@ -6,6 +6,7 @@
 static Registrar<Warrior> warrior("WARRIOR");
 
 Warrior::Warrior(Transform* tf) : GameObject(tf){
+    m_Tf->ScrollRatio = 1;
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
     m_AttackTime = ATTACK_TIME;

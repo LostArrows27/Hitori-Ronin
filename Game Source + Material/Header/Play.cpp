@@ -2,54 +2,52 @@
 #include "Menu.h"
 #include "Pause.h"
 #include "Helpers.h"
+#include "Button.h"
 
 enum DayTime {DAY=0, NIGHT};
 ClimatEmitter* rEmttr = nullptr;
-ClimatEmitter* lightEmttr = nullptr;
 
 Play::Play(){}
 
 bool Play::Init(){
+    m_ClearColor = SKYBLUE;
     m_Ctxt = Engine::Instance()->GetRenderer();
+
     Parser::Instance()->ParseTextures("assets/textures.tml");
-    m_LevelMap = Parser::Instance()->ParseMap("assets/maps/mymap.tmx");
+    m_TilelMap = Parser::Instance()->ParseMap("assets/maps/mymap.tmx");
+    Parser::Instance()->ParseGameObjects("assets/levels/day.tml", &m_GameObjects);
+    // u can change to dark later
 
-    if(Helpers::RandI(0,10) <= 5){
-        Parser::Instance()->ParseGameObjects("assets/day.tml", &m_GameObjects);
-        m_ClearColor = SKYBLUE;
-    }else{
-        Parser::Instance()->ParseGameObjects("assets/night.tml", &m_GameObjects);
-        m_ClearColor = SKYDARK;
-    }
-
-    //m_CurrClimat = (Climat)Helpers::RandI(0, 3);
     rEmttr = new ClimatEmitter(DUST);
-    // u can press from 1- 6 to change climate and sky state
-    // for more infor go to the void event down belown
+    TileLayer* layer = m_TilelMap->GetLayers().back();
+    CollisionMgr::Instance()->SetCollisionLayer(layer);
+    Camera::Instance()->SetMapLimit(layer->GetWidth(), layer->GetHeight());
 
-
-    TileLayer* colLayer = m_LevelMap->GetLayers().back();
-    CollisionMgr::Instance()->SetCollisionLayer(colLayer);
-    Camera::Instance()->SetMapLimit(colLayer->GetWidth(), colLayer->GetHeight());
-
-    Transform* tf = new Transform(0, 0, 200, 200, "", SDL_FLIP_NONE, 1.0f, 1.0f, 1.0f, 1.0f);
-    m_Player = ObjectFactory::Instance()->CreateObject("WARRIOR", tf);
+    m_Player = ObjectFactory::Instance()->CreateObject("WARRIOR", new Transform(0, 0, 200, 200));
     Camera::Instance()->SetTarget(m_Player->GetOrigin());
 
-    std::cout << "play initialized!" << std::endl;
+    Button* menubtn = new Button(100, 50, OpenMenu, {"home_n", "home_h", "home_p"});
+    Button* optbtn = new Button(100, 50, Options, {"opt_n", "opt_h", "opt_p"});
+
+    m_UiObjects.push_back(optbtn);
+    m_UiObjects.push_back(menubtn);
     return true;
 }
 
 void Play::Render(){
-    SDL_SetRenderDrawColor(m_Ctxt, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, 255);
+
+    SDL_SetRenderDrawColor(m_Ctxt, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
     SDL_RenderClear(m_Ctxt);
 
     for(auto object : m_GameObjects)
         object->Draw();
 
     rEmttr->RenderParticles();
-    m_LevelMap->Render();
+    m_TilelMap->Render();
     m_Player->Draw();
+
+    for(auto object : m_UiObjects)
+        object->Draw();
 
     SDL_RenderPresent(m_Ctxt);
 }
@@ -57,16 +55,18 @@ void Play::Render(){
 void Play::Update(){
 
     Events();
-
     float dt = Timer::Instance()->GetDeltaTime();
     m_Player->Update(dt);
 
     Camera::Instance()->TrackTarget();
 
-    m_LevelMap->Update();
+    m_TilelMap->Update();
 
     for(auto object : m_GameObjects)
         object->Update(dt);
+
+    for(auto object : m_UiObjects)
+        object->Update(0);
 
     rEmttr->UpdateParticles(dt);
 }
@@ -94,18 +94,17 @@ void Play::Events(){
 }
 
 bool Play::Exit(){
-
-    m_LevelMap->Clean();
-    delete m_LevelMap;
-
-    for(auto object : m_GameObjects){
-        object->Clean();
-        delete object;
-    }
-
     m_GameObjects.clear();
     TextureMgr::Instance()->Clean();
     return true;
+}
+
+void Play::OpenMenu(){
+    std::cout << "open menu" << std::endl;
+}
+
+void Play::Options(){
+    std::cout << "open option" << std::endl;
 }
 
 

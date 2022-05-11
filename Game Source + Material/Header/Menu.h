@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include "GameState.h"
+#include "ObjectFactory.h"
 
 class Menu : public GameState {
 
@@ -14,9 +15,11 @@ class Menu : public GameState {
 
     private:
         static void StartGame();
+        static void QuitGame();
         static void Settings();
-        static void Editor();
-        static void Quit();
+
+    private:
+        ObjectList m_GuiObjects;
 };
 
 #endif // MENU_H

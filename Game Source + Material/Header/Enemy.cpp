@@ -41,7 +41,7 @@ void Enemy::Update(float dt){
         m_Tf->Y = m_LastSafePosition.Y;
 
     m_Animation->Update(dt);
-    // u can cmt all "1"
+    // u can cmt all "1" or put it in front of "Update" function
     if(m_Animation->IsEnded()){ // 1
         m_Animation->SetRepeat(true); // 1
         m_Animation->SetCurrentSeq("boss_idle"); // 1

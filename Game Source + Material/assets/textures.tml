@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <textures>
+    <texture id="player_run" source="assets/textures/player/run.png"/>
+    <texture id="player_idle" source="assets/textures/player/stay.png"/>
+    <texture id="player_jump" source="assets/textures/player/Jump.png"/>
+    <texture id="player_fall" source="assets/textures/player/Fall.png"/>
+    <texture id="player_attack1" source="assets/textures/player/Attack1.png"/>
+    <texture id="player_attack2" source="assets/textures/player/Attack2.png"/>
+
     <texture id="brick" source="assets/maps/brick.png"/>
     <texture id="objects" source="assets/maps/objects.png"/>
     <texture id="Jungle_terrain" source="assets/maps/Jungle_terrain.png"/>
@@ -49,14 +56,13 @@
 
     <texture id="ligth1" source="assets/textures/ligthing/ligth1.png"/>
     <texture id="ligth2" source="assets/textures/ligthing/ligth2.png"/>
-    <texture id="ligth3" source="assets/textures/ligthing/ligth3.png"/>
+    <texture id="ligth3" source="assets/textures/ligthing/ligth3.png"/>  
+
+    <texture id="play_normal" source="assets/textures/button/play_normal.png"/>
+    <texture id="play_hover" source="assets/textures/button/play_hover.png"/>
+    <texture id="play_pressed" source="assets/textures/button/play_pressed.png"/> 
     
-    <texture id="player_run" source="assets/textures/player/run.png"/>
-    <texture id="player_idle" source="assets/textures/player/stay.png"/>
-    <texture id="player_jump" source="assets/textures/player/Jump.png"/>
-    <texture id="player_fall" source="assets/textures/player/Fall.png"/>
-    <texture id="player_attack1" source="assets/textures/player/Attack1.png"/>
-    <texture id="player_attack2" source="assets/textures/player/Attack2.png"/>
+    
 </textures>
 
  

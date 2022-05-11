@@ -1,7 +1,8 @@
-#ifndef TEXTUREMGR_H
-#define TEXTUREMGR_H
+#ifndef TEXTUREMANAGER_H
+#define TEXTUREMANAGER_H
 
 #include "Transform.h"
+#include <iostream>
 #include <string>
 #include "SDL.h"
 #include <map>
@@ -25,8 +26,9 @@ class TextureMgr {
         inline static TextureMgr* Instance(){ return s_Instance = (s_Instance != nullptr)? s_Instance : new TextureMgr();}
 
     private:
-        TextureMgr(){}
+        TextureMgr();
         TextureMap m_TextureMap;
+        SDL_Renderer* m_Renderer;
         static TextureMgr* s_Instance;
 };
 

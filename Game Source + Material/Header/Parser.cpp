@@ -1,58 +1,8 @@
 #include "Parser.h"
-#include "Transform.h"
 #include "TextureMgr.h"
 
 Parser* Parser::s_Instance = nullptr;
 
-void Parser::ParseGameObjects(std::string source, ObjectList* target){
-
-    TiXmlDocument xml;
-    xml.LoadFile(source);
-    if(xml.Error()){
-        std::cout << "Failed to load: " << source << " " << xml.ErrorDesc() << std::endl;
-        return;
-    }
-
-    TiXmlElement* root = xml.RootElement();
-
-    for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
-        if(e->Value() == std::string("object")){
-            int category = -1;
-            int x, y, width, height, flip = 0;
-            double scX, scY, sratio, rot = 0.0f;
-
-            std::string objType = e->Attribute("type");
-            e->Attribute("category", &category);
-            std::string texID = e->Attribute("texture");
-
-            e->Attribute("x", &x);
-            e->Attribute("y", &y);
-            e->Attribute("w", &width);
-            e->Attribute("h", &height);
-
-            e->Attribute("flip", &flip);
-            e->Attribute("sX", &scX);
-            e->Attribute("sY", &scY);
-
-            e->Attribute("sratio", &sratio);
-            e->Attribute("rot", &rot);
-
-            SDL_RendererFlip rflip;
-            if(flip == 0){rflip = SDL_FLIP_NONE;}
-            if(flip == 1){rflip = SDL_FLIP_HORIZONTAL;}
-            if(flip == 2){rflip = SDL_FLIP_VERTICAL;}
-
-            Transform* tf = new Transform(x, y, width, height, texID, rflip, scX, scY, rot, sratio);
-            ObjectPtr object = ObjectFactory::Instance()->CreateObject(objType, tf);
-
-            if(object != nullptr)
-                target->push_back(object);
-                //target->push_back(std::move(object));
-        }
-    }
-
-    std::cout << source << " Parsed!" << std::endl;
-}
 
 bool Parser::ParseTextures(std::string source){
 
@@ -109,7 +59,52 @@ TileMap* Parser::ParseMap(std::string source){
         }
     }
 
+    std::cout << source << " Parsed!" << std::endl;
     return gamemap;
+}
+
+bool Parser::ParseGameObjects(std::string source, ObjectList* target){
+
+    TiXmlDocument xml;
+    xml.LoadFile(source);
+    if(xml.Error()){
+        std::cout << "Failed to load: " << source << " " << xml.ErrorDesc() << std::endl;
+        return false;
+    }
+
+    TiXmlElement* root = xml.RootElement();
+
+    for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
+        if(e->Value() == std::string("object")){
+
+            int x, y, width, height, flip = 0;
+            double scX, scY, sratio, rot = 0.0f;
+
+            std::string objType = e->Attribute("type");
+            std::string texID = e->Attribute("texture");
+
+            e->Attribute("x", &x);
+            e->Attribute("y", &y);
+            e->Attribute("w", &width);
+            e->Attribute("h", &height);
+
+            e->Attribute("flip", &flip);
+            e->Attribute("scX", &scX);
+            e->Attribute("scY", &scY);
+
+            e->Attribute("sratio", &sratio);
+            e->Attribute("rot", &rot);
+
+            Transform* tfr = new Transform(x, y, width, height, texID, (SDL_RendererFlip)flip, scX, scY, rot, sratio);
+            ObjectPtr object = ObjectFactory::Instance()->CreateObject(objType, tfr);
+
+            if(object != nullptr)
+                target->push_back(object);
+        }
+    }
+
+    std::cout << source << " Parsed!" << std::endl;
+    return true;
 }
 
 Tileset Parser::ParseTileset(TiXmlElement* xmlTileset){

@@ -4,15 +4,15 @@
 #include <string>
 #include "Helpers.h"
 #include "Engine.h"
-#include "Transform.h"
+#include "Vector2D.h"
 #include "TextureMgr.h"
 
 class Particle {
 
     public:
 
-        Particle(Transform tf, float vx, float vy, Uint32 lifeTime){
-            m_xVel = vx; m_yVel = vy;
+        Particle(Transform tf, Vector2D vel, Uint32 lifeTime){
+            m_Vel = vel;
             m_Tf.X = tf.X; m_Tf.Y = tf.Y;
             m_Tf.TextureID = tf.TextureID;
             m_LifeTime = (SDL_GetTicks() + lifeTime);
@@ -24,8 +24,8 @@ class Particle {
         }
 
         virtual void Move(float dt){
-            m_Tf.X += m_xVel*dt;
-            m_Tf.Y += m_yVel*dt;
+             m_Tf.X += m_Vel.X*dt;
+             m_Tf.Y += m_Vel.Y*dt;
         }
 
         virtual bool IsDead(){
@@ -34,6 +34,7 @@ class Particle {
         }
 
     private:
+        Vector2D m_Vel;
         Transform m_Tf;
         Uint32 m_LifeTime;
         float m_xVel, m_yVel;
