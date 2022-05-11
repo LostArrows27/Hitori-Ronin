@@ -1,8 +1,34 @@
 #include "Parser.h"
+#include "SoundMgr.h"
 #include "TextureMgr.h"
 
 Parser* Parser::s_Instance = nullptr;
 
+bool Parser::ParseSounds(std::string source){
+    TiXmlDocument xml;
+    xml.LoadFile(source);
+    if(xml.Error()){
+        std::cout << "Failed to load: " << source << std::endl;
+        return false;
+    }
+
+    TiXmlElement* root = xml.RootElement();
+    for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
+
+        if(e->Value() == std::string("effect")){
+            SoundMgr::Instance()->LoadEffect(e->Attribute("id"), e->Attribute("source"));
+            continue;
+        }
+
+        if(e->Value() == std::string("music")){
+            SoundMgr::Instance()->LoadMusik(e->Attribute("id"), e->Attribute("source"));
+            continue;
+        }
+    }
+
+    std::cout << source << " Parsed!" << std::endl;
+    return true;
+}
 
 bool Parser::ParseTextures(std::string source){
 

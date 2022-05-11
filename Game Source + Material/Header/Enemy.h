@@ -14,7 +14,6 @@ class Enemy: public GameObject {
         Enemy(Transform* tf);
 
         virtual void Draw();
-        virtual void Clean();
         virtual void Update(float dt);
 
     private:

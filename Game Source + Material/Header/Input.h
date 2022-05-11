@@ -11,6 +11,12 @@ enum MouseButtons{LEFT, MIDDLE, RIGHT};
 class Input {
 
     public:
+        ~Input(){
+            m_MouseButtonStates.clear();
+            m_MouseButtonStates.shrink_to_fit();
+            free((void*)m_KeyStates);
+        };
+
         void Listen();
         int GetAxisKey(Axis axis);
         inline bool GetKeyDown(SDL_Scancode key){return (m_KeyStates[key])? true: false;}

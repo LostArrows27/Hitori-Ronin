@@ -1,12 +1,12 @@
 #include "SpriteAnimation.h"
 
-SpritetAnimation::SpritetAnimation(bool repeat): Animation(repeat){}
+SpritetAnimation::SpritetAnimation(){}
 
 void SpritetAnimation::Draw(Transform* tf){
     TextureMgr::Instance()->DrawFrame(tf, m_SpriteRow, m_CurrentFrame);
 }
 
-void SpritetAnimation::Update(float dt){
+void SpritetAnimation::Update(){
     m_CurrentFrame = (SDL_GetTicks()/m_Speed) % m_FrameCount;
 }
 

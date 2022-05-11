@@ -13,6 +13,7 @@ class TextureMgr {
 
     public:
         void Clean();
+        void DestroyTexture(std::string id);
         SDL_Texture* Load(std::string filename);
         bool Add(std::string id, std::string filename);
         void QueryTexture(std::string id, int* out_w, int* out_h);

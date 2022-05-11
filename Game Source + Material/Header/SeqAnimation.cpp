@@ -2,24 +2,35 @@
 #include "tinyxml.h"
 #include "iostream"
 
-SeqAnimation::SeqAnimation(bool repeat):Animation(repeat){}
+SeqAnimation::SeqAnimation(){}
 
-void SeqAnimation::DrawFrame(Transform* tf){
-    tf->TextureID = m_CurrentSeq.TextureIDs[m_CurrentFrame];
-    tf->Width =  m_CurrentSeq.Width;
-    tf->Height =  m_CurrentSeq.Height;
+SeqAnimation::~SeqAnimation(){
+    m_CurrSeq->TextureIDs.clear();
+    m_CurrSeq->TextureIDs.shrink_to_fit();
+    m_SeqMap.clear();
+}
+
+void SeqAnimation::Draw(Transform* tf){
     TextureMgr::Instance()->Draw(tf);
 }
 
-void SeqAnimation::Update(float dt){
-    m_CurrentFrame = (SDL_GetTicks()/m_CurrentSeq.Speed) % m_CurrentSeq.FrameCount;
+void SeqAnimation::Update(Transform* tf){
+
+    if(m_CurrSeq->FrameCount > 1)
+        m_CurrFrame = (SDL_GetTicks()/m_CurrSeq->Speed) % m_CurrSeq->FrameCount;
+    else
+        m_CurrFrame = 0;
+
+    tf->TextureID = m_CurrSeq->TextureIDs[m_CurrFrame];
+    tf->Width =  m_CurrSeq->Width;
+    tf->Height =  m_CurrSeq->Height;
 }
 
-void SeqAnimation::SetCurrentSeq(std::string seqID){
+void SeqAnimation::SetCurrSeq(std::string seqID){
     if(m_SeqMap.count(seqID) > 0)
-        m_CurrentSeq = m_SeqMap[seqID];
+        m_CurrSeq = m_SeqMap[seqID];
     else
-        std::cout << "The given Sequence animation is not matching: " << seqID << std::endl;
+        std::cout << "Sequence wrong:" << seqID << std::endl;
 }
 
 void SeqAnimation::Parse(std::string source){
@@ -27,22 +38,26 @@ void SeqAnimation::Parse(std::string source){
     TiXmlDocument xml;
     xml.LoadFile(source);
     if(xml.Error())
-        std::cout << "Failed to load animation file: " << source << std::endl;
+        std::cout << "Failed to parse: " << source << xml.ErrorDesc() << std::endl;
 
     TiXmlElement* root = xml.RootElement();
     for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
         if(e->Value() == std::string("sequence")){
-            Sequence seq;
+            Sequence* seq = new Sequence();
             std::string seqID = e->Attribute("id");
-            e->Attribute("speed", &seq.Speed);
-            e->Attribute("width", &seq.Width);
-            e->Attribute("height", &seq.Height);
-            e->Attribute("frameCount", &seq.FrameCount);
+            e->Attribute("speed", &seq->Speed);
+            e->Attribute("width", &seq->Width);
+            e->Attribute("height", &seq->Height);
+            e->Attribute("frameCount", &seq->FrameCount);
 
             for(TiXmlElement* frame=e->FirstChildElement(); frame!= nullptr; frame=frame->NextSiblingElement())
-                seq.TextureIDs.push_back(frame->Attribute("textureID"));
+                seq->TextureIDs.push_back(frame->Attribute("texture"));
 
             m_SeqMap[seqID] = seq;
         }
     }
+
+    std::cout << source << " animation parsed!" << std::endl;
 }
+
+

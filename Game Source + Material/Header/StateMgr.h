@@ -4,6 +4,8 @@
 #include <vector>
 #include "GameState.h"
 
+#define SWITCH_DELAY 200
+
 class StateMgr {
 
     public:

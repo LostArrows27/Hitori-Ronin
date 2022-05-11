@@ -18,7 +18,7 @@ void Engine::Init(){
 
     m_ScreenViewPort = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     StateMgr::Instance()->ChangeState(new Menu());
-    // neu muon vao choi luon thi "ChangeState(new Play())"
+   // StateMgr::Instance()->ChangeState(new Menu());
     m_IsRunning = true;
 }
 

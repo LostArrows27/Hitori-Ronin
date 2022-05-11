@@ -8,11 +8,15 @@
 
 Menu::Menu(){}
 
-bool Menu::Init(){
+Menu::~Menu(){
+    m_GuiObjects.clear();
+    m_GuiObjects.shrink_to_fit();
+}
 
-    m_ClearColor = {16, 45, 70};
+bool Menu::Init(){
+    m_BgColor = DARK;
     m_Ctxt = Engine::Instance()->GetRenderer();
-    Parser::Instance()->ParseTextures("assets/gui_textures.tml");
+    Parser::Instance()->ParseTextures("assets/ui_menu.tml");
 
     Button* playbtn = new Button(250, 100, StartGame,{"play_n", "play_h", "play_p"});
     Button* settbtn = new Button(250, 250, Settings, {"opt_n", "opt_h", "opt_p"});
@@ -21,13 +25,11 @@ bool Menu::Init(){
     m_GuiObjects.push_back(playbtn);
     m_GuiObjects.push_back(settbtn);
     m_GuiObjects.push_back(quitbtn);
-
-    std::cout << "menu initialized!" << std::endl;
     return true;
 }
 
 void Menu::Render(){
-    SDL_SetRenderDrawColor(m_Ctxt, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
+    SDL_SetRenderDrawColor(m_Ctxt, m_BgColor.r, m_BgColor.g, m_BgColor.b, m_BgColor.a);
     SDL_RenderClear(m_Ctxt);
 
     for(auto object : m_GuiObjects)
@@ -42,7 +44,6 @@ void Menu::Update(){
 }
 
 bool Menu::Exit(){
-    m_GuiObjects.clear();
     TextureMgr::Instance()->Clean();
     return true;
 }
@@ -53,7 +54,7 @@ void Menu::StartGame(){
 }
 
 void Menu::Settings(){
-    std::cout << "options mode\n";
+    std::cout << "options settings\n";
 }
 
 void Menu::QuitGame(){

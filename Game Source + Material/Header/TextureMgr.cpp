@@ -73,11 +73,22 @@ void TextureMgr::QueryTexture(std::string id, int* out_w, int* out_h){
     SDL_QueryTexture(m_TextureMap[id], NULL, NULL, out_w, out_h);
 }
 
+void TextureMgr::DestroyTexture(std::string id){
+    const TextureMap::iterator it = m_TextureMap.find(id);
+    if(it != m_TextureMap.end()){
+        //SDL_DestroyTexture(it->second);
+        m_TextureMap.erase(it);
+        std::cout << id << "destroyed!" << std::endl;
+    }
+    else
+      std::cout << id <<" not in map!" << std::endl;
+}
+
 void TextureMgr::Clean(){
     for(TextureMap::iterator it = m_TextureMap.begin(); it != m_TextureMap.end(); it++)
         SDL_DestroyTexture(it->second);
 
     m_TextureMap.clear();
-    std::cout << "Texture system cleaned!" << std::endl;
+    std::cout << "Textures mgr cleaned!" << std::endl;
 }
 

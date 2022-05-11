@@ -1,25 +1,27 @@
 #include "StateMgr.h"
 
+
 StateMgr* StateMgr::s_Instance = nullptr;
 
 void StateMgr::PopState(){
-    SDL_Delay(100);
+    SDL_Delay(SWITCH_DELAY);
     if(m_GameStates.size() > 1){
         if(m_GameStates.back()->Exit()){
             delete m_GameStates.back();
             m_GameStates.pop_back();
         }
     }
+
 }
 
 void StateMgr::PushState(GameState* current){
-    SDL_Delay(100);
+    SDL_Delay(SWITCH_DELAY);
     m_GameStates.push_back(current);
     m_GameStates.back()->Init();
 }
 
 void StateMgr::ChangeState(GameState* target){
-    SDL_Delay(100);
+    SDL_Delay(SWITCH_DELAY);
     if(!m_GameStates.empty()){
         if(m_GameStates.back()->Exit()){
             delete m_GameStates.back();
@@ -37,3 +39,4 @@ void StateMgr::Render(){
 void StateMgr::Update(){
     m_GameStates.back()->Update();
 }
+

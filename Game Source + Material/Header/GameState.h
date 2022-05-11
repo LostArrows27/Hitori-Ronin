@@ -1,11 +1,12 @@
 #ifndef STATES_H
 #define STATES_H
 
-#include <SDL.h>
 #include <iostream>
+#include "ObjectFactory.h"
 
-const SDL_Color SKYBLUE = {30, 191, 242};
-const SDL_Color SKYDARK = {45, 80, 82};
+const SDL_Color ORANGE = {255, 177, 0};
+const SDL_Color BLUE = {30, 191, 242};
+const SDL_Color DARK = {45, 80, 82};
 
 class GameState {
 
@@ -17,8 +18,8 @@ class GameState {
         virtual void Render() = 0;
 
     protected:
-        SDL_Color m_ClearColor;
         SDL_Renderer* m_Ctxt;
+        SDL_Color m_BgColor;
 };
 
 #endif // STATES_H

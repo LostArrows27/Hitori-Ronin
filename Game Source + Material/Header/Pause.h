@@ -7,6 +7,7 @@ class Pause: public GameState {
 
     public:
         Pause();
+        ~Pause();
         virtual bool Init();
         virtual bool Exit();
         virtual void Update();
@@ -14,6 +15,11 @@ class Pause: public GameState {
 
     private:
         static void Resume();
+        static void Options();
+        static void OpenMenu();
+
+    private:
+        ObjectList m_GuiObjects;
 };
 
 #endif // PAUSE_H

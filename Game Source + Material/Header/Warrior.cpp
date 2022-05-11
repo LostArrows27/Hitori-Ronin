@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "CollisionMgr.h"
 #include "ObjectFactory.h"
+#include "SoundMgr.h"
 
 static Registrar<Warrior> warrior("WARRIOR");
 
@@ -19,6 +20,12 @@ Warrior::Warrior(Transform* tf) : GameObject(tf){
 
     m_Animation = new SpritetAnimation();
     m_Animation->SetProps(1, 8, 100);
+}
+
+Warrior::~Warrior(){
+    delete m_Collider;
+    delete m_RigidBody;
+    delete m_Animation;
 }
 
 void Warrior::Draw(){
@@ -47,14 +54,16 @@ void Warrior::Update(float dt){
     }
 
     // Attack1
-    if(Input::Instance()->GetKeyDown(SDL_SCANCODE_K)){
+    if(Input::Instance()->GetKeyDown(SDL_SCANCODE_J)){
         m_RigidBody->UnSetForce();
         m_IsAttacking1 = true;
+
     }
 
-    if(Input::Instance()->GetKeyDown(SDL_SCANCODE_L)){
+    if(Input::Instance()->GetKeyDown(SDL_SCANCODE_K)){
         m_RigidBody->UnSetForce();
         m_IsAttacking2 = true;
+
     }
 
     // Jump
@@ -62,6 +71,7 @@ void Warrior::Update(float dt){
         m_IsJumping = true;
         m_IsGrounded = false;
         m_RigidBody->ApplyForceY(UPWARD*m_JumpForce);
+        SoundMgr::Instance()->PlayEffect("jump2");
     }
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_W) && m_IsJumping && m_JumpTime > 0){
         m_JumpTime -= dt;
@@ -91,7 +101,7 @@ void Warrior::Update(float dt){
     }
 
     // move on X axis
-    m_RigidBody->Update(dt);
+    m_RigidBody->Move(dt);
     m_LastSafePosition.X = m_Tf->X;
     m_Tf->X += m_RigidBody->Position().X;
     m_Collider->Set(m_Tf->X, m_Tf->Y, 30, 50);
@@ -101,7 +111,7 @@ void Warrior::Update(float dt){
 
 
     // move on Y axis
-    m_RigidBody->Update(dt);
+    m_RigidBody->Move(dt);
     m_LastSafePosition.Y = m_Tf->Y;
     m_Tf->Y += m_RigidBody->Position().Y;
     m_Collider->Set(m_Tf->X, m_Tf->Y, 30, 50);
@@ -114,17 +124,16 @@ void Warrior::Update(float dt){
         m_IsGrounded = false;
     }
 
-    GameObject::Update(dt);
-
-    AnimationState();
-    m_Animation->Update(dt);
+   Animate();
+   // m_Animation->Update(dt);
+   GameObject::Update(dt);
 }
 
 
-void Warrior::AnimationState(){
+void Warrior::Animate(){
     // idling
     m_Tf->TextureID = "player_idle";
-    m_Animation->SetProps(0, 6, 100);
+    m_Animation->SetProps(0, 6, 150);
 
     // running
     if(m_IsRunning){
@@ -155,9 +164,8 @@ void Warrior::AnimationState(){
         m_Tf->TextureID = "player_attack2";
         m_Animation->SetProps(0, 6, 60);
     }
+
+    m_Animation->Update();
 }
 
-void Warrior::Clean(){
-
-}
 

@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include "SDL.h"
-#include "Animation.h"
 #include "TextureMgr.h"
 #include "Transform.h"
 
@@ -13,23 +12,24 @@ struct Sequence {
     int Speed;
     int FrameCount;
     int Width, Height;
-    std::vector<const char*> TextureIDs;
+    std::vector<std::string> TextureIDs;
 };
 
-class SeqAnimation: public Animation{
+class SeqAnimation {
 
     public:
-        SeqAnimation(bool repeat = true);
+        SeqAnimation();
+        ~SeqAnimation();
 
-        virtual void Update(float dt);
-        void DrawFrame(Transform* tf);
+        void Update(Transform* tf);
+        void Draw(Transform* tf);
         void Parse(std::string source);
-        void SetCurrentSeq(std::string seqID);
-        void SetRepeat(bool repeat){m_Repeat = repeat;}
+        void SetCurrSeq(std::string seqID);
 
     private:
-        Sequence m_CurrentSeq;
-        std::map<std::string, Sequence> m_SeqMap;
+        int m_CurrFrame;
+        Sequence* m_CurrSeq;
+        std::map<std::string, Sequence*> m_SeqMap;
 };
 
 #endif // SEQANIMATION_H

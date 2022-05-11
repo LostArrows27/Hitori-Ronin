@@ -8,6 +8,7 @@ class Menu : public GameState {
 
     public:
         Menu();
+        ~Menu();
         virtual bool Init();
         virtual bool Exit();
         virtual void Update();
@@ -20,6 +21,7 @@ class Menu : public GameState {
 
     private:
         ObjectList m_GuiObjects;
+
 };
 
 #endif // MENU_H

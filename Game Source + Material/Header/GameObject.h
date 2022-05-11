@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 
 #include <SDL.h>
+#include <vector>
 #include "IObject.h"
 #include "Transform.h"
 #include "TextureMgr.h"
@@ -27,5 +28,8 @@ class GameObject : public IObject {
     protected:
         Transform* m_Tf;
 };
+
+using ObjectPtr = GameObject*;
+using ObjectList = std::vector<ObjectPtr>;
 
 #endif // GAMEOBJECT_H

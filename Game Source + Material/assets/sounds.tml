@@ -2,9 +2,17 @@
 <sounds>    
     <effect id="hurt" source="assets/sounds/hurt.ogg"/>
     <effect id="jump" source="assets/sounds/jump.ogg"/>
-    <effect id="item" source="assets/sounds/item.ogg"/>       
+    <effect id="item" source="assets/sounds/item.ogg"/>
+    <effect id="jump2" source="assets/sounds/jump2.mp3"/>    
     <effect id="enemy_death" source="assets/sounds/enemy-death.ogg"/>
+    <effect id="attack1" source="assets/sounds/attack1.wav"/>
+    <effect id="attack2" source="assets/sounds/attack2.wav"/>
     <music id="valley" source="assets/sounds/valley.ogg"/>
+    <music id="yuru" source="assets/sounds/yuru.mp3"/>
+    <music id="japan1" source="assets/sounds/japan1.wav"/>
+    <music id="japan2" source="assets/sounds/japan2.wav"/>
+    <music id="japan3" source="assets/sounds/japan3.wav"/>
+    <music id="onsen" source="assets/sounds/onsen.wav"/>
 </sounds>
 
  

@@ -43,7 +43,7 @@ class RigidBody {
 
 
         // update methode
-        void Update(float dt){
+        void Move(float dt){
             m_Accelaration.X = (m_Force.X + m_Friction.X)/m_Mass;
             m_Accelaration.Y = m_Gravity + m_Force.Y/m_Mass;
             m_Velocity = m_Accelaration*dt;

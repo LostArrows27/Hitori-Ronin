@@ -9,19 +9,20 @@
 #define JUMP_FORCE 10.0f
 #define JUMP_TIME 15.0f;
 
-#define RUN_FORCE 4.0f
+#define RUN_FORCE 3.0f
 #define ATTACK_TIME 20.0f
 
 class Warrior: public GameObject{
 
     public:
         Warrior(Transform* tf);
+        ~Warrior();
+
         virtual void Draw() override;
-        virtual void Clean() override;
         virtual void Update(float dt) override;
 
     private:
-        void AnimationState();
+        void Animate();
 
     private:
         bool m_IsRunning;

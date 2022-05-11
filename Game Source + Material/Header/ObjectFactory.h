@@ -8,13 +8,10 @@
 #include "Transform.h"
 #include "GameObject.h"
 
-using ObjectPtr = GameObject*; // std::unique_ptr<GameObject>;
-using ObjectList = std::vector<ObjectPtr>;
-enum ObjectCategory {SCENE_OBJECTS=0, GAME_OBJECTS=1};
-
 class ObjectFactory{
 
     public:
+        ~ObjectFactory(){m_TypeRegistry.clear();}
         ObjectPtr CreateObject(std::string type, Transform* tf);
         void RegisterType(std::string className, std::function<ObjectPtr(Transform* tf)> type);
         static ObjectFactory* Instance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new ObjectFactory();}

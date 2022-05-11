@@ -8,7 +8,7 @@
 class Camera {
 
     public:
-
+        ~Camera(){};
         void TrackTarget();
 
         void TranslateX(int x);

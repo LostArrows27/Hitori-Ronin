@@ -4,22 +4,21 @@
 #include <string>
 #include "SDL.h"
 #include "Transform.h"
-#include "Animation.h"
 #include "TextureMgr.h"
 
-class SpritetAnimation : public Animation {
+class SpritetAnimation {
 
     public:
-        SpritetAnimation(bool repeat = true);
-
-        virtual void Update(float dt);
-        void SetProps(int spriteRow, int frameCount, int speed);
+        SpritetAnimation();
+        void Update();
         void Draw(Transform* tf);
+        void SetProps(int spriteRow, int frameCount, int speed);
 
     private:
         int m_Speed;
         int m_SpriteRow;
         int m_FrameCount;
+        int m_CurrentFrame;
 };
 
 #endif // SPRITEANIMATION_H

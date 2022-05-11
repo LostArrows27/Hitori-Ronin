@@ -8,7 +8,7 @@
 #include "GameObject.h"
 #include "TextureMgr.h"
 
-using TextureIDList = std::vector<std::string>;
+using TextureIdList = std::vector<std::string>;
 
 enum ButtonState {NORMAL=0, HOVER=1, PRESSED=2};
 
@@ -16,7 +16,7 @@ class Button : public GameObject {
 
     public:
 
-        Button(int x, int y, void (*callback)(), TextureIDList textrIDs):GameObject(new Transform()){
+        Button(int x, int y, void (*callback)(), TextureIdList textrIDs):GameObject(new Transform()){
             m_Tf->X = x;
             m_Tf->Y = y;
             m_Callback = callback;
@@ -24,6 +24,18 @@ class Button : public GameObject {
             m_Tf->TextureID = m_TextrIDs[NORMAL];
             TextureMgr::Instance()->QueryTexture(m_Tf->TextureID, &m_Tf->Width, &m_Tf->Height);
             m_Shape = {m_Tf->X, m_Tf->Y, m_Tf->Width, m_Tf->Height};
+        }
+
+        ~Button(){
+            m_TextrIDs.clear();
+            m_TextrIDs.shrink_to_fit();
+        }
+
+        virtual void Clean() override{
+            for(auto id : m_TextrIDs)
+                TextureMgr::Instance()->DestroyTexture(id);
+            m_TextrIDs.clear();
+            m_TextrIDs.shrink_to_fit();
         }
 
         virtual void Update(float dt) override {
@@ -50,7 +62,7 @@ class Button : public GameObject {
         SDL_Rect m_Shape;
         bool m_IsReleased;
         void (*m_Callback)();
-        std::vector<std::string> m_TextrIDs;
+        TextureIdList m_TextrIDs;
 };
 
 #endif // BUTTON_H

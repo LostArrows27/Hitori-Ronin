@@ -5,20 +5,28 @@
 #include "Button.h"
 
 enum DayTime {DAY=0, NIGHT};
-ClimatEmitter* rEmttr = nullptr;
 
 Play::Play(){}
 
+Play::~Play(){
+    m_GameObjects.clear();
+    m_GameObjects.shrink_to_fit();
+
+    m_GuiObjects.clear();
+    m_GuiObjects.shrink_to_fit();
+}
+
 bool Play::Init(){
-    m_ClearColor = SKYBLUE;
+    m_BgColor = DARK;
     m_Ctxt = Engine::Instance()->GetRenderer();
 
+    Parser::Instance()->ParseSounds("assets/sounds.tml");
     Parser::Instance()->ParseTextures("assets/textures.tml");
+    Parser::Instance()->ParseTextures("assets/ui_play.tml");
     m_TilelMap = Parser::Instance()->ParseMap("assets/maps/mymap.tmx");
     Parser::Instance()->ParseGameObjects("assets/levels/day.tml", &m_GameObjects);
-    // u can change to dark later
 
-    rEmttr = new ClimatEmitter(DUST);
+    m_SceneClimat = new ClimatEmitter(DUST);
     TileLayer* layer = m_TilelMap->GetLayers().back();
     CollisionMgr::Instance()->SetCollisionLayer(layer);
     Camera::Instance()->SetMapLimit(layer->GetWidth(), layer->GetHeight());
@@ -26,27 +34,31 @@ bool Play::Init(){
     m_Player = ObjectFactory::Instance()->CreateObject("WARRIOR", new Transform(0, 0, 200, 200));
     Camera::Instance()->SetTarget(m_Player->GetOrigin());
 
-    Button* menubtn = new Button(100, 50, OpenMenu, {"home_n", "home_h", "home_p"});
-    Button* optbtn = new Button(100, 50, Options, {"opt_n", "opt_h", "opt_p"});
+    SoundMgr::Instance()->PlayMusik("onsen");
 
-    m_UiObjects.push_back(optbtn);
-    m_UiObjects.push_back(menubtn);
+    Button* menubtn = new Button(10, 10, OpenMenu, {"home_n", "home_h", "home_p"});
+    Button* pausebtn = new Button(70, 10, PauseGame, {"pause_n", "pause_h", "pause_p"});
+    Button* optbtn = new Button(130, 10, Options, {"set_n", "set_h", "set_p"});
+
+    m_GuiObjects.push_back(optbtn);
+    m_GuiObjects.push_back(menubtn);
+    m_GuiObjects.push_back(pausebtn);
     return true;
 }
 
 void Play::Render(){
 
-    SDL_SetRenderDrawColor(m_Ctxt, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
+    SDL_SetRenderDrawColor(m_Ctxt, m_BgColor.r, m_BgColor.g, m_BgColor.b, m_BgColor.a);
     SDL_RenderClear(m_Ctxt);
 
     for(auto object : m_GameObjects)
         object->Draw();
 
-    rEmttr->RenderParticles();
+    m_SceneClimat->RenderParticles();
     m_TilelMap->Render();
     m_Player->Draw();
 
-    for(auto object : m_UiObjects)
+    for(auto object : m_GuiObjects)
         object->Draw();
 
     SDL_RenderPresent(m_Ctxt);
@@ -65,10 +77,10 @@ void Play::Update(){
     for(auto object : m_GameObjects)
         object->Update(dt);
 
-    for(auto object : m_UiObjects)
+    for(auto object : m_GuiObjects)
         object->Update(0);
 
-    rEmttr->UpdateParticles(dt);
+    m_SceneClimat->UpdateParticles(dt);
 }
 
 void Play::Events(){
@@ -79,32 +91,39 @@ void Play::Events(){
         StateMgr::Instance()->PushState(new Pause());
 
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_1))
-        m_ClearColor = SKYDARK;
+        m_BgColor = ORANGE;
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_2))
-        m_ClearColor = SKYBLUE;
+        m_BgColor = DARK;
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_3))
-        rEmttr->InitParticles(RAIN);
+        m_BgColor = BLUE;
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_4))
-        rEmttr->InitParticles(SNOW);
+        m_SceneClimat->InitParticles(RAIN);
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_5))
-        rEmttr->InitParticles(DUST);
+        m_SceneClimat->InitParticles(SNOW);
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_6))
-        rEmttr->InitParticles(LIGTHNING);
+        m_SceneClimat->InitParticles(DUST);
+    if(Input::Instance()->GetKeyDown(SDL_SCANCODE_7))
+        m_SceneClimat->InitParticles(LIGTHNING);
+
 
 }
 
 bool Play::Exit(){
-    m_GameObjects.clear();
+    SoundMgr::Instance()->Clean();
     TextureMgr::Instance()->Clean();
     return true;
 }
 
 void Play::OpenMenu(){
-    std::cout << "open menu" << std::endl;
+    StateMgr::Instance()->ChangeState(new Menu());
 }
 
 void Play::Options(){
-    std::cout << "open option" << std::endl;
+    //StateMgr::Instance()->ChangeState(new Menu());
+}
+
+void Play::PauseGame(){
+    StateMgr::Instance()->PushState(new Pause());
 }
 
 
