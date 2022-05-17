@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<animations>
-    <sequence id="anim" frameCount="2" speed="50" width="460" height="352">
-        <frame textureID ="tree1"/>
-        <frame textureID ="tree2"/>
-    </sequence> 
-</animations>

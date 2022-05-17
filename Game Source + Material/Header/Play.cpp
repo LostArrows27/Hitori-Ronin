@@ -3,8 +3,11 @@
 #include "Pause.h"
 #include "Helpers.h"
 #include "Button.h"
+#include "CollisionMgr.h"
 
 enum DayTime {DAY=0, NIGHT};
+
+int MAX_ENEMY = 3;
 
 Play::Play(){}
 
@@ -17,24 +20,48 @@ Play::~Play(){
 }
 
 bool Play::Init(){
-    m_BgColor = DARK;
+    if(Engine::Instance()->day_or_night == 1){
+        m_BgColor = BLUE;
+
+    }else{
+        m_BgColor = DARK;
+    }
     m_Ctxt = Engine::Instance()->GetRenderer();
 
     Parser::Instance()->ParseSounds("assets/sounds.tml");
+    SoundMgr::Instance()->PlayMusik("japan2");
     Parser::Instance()->ParseTextures("assets/textures.tml");
     Parser::Instance()->ParseTextures("assets/ui_play.tml");
     m_TilelMap = Parser::Instance()->ParseMap("assets/maps/mymap.tmx");
-    Parser::Instance()->ParseGameObjects("assets/levels/day.tml", &m_GameObjects);
+    if(Engine::Instance()->day_or_night == 1){
+        Parser::Instance()->ParseGameObjects("assets/levels/day.tml", &m_GameObjects);
+        m_SceneClimat = new ClimatEmitter(DUST);
+    }else{
+        Engine::Instance()->can_fight1 = false;
+        Engine::Instance()->can_fight2 = false;
+        Engine::Instance()->can_fight3 = false;
+        Engine::Instance()->can_fight4 = false;
+        Parser::Instance()->ParseGameObjects("assets/levels/night.tml", &m_GameObjects);
+        m_SceneClimat = new ClimatEmitter(RAIN);
+    }
 
-    m_SceneClimat = new ClimatEmitter(DUST);
     TileLayer* layer = m_TilelMap->GetLayers().back();
     CollisionMgr::Instance()->SetCollisionLayer(layer);
     Camera::Instance()->SetMapLimit(layer->GetWidth(), layer->GetHeight());
 
     m_Player = ObjectFactory::Instance()->CreateObject("WARRIOR", new Transform(0, 0, 200, 200));
-    Camera::Instance()->SetTarget(m_Player->GetOrigin());
+    m_Enemy[0] = ObjectFactory::Instance()->CreateObject("ENEMY", new Transform(600, 0, 200, 200));
+    m_Enemy[1] = ObjectFactory::Instance()->CreateObject("ENEMY", new Transform(1481, 0, 200, 200));
+    m_Enemy[2] = ObjectFactory::Instance()->CreateObject("ENEMY", new Transform(2118, 0, 200, 200));
+    m_Enemy[3] = ObjectFactory::Instance()->CreateObject("ENEMY", new Transform(2667, 0, 200, 200));
 
-    SoundMgr::Instance()->PlayMusik("onsen");
+
+    Camera::Instance()->SetTarget(m_Player->GetOrigin());
+    if(Engine::Instance()->day_or_night == 1){
+        SoundMgr::Instance()->PlayMusik("japan1");
+    }else{
+        SoundMgr::Instance()->PlayMusik("japan2");
+    }
 
     Button* menubtn = new Button(10, 10, OpenMenu, {"home_n", "home_h", "home_p"});
     Button* pausebtn = new Button(70, 10, PauseGame, {"pause_n", "pause_h", "pause_p"});
@@ -53,23 +80,31 @@ void Play::Render(){
 
     for(auto object : m_GameObjects)
         object->Draw();
-
     m_SceneClimat->RenderParticles();
     m_TilelMap->Render();
     m_Player->Draw();
+    if(Engine::Instance()->can_fight1 != true) m_Enemy[0]->Draw();
+    else m_Enemy[0]->Clean();
+    if(Engine::Instance()->can_fight2 != true) m_Enemy[1]->Draw();
+    else m_Enemy[1]->Clean();
+    if(Engine::Instance()->can_fight3 != true) m_Enemy[2]->Draw();
+    else m_Enemy[2]->Clean();
+    if(Engine::Instance()->can_fight4 != true) m_Enemy[3]->Draw();
+    else m_Enemy[3]->Clean();
 
     for(auto object : m_GuiObjects)
         object->Draw();
-
     SDL_RenderPresent(m_Ctxt);
 }
 
 void Play::Update(){
-
     Events();
     float dt = Timer::Instance()->GetDeltaTime();
-    m_Player->Update(dt);
-
+    if(m_Player->m_DeadTime >= 0) m_Player->Update(dt);
+    if(Engine::Instance()->can_fight1 != true) m_Enemy[0]->Update(dt);
+    if(Engine::Instance()->can_fight2 != true) m_Enemy[1]->Update(dt);
+    if(Engine::Instance()->can_fight3 != true) m_Enemy[2]->Update(dt);
+    if(Engine::Instance()->can_fight4 != true) m_Enemy[3]->Update(dt);
     Camera::Instance()->TrackTarget();
 
     m_TilelMap->Update();
@@ -119,7 +154,7 @@ void Play::OpenMenu(){
 }
 
 void Play::Options(){
-    //StateMgr::Instance()->ChangeState(new Menu());
+    StateMgr::Instance()->ChangeState(new Menu());
 }
 
 void Play::PauseGame(){

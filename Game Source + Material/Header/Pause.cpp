@@ -21,7 +21,6 @@ bool Pause::Init(){
     Button* resbtn = new Button(150, 100, Resume,{"left_n", "left_h", "left_p"});
     Button* optbtn = new Button(250, 100, OpenMenu, {"home_n", "home_h", "home_p"});
     Button* menubtn = new Button(350,100, Options, {"set_n", "set_h", "set_p"});
-
     m_GuiObjects.push_back(resbtn);
     m_GuiObjects.push_back(menubtn);
     m_GuiObjects.push_back(optbtn);
@@ -32,7 +31,7 @@ void Pause::Render(){
     SDL_SetRenderDrawColor(m_Ctxt, m_BgColor.r, m_BgColor.g, m_BgColor.b, m_BgColor.a);
     SDL_RenderClear(m_Ctxt);
 
-    TextureMgr::Instance()->Draw(new Transform(600, 50, 500, 200, "pause"));
+    TextureMgr::Instance()->Draw(new Transform(0, 0, 1550, 930, "pause"));
 
     SDL_SetRenderDrawBlendMode(m_Ctxt, SDL_BLENDMODE_MOD);
      for(auto object : m_GuiObjects)
@@ -57,6 +56,7 @@ void Pause::Resume(){
 }
 
 void Pause::Options(){
+
     //StateMgr::Instance()->PopState();
 }
 

@@ -5,8 +5,11 @@
     <effect id="item" source="assets/sounds/item.ogg"/>
     <effect id="jump2" source="assets/sounds/jump2.mp3"/>    
     <effect id="enemy_death" source="assets/sounds/enemy-death.ogg"/>
+    <effect id="trigger" source="assets/sounds/trigger.wav"/>
     <effect id="attack1" source="assets/sounds/attack1.wav"/>
     <effect id="attack2" source="assets/sounds/attack2.wav"/>
+    <effect id="death" source="assets/sounds/death.wav"/>
+    <effect id="victory" source="assets/sounds/victory.wav"/>
     <music id="valley" source="assets/sounds/valley.ogg"/>
     <music id="yuru" source="assets/sounds/yuru.mp3"/>
     <music id="japan1" source="assets/sounds/japan1.wav"/>

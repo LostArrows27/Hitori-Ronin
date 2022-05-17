@@ -24,10 +24,22 @@ class Collider {
             return CollisionMgr::Instance()->MapCollision(m_Box);
         }
 
+        bool isUnderWater(){
+            return CollisionMgr::Instance()->isDead(m_Box);
+        }
+
         void Draw(float speedRatio=1.0){
             Vector2D cam = Camera::Instance()->GetPosition()*speedRatio;
             SDL_Rect box = {m_Box.x - cam.X, m_Box.y - cam.Y, m_Box.w, m_Box.h};
             SDL_RenderDrawRect(Engine::Instance()->GetRenderer(), &box);
+        }
+
+        void DrawRect(){
+            CollisionMgr::Instance()->printMap(m_Box);
+        }
+
+        void NextLevel(){
+            CollisionMgr::Instance()->NextLevel(m_Box);
         }
 
     private:

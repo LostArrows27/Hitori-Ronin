@@ -16,6 +16,7 @@
 class Engine {
 
     public:
+
         ~Engine();
         void Init();
 
@@ -29,10 +30,15 @@ class Engine {
         inline void SetViewPort(SDL_Rect viewport){ m_ScreenViewPort = viewport;}
 
         inline static Engine* Instance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new Engine();}
+        bool m_IsRunning;
+        int day_or_night = 1;
+        bool can_fight1 = false;
+        bool can_fight2 = false;
+        bool can_fight3 = false;
+        bool can_fight4 = false;
 
     private:
         Engine(){}
-        bool m_IsRunning;
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         SDL_Rect m_ScreenViewPort;

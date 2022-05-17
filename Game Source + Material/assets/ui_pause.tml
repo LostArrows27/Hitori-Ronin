@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <textures>
-    <texture id="pause" source="assets/textures/imgs/paused.png"/>
-
+     <texture id="pause" source="assets/textures/bg/pause.png"/>
     <texture id="set_n" source="assets/textures/button/settings_normal.png"/>
     <texture id="set_h" source="assets/textures/button/settings_hover.png"/>
     <texture id="set_p" source="assets/textures/button/settings_pressed.png"/>

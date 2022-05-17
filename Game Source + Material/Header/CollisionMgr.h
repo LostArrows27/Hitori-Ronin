@@ -10,10 +10,16 @@ class CollisionMgr{
 
     public:
         bool MapCollision(SDL_Rect a);
+        bool isDead(SDL_Rect a);
+        bool isWin(SDL_Rect a);
+        int canAttack(SDL_Rect a);
+        void NextLevel(SDL_Rect a);
         bool CheckCollision(SDL_Rect a, SDL_Rect b);
         void SetCollisionLayer(TileLayer* layer);
 
         inline static CollisionMgr* Instance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new CollisionMgr();}
+        void printMap(SDL_Rect a);
+
 
     private:
         CollisionMgr(){}

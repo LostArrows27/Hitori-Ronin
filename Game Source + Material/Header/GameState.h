@@ -17,7 +17,7 @@ class GameState {
         virtual void Update() = 0;
         virtual void Render() = 0;
 
-    protected:
+    public:
         SDL_Renderer* m_Ctxt;
         SDL_Color m_BgColor;
 };

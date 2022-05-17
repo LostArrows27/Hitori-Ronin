@@ -3,6 +3,7 @@
 
 #include "GameState.h"
 #include "ObjectFactory.h"
+#include "SoundMgr.h"
 
 class Menu : public GameState {
 

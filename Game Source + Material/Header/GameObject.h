@@ -24,9 +24,12 @@ class GameObject : public IObject {
         virtual void Clean(){}
 
         inline Vector2D* GetOrigin(){return m_Tf->Origin;}
+        bool m_IsDead = false;
+        float m_DeadTime;
 
     protected:
         Transform* m_Tf;
+
 };
 
 using ObjectPtr = GameObject*;

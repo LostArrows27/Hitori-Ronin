@@ -8,6 +8,8 @@ TextureMgr::TextureMgr(){
     m_Renderer = Engine::Instance()->GetRenderer();
 }
 
+
+
 SDL_Texture* TextureMgr::Load(std::string filename){
 
     SDL_Surface* surface = IMG_Load(filename.c_str());

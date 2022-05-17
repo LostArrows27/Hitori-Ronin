@@ -3,6 +3,11 @@
 #include "CollisionMgr.h"
 #include "ObjectFactory.h"
 #include "SoundMgr.h"
+#include "StateMgr.h"
+#include "Menu.h"
+#include "Play.h"
+
+int stop_lagging = 1;
 
 static Registrar<Warrior> warrior("WARRIOR");
 
@@ -11,6 +16,7 @@ Warrior::Warrior(Transform* tf) : GameObject(tf){
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
     m_AttackTime = ATTACK_TIME;
+    m_DeadTime = JUMP_TIME;
 
     m_Collider = new Collider();
     m_Collider->SetBuffer(-85, -75, 0, 0);
@@ -34,10 +40,35 @@ void Warrior::Draw(){
 }
 
 void Warrior::Update(float dt){
-
+    /*SDL_Rect temp = m_Collider->Get();
+    std::cout << temp.x << " " << temp.y << std::endl;*/
     m_IsRunning = false;
-    m_IsCrouching = false;
     m_RigidBody->UnSetForce();
+    //CollisionMgr::Instance()->printMap(m_Collider->Get());
+    m_Collider->NextLevel();
+    // loading dead animation
+    if(stop_lagging == 1){
+        if(m_Collider->isUnderWater()){
+            stop_lagging = 2;
+            m_RigidBody->UnSetForce();  // so that character doesnt have to dead falling down :D
+            m_IsDead = true;
+            m_DeadTime -= dt/3;
+            }
+    }else{
+            m_RigidBody->UnSetForce();  // so that character doesnt have to dead falling down :D
+            m_IsDead = true;
+            m_DeadTime -= dt/3;
+            if(m_DeadTime < 0) {
+                    //Parser::Instance()->ParseSounds("assets/sounds.tml");
+                   // SoundMgr::Instance()->PlayEffect("death");
+                    StateMgr::Instance()->ChangeState(new Menu());
+                    SoundMgr::Instance()->PlayEffect("death");
+                    m_DeadTime = JUMP_TIME;
+                    m_IsDead = false;
+                    stop_lagging = 1;
+            }
+
+    }
 
     // Run forward
     if(Input::Instance()->GetAxisKey(HORIZONTAL) == FORWARD && !m_IsAttacking1 && !m_IsAttacking2){
@@ -45,7 +76,6 @@ void Warrior::Update(float dt){
         m_Tf->Flip = SDL_FLIP_NONE;
         m_IsRunning = true;
     }
-
     // Run backward
     if(Input::Instance()->GetAxisKey(HORIZONTAL) == BACKWARD && !m_IsAttacking1 && !m_IsAttacking2){
         m_RigidBody->ApplyForceX(BACKWARD*RUN_FORCE);
@@ -57,14 +87,32 @@ void Warrior::Update(float dt){
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_J)){
         m_RigidBody->UnSetForce();
         m_IsAttacking1 = true;
-
     }
+
+
+    // Attack 2
 
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_K)){
         m_RigidBody->UnSetForce();
         m_IsAttacking2 = true;
+    }
+
+    if(m_IsAttacking1 || m_IsAttacking2){
+        if(CollisionMgr::Instance()->canAttack(m_Collider->Get()) == 1){
+            Engine::Instance()->can_fight1 = true;
+        }else if(CollisionMgr::Instance()->canAttack(m_Collider->Get()) == 2){
+            Engine::Instance()->can_fight2 = true;
+        }else if(CollisionMgr::Instance()->canAttack(m_Collider->Get()) == 3){
+            Engine::Instance()->can_fight3 = true;
+        }else if(CollisionMgr::Instance()->canAttack(m_Collider->Get()) == 4){
+            Engine::Instance()->can_fight4 = true;
+        }/*else if(CollisionMgr::Instance()->canAttack(m_Collider->Get()) == 5){
+            Engine::Instance()->can_fight5 = true;
+        }*/
 
     }
+    //std::cout << CollisionMgr::Instance()->canAttack(m_Collider->Get()) << std::endl;
+    //std::cout << Engine::Instance()->can_fight1 << std::endl;
 
     // Jump
     if(Input::Instance()->GetKeyDown(SDL_SCANCODE_W) && m_IsGrounded){
@@ -80,6 +128,7 @@ void Warrior::Update(float dt){
     else{
         m_IsJumping = false;
         m_JumpTime = JUMP_TIME;
+
     }
 
     // Fall
@@ -93,12 +142,16 @@ void Warrior::Update(float dt){
         m_AttackTime -= dt;
     }else if(m_IsAttacking2 && m_AttackTime > 0){
         m_AttackTime -= dt;
-    }
-    else{
+    }else{
         m_IsAttacking1 = false;
         m_IsAttacking2 = false;
         m_AttackTime = ATTACK_TIME;
     }
+
+    if(m_AttackTime < 10.0f && m_AttackTime > 9.0f) SoundMgr::Instance()->PlayEffect("trigger");
+
+
+
 
     // move on X axis
     m_RigidBody->Move(dt);
@@ -108,7 +161,6 @@ void Warrior::Update(float dt){
 
     if(m_Collider->CollideWithMap())
         m_Tf->X = m_LastSafePosition.X;
-
 
     // move on Y axis
     m_RigidBody->Move(dt);
@@ -163,6 +215,12 @@ void Warrior::Animate(){
     if(m_IsAttacking2){
         m_Tf->TextureID = "player_attack2";
         m_Animation->SetProps(0, 6, 60);
+    }
+
+    // dead
+    if(m_IsDead){
+        m_Tf->TextureID = "dead";
+        m_Animation->SetProps(0, 6, 200);
     }
 
     m_Animation->Update();

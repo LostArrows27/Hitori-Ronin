@@ -12,14 +12,18 @@
 #define RUN_FORCE 3.0f
 #define ATTACK_TIME 20.0f
 
+
 class Warrior: public GameObject{
 
     public:
         Warrior(Transform* tf);
         ~Warrior();
-
         virtual void Draw() override;
         virtual void Update(float dt) override;
+
+        Collider* getRect() {return m_Collider;}
+       // bool m_IsDead = false;
+
 
     private:
         void Animate();
@@ -31,7 +35,6 @@ class Warrior: public GameObject{
         bool m_IsGrounded;
         bool m_IsAttacking1;
         bool m_IsAttacking2;
-        bool m_IsCrouching;
 
         float m_JumpTime;
         float m_JumpForce;

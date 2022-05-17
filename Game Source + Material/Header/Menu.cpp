@@ -5,6 +5,8 @@
 #include "StateMgr.h"
 #include "Button.h"
 #include "ClimatEmitter.h"
+#include <SDL.h>
+
 
 Menu::Menu(){}
 
@@ -14,17 +16,21 @@ Menu::~Menu(){
 }
 
 bool Menu::Init(){
+
     m_BgColor = DARK;
     m_Ctxt = Engine::Instance()->GetRenderer();
     Parser::Instance()->ParseTextures("assets/ui_menu.tml");
+    Parser::Instance()->ParseSounds("assets/sounds.tml");
 
     Button* playbtn = new Button(250, 100, StartGame,{"play_n", "play_h", "play_p"});
     Button* settbtn = new Button(250, 250, Settings, {"opt_n", "opt_h", "opt_p"});
     Button* quitbtn = new Button(250, 400, QuitGame, {"quit_n", "quit_h", "quit_p"});
 
+
     m_GuiObjects.push_back(playbtn);
     m_GuiObjects.push_back(settbtn);
     m_GuiObjects.push_back(quitbtn);
+    SoundMgr::Instance()->PlayMusik("japan3");
     return true;
 }
 
@@ -32,9 +38,10 @@ void Menu::Render(){
     SDL_SetRenderDrawColor(m_Ctxt, m_BgColor.r, m_BgColor.g, m_BgColor.b, m_BgColor.a);
     SDL_RenderClear(m_Ctxt);
 
+    TextureMgr::Instance()->Draw(new Transform(0, 0, 1550, 872, "bg"));
+
     for(auto object : m_GuiObjects)
         object->Draw();
-
     SDL_RenderPresent(m_Ctxt);
 }
 
