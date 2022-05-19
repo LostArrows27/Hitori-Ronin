@@ -66,6 +66,7 @@ void Input::WindowEvent(SDL_Event event){
         Engine::Instance()->SetViewPort(viewport);
         Camera::Instance()->SetViewPort(viewport);
     }
+    // khi ma thu nho size cua so, thi man hinh va camera se thu nho dua theo thong so ta thu nho
 }
 
 int Input::GetAxisKey(Axis axis){

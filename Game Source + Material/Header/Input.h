@@ -35,6 +35,8 @@ class Input {
 
         // window event
         void WindowEvent(SDL_Event event);
+        // every time window get resize, the viewport of our character
+        // will change 2
 
         // mouse button event
         void MouseMotion(SDL_Event event);

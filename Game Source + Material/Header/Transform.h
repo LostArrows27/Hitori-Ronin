@@ -5,6 +5,11 @@
 #include <string>
 #include "Vector2D.h"
 
+// Chua tat ca thong so khi truyen vao cac ham nhu texture mgr
+// thay vi truyen thong so, ta chi don gian truyen bien "Transform" trong class nay
+// Well, la 1 core chinh cua game khi render moi thu len man hinh theo thong so
+// "textureID" will take the string in the "tml" file
+
 class Transform {
 
     public:

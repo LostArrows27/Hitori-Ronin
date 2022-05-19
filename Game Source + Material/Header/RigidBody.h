@@ -30,6 +30,7 @@ class RigidBody {
         inline void ApplyForceX(float Fx){m_Force.X = Fx;}
         inline void ApplyForceY(float Fy){m_Force.Y = Fy;}
         inline void UnSetForce(){m_Force = Vector2D(0,0);}
+        // well this mean like your character wont have any x or y force so he stays still
 
         // Friction
         inline void ApplyFriction(Vector2D Fr){m_Friction = Fr;}
@@ -45,9 +46,14 @@ class RigidBody {
         // update methode
         void Move(float dt){
             m_Accelaration.X = (m_Force.X + m_Friction.X)/m_Mass;
+            // force + friction = mass * acceralation
             m_Accelaration.Y = m_Gravity + m_Force.Y/m_Mass;
+            // force + gravity = mass * acc
+            // well, we need mass because this the force will pull player down when he jumping
             m_Velocity = m_Accelaration*dt;
+            // v = a * t (vector2d * const)
             m_Position = m_Velocity*dt;
+            // s = v * t
         }
 
     private:
@@ -55,7 +61,11 @@ class RigidBody {
         float m_Gravity;
 
         Vector2D m_Force;
-        Vector2D m_Friction;
+        // move your position based on x or y axis
+        // x axis: when player running
+        // y axis: when player jumping
+        Vector2D m_Friction; // "ma sat" when ever player walking on ice, swimming or what ever
+        // but my game simply player walking on ground so yeah not really need this
 
         Vector2D m_Position;
         Vector2D m_Velocity;

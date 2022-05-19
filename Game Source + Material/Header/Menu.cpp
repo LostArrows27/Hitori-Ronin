@@ -30,6 +30,7 @@ bool Menu::Init(){
     m_GuiObjects.push_back(playbtn);
     m_GuiObjects.push_back(settbtn);
     m_GuiObjects.push_back(quitbtn);
+    // pushing our 3 button in menu to the list
     SoundMgr::Instance()->PlayMusik("japan3");
     return true;
 }

@@ -9,6 +9,10 @@
 #define SNOW_PARTICLE_COUNT 400
 #define THUNDER_PARTICLE_COUNT 1
 
+// based on this, will have a certain "particle" on your screen
+
+// render Thunder, dust, rain ,snow
+
 enum Climat {DUST=0, RAIN, SNOW, LIGTHNING};
 
 class ClimatEmitter {
@@ -63,6 +67,9 @@ class ClimatEmitter {
                 else{
                     m_Particles[i]->Move(dt);
                 }
+                // if particle dead hay lifetime = 0,
+                // then we create new particle and delete old 1
+                // else, we keep the particle moving still as before
             }
         }
 
@@ -96,6 +103,7 @@ class ClimatEmitter {
             Uint32 lifetime = Helpers::RandI(5000, 8000);
             Vector2D vel(Helpers::RandI(-2, 2), Helpers::RandI(1, 4));
             return (new Particle(Transform(x, 0, 0, 0, textrID), vel, lifetime));
+            // cause of this so we have a 2 line of snow on the beginnning
         }
 
         Particle* DustParticle(std::string textrID){
@@ -116,8 +124,8 @@ class ClimatEmitter {
 
     private:
         Climat m_CurrClimat;
-        Uint32 m_ParticleCount;
-        std::vector<Particle*> m_Particles;
+        Uint32 m_ParticleCount; // count your certaini particle on screen
+        std::vector<Particle*> m_Particles; // vector contain all the particle
         std::vector<std::string> m_PartTextrID;
 };
 

@@ -5,7 +5,6 @@
 #include "GameObject.h"
 #include "TextureMgr.h"
 #include "ObjectFactory.h"
-#include "SeqAnimation.h"
 
 class Tree : public GameObject{
 

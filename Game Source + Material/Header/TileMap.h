@@ -4,6 +4,9 @@
 #include <vector>
 #include "TileLayer.h"
 
+// every xml file have many 2D matrix
+// and each 1 is a matrix of each layer in your map
+
 class TileMap {
 
     public:

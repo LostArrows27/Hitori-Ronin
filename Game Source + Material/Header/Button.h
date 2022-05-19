@@ -8,9 +8,14 @@
 #include "GameObject.h"
 #include "TextureMgr.h"
 
+// class "Inherit" from "GameObject"
+
 using TextureIdList = std::vector<std::string>;
 
 enum ButtonState {NORMAL=0, HOVER=1, PRESSED=2};
+// NORMAL : havent clicked
+// HOVER : moving your mouse to the area of the button
+// PRESSED: your mouse pressed the button
 
 class Button : public GameObject {
 
@@ -36,6 +41,9 @@ class Button : public GameObject {
                 TextureMgr::Instance()->DestroyTexture(id);
             m_TextrIDs.clear();
             m_TextrIDs.shrink_to_fit();
+            // set size cua vector ve 0 trong truong hop mo menu 3, 4 lan
+            // so that you dont have to create new one
+            // and reuse the old 1
         }
 
         virtual void Update(float dt) override {
@@ -59,10 +67,10 @@ class Button : public GameObject {
         }
 
     private:
-        SDL_Rect m_Shape;
-        bool m_IsReleased;
+        SDL_Rect m_Shape; // vi tri and thong so "Button"
+        bool m_IsReleased; // as we know the button alwasy render as in "NORMAL" state
         void (*m_Callback)();
-        TextureIdList m_TextrIDs;
+        TextureIdList m_TextrIDs; // vector keep all the "TextureID"
 };
 
 #endif // BUTTON_H

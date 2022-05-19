@@ -44,11 +44,19 @@ bool Play::Init(){
         Parser::Instance()->ParseGameObjects("assets/levels/night.tml", &m_GameObjects);
         m_SceneClimat = new ClimatEmitter(RAIN);
     }
+    // this day or night tml file will be a parralax BG
+    // which is a bg with many layer
+    // each layer have it owns scroll ratio
+    // scrollratio = 1, mean it move with the same speed as the player move
+
+    // well this is like create new level
+    // since "deadline" so yeah i just set the 2 level just the same
+    // but the weather and day - night state will change
 
     TileLayer* layer = m_TilelMap->GetLayers().back();
     CollisionMgr::Instance()->SetCollisionLayer(layer);
     Camera::Instance()->SetMapLimit(layer->GetWidth(), layer->GetHeight());
-
+    // and yeah the camera take it limit from all the number above
     m_Player = ObjectFactory::Instance()->CreateObject("WARRIOR", new Transform(0, 0, 200, 200));
     m_Enemy[0] = ObjectFactory::Instance()->CreateObject("ENEMY", new Transform(600, 0, 200, 200));
     m_Enemy[1] = ObjectFactory::Instance()->CreateObject("ENEMY", new Transform(1481, 0, 200, 200));
@@ -57,6 +65,7 @@ bool Play::Init(){
 
 
     Camera::Instance()->SetTarget(m_Player->GetOrigin());
+    // get origin based on the character you just create above
     if(Engine::Instance()->day_or_night == 1){
         SoundMgr::Instance()->PlayMusik("japan1");
     }else{

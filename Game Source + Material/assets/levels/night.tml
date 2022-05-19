@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Objects>
     <object type="SOBJECT" texture="night_sky" x="0" y ="-50" w="0" h="0" flip="0" scX="3" scY="3" sratio="0.08" rot="0"/>
-    <object type="SOBJECT" texture="moon"  x="550" y ="100" w="0" h="0" flip="0" scX="0.6" scY="0.6" sratio="0.07" rot="0"/>
+    <object type="SOBJECT" texture="moon"  x="550" y ="0" w="0" h="0" flip="0" scX="0.6" scY="0.6" sratio="0.07" rot="0"/>
     <object type="CLOUD" texture="cloud_night" x="1200" y ="0" w="0" h="0" flip="0" scX="1.5" scY="1.5" sratio="0.2" rot="0"/>    
     <object type="CLOUD" texture="cloud_night" x="0" y ="-50" w="0" h="0" flip="0" scX="3" scY="3" sratio="0.15" rot="0"/>
     <object type="SOBJECT" texture="mountain__night" x="0" y ="220" w="0" h="0" flip="0" scX="3" scY="1" sratio="0.1" rot="0"/>

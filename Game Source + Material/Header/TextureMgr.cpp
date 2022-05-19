@@ -69,11 +69,14 @@ void TextureMgr::DrawTile(std::string tilesetID, int x, int y, int tilesize, int
         SDL_Rect srcRect = {tilesize*col, tilesize*row, tilesize, tilesize};
         SDL_RenderCopyEx(m_Renderer, m_TextureMap[tilesetID], &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
     }
+    //render len man hinh dua theo vi tri cua camera
+    // like instead of render all, you just have to render thing in your screen and dont have to render it 2nd times
 }
 
 void TextureMgr::QueryTexture(std::string id, int* out_w, int* out_h){
     SDL_QueryTexture(m_TextureMap[id], NULL, NULL, out_w, out_h);
 }
+// this class will like keep all the basic setting of a texture
 
 void TextureMgr::DestroyTexture(std::string id){
     const TextureMap::iterator it = m_TextureMap.find(id);

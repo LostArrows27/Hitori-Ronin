@@ -148,6 +148,7 @@ void Warrior::Update(float dt){
         m_AttackTime = ATTACK_TIME;
     }
 
+
     if(m_AttackTime < 10.0f && m_AttackTime > 9.0f) SoundMgr::Instance()->PlayEffect("trigger");
 
 
@@ -161,6 +162,7 @@ void Warrior::Update(float dt){
 
     if(m_Collider->CollideWithMap())
         m_Tf->X = m_LastSafePosition.X;
+    // so that the character doesnt cross throw the collision
 
     // move on Y axis
     m_RigidBody->Move(dt);

@@ -24,6 +24,10 @@ void Camera::TrackTarget(){
         m_ViewPort.x = (m_ViewPort.x > (m_MapWidth - m_ViewPort.w)) ? (m_MapWidth - m_ViewPort.w) : m_ViewPort.x;
         m_ViewPort.y = (m_ViewPort.y > (m_MapHeight - m_ViewPort.h)) ? (m_MapHeight - m_ViewPort.h) : m_ViewPort.y;
 
+        // this keeping the camera doesnt fall out of the map
+        // cause when it happen our com wont know what to do
+        // so yeah we set our camera based on map width and height in the "PLay.cpp"
+
         m_Position = Vector2D(m_ViewPort.x, m_ViewPort.y);
     }
 }

@@ -17,6 +17,7 @@ class TextureMgr {
         SDL_Texture* Load(std::string filename);
         bool Add(std::string id, std::string filename);
         void QueryTexture(std::string id, int* out_w, int* out_h);
+        // this class will like keep all the basic setting of a texture
 
         void Draw(Transform* tf);
         void DrawFrame(Transform* tf, int row, int frame);

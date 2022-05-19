@@ -13,6 +13,8 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 
+// Gather everything in game together
+
 class Engine {
 
     public:
@@ -42,6 +44,10 @@ class Engine {
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         SDL_Rect m_ScreenViewPort;
+        // Based on window size
+        // We have the update function to resize the viewport every time
+        // the window resize
+        // "WindowEvent" function in  "Input.h"
         static Engine* s_Instance;
 };
 

@@ -30,6 +30,8 @@ class Camera {
         inline void SetTarget(Vector2D* target){m_Target = target;}
         inline void SetViewPort(SDL_Rect viewport){m_ViewPort = viewport;}
         inline void SetMapLimit(int w, int h){m_MapWidth = w; m_MapHeight = h;}
+        // setlimit so that our player dont run out of the map
+        // its like stop at the border of the map
         inline static Camera* Instance(){return s_Instance = (s_Instance != nullptr) ? s_Instance : new Camera();}
 
     private:

@@ -11,7 +11,7 @@ const SDL_Color DARK = {45, 80, 82};
 class GameState {
 
     public:
-        virtual bool Init() = 0;
+        virtual bool Init() = 0; // Tao component cua 1 state
         virtual bool Exit() = 0;
 
         virtual void Update() = 0;
@@ -19,6 +19,7 @@ class GameState {
 
     public:
         SDL_Renderer* m_Ctxt;
+        // since every state will have it owns renderer
         SDL_Color m_BgColor;
 };
 

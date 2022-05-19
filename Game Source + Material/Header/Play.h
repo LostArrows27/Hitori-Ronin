@@ -46,7 +46,8 @@ class Play : public GameState {
         ObjectPtr m_Enemy[4]; // if u create a certain enemy array but dont use all of them, they will point to somewhere else and cause crashing
         ObjectPtr m_Player;
         TileMap* m_TilelMap;
-        ObjectList m_GuiObjects;
+        ObjectList m_GuiObjects; // a vector contain all "GameObject"
+        // this was define in the "GameObject.h" file D
         ObjectList m_GameObjects;
         ClimatEmitter* m_SceneClimat;
 };

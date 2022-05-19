@@ -7,6 +7,9 @@
 #include "Transform.h"
 #include "TextureMgr.h"
 
+// ke thua tu "IObject"
+// la class [Parent] cua tat ca object trong game tu tree, player, enemy, ....
+
 class GameObject : public IObject {
 
     public:
